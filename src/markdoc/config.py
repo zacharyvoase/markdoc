@@ -21,7 +21,7 @@ class MarkdocConfig(dict):
     """A dictionary which represents the Markdoc configuration."""
     
     def __init__(self, config_file, config):
-        super(MarkdownConfig, self).__init__(config)
+        super(MarkdocConfig, self).__init__(config)
         self.setdefault('meta', {})['config_file'] = config_file
     
     @classmethod
