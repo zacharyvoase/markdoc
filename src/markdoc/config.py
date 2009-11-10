@@ -18,11 +18,12 @@ class ConfigNotFound(markdoc.exc.AbortError):
 
 class MarkdocConfig(dict):
     
-    """A dictionary which represents the Markdoc configuration."""
+    """A dictionary which represents a single wiki's Markdoc configuration."""
     
     def __init__(self, config_file, config):
         super(MarkdocConfig, self).__init__(config)
         self.setdefault('meta', {})['config_file'] = config_file
+        self['meta']['root'] = os.path.dirname(config_file)
     
     @classmethod
     def for_directory(cls, directory=None):
