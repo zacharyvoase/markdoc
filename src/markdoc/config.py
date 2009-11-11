@@ -60,7 +60,9 @@ class MarkdocConfig(dict):
         if not self.__template_env:
             template_dir = os.path.join(self['meta']['root'], '.templates')
             loader = jinja2.FileSystemLoader(template_dir)
-            self.__template_env = jinja2.Environment(loader=loader)
+            environment = jinja2.Environment(loader=loader)
+            environment.globals['config'] = self
+            self.__template_env = environment
         return self.__template_env
     
     def markdown(self, **config):
