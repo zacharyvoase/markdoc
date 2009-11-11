@@ -52,8 +52,7 @@ class MarkdocWSGIApplication(object):
     @property
     def htroot(self):
         hide_prefix = self.config.setdefault('hide-prefix', '.')
-        html_dir = hide_prefix + 'html'
-        return p.join(self.config['meta']['root'], html_dir)
+        return p.join(self.config['meta']['root'], hide_prefix + 'html')
     
     def is_safe(self, directory):
         return p.pardir not in p.relpath(directory, start=self.htroot)
