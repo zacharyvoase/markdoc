@@ -57,7 +57,7 @@ class MarkdocConfig(dict):
     
     @property
     def template_env(self):
-        if not self.__template_env:
+        if not getattr(self, '__template_env', None):
             hide_prefix = self.setdefault('hide-prefix', '.')
             template_dir = os.path.join(self['meta']['root'], hide_prefix + 'templates')
             loader = jinja2.FileSystemLoader(template_dir)
