@@ -55,6 +55,8 @@ class MarkdocWSGIApplication(object):
         return p.join(self.config['meta']['root'], hide_prefix + 'html')
     
     def is_safe(self, directory):
+        """Make sure the given absolute path does not point above the htroot."""
+        
         return p.pardir not in p.relpath(directory, start=self.htroot)
     
     def get_response(self, request):
