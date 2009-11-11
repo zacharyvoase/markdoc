@@ -5,6 +5,7 @@
 import os
 
 import cherrypy.wsgiserver
+import jinja2
 import markdown
 import yaml
 
@@ -23,7 +24,7 @@ class MarkdocConfig(dict):
     def __init__(self, config_file, config):
         super(MarkdocConfig, self).__init__(config)
         self.setdefault('meta', {})['config_file'] = config_file
-        self['meta']['root'] = os.path.dirname(config_file)
+        self['meta'].setdefault('root', os.path.dirname(config_file))
     
     @classmethod
     def for_directory(cls, directory=None):
@@ -53,6 +54,14 @@ class MarkdocConfig(dict):
             fp.close()
         
         return cls(config_file, config)
+    
+    @property
+    def template_env(self):
+        if not self.__template_env:
+            template_dir = os.path.join(self['meta']['root'], '.templates')
+            loader = jinja2.FileSystemLoader(template_dir)
+            self.__template_env = jinja2.Environment(loader=loader)
+        return self.__template_env
     
     def markdown(self, **config):
         """Return a `markdown.Markdown` instance for this configuration."""
