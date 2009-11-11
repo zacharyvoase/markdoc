@@ -138,19 +138,30 @@ class MarkdocWSGIApplication(object):
         : A string of the HTTP status 'reason', such as 'Not Found' for 404.
         
         The template is assumed to be valid XHTML.
-        """
         
-        context = {}
-        context['request'] = request
-        context['is_index'] = request.path_info in ['/', '/index.html']
-        context['status'] = status
-        context['reason'] = webob.status_reasons[status]
+        Note that the templating machinery is only invoked when the browser is
+        expecting HTML. This is determined by calling
+        `request.accept.accept_html()`. If not, an empty response (i.e. one
+        without a content body) is returned.
+        """
         
         response = webob.Response()
         response.status = status
-        template = self.config.template_env.get_template('%d.html' % status)
-        response.unicode_body = template.render(context)
-        response.content_type = mimetypes.types_map['.xhtml']
+        
+        if request.accept.accept_html():
+            context = {}
+            context['request'] = request
+            context['is_index'] = request.path_info in ['/', '/index.html']
+            context['status'] = status
+            context['reason'] = webob.status_reasons[status]
+            
+            template = self.config.template_env.get_template('%d.html' % status)
+            response.unicode_body = template.render(context)
+            response.content_type = mimetypes.types_map['.xhtml']
+        else:
+            del response.content_length
+            del response.content_type
+        
         return response
     
     forbidden = lambda self, request: self.error(request, 403)
