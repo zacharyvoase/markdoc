@@ -8,7 +8,7 @@ Installation
     hg clone ssh://hg@bitbucket.org/zacharyvoase/markdoc
     cd markdoc/
     pip install -r REQUIREMENTS
-    python setup.py develop
+    python setup.py install
 
 I’ll make an `easy_install`-friendly version as soon as this project assumes some semblance of stability.
 
@@ -46,7 +46,7 @@ Markdoc wikis have the following layout:
     |-- .tmp/
     |-- static/
     |-- wiki/
-    `-- config.yaml
+    `-- markdoc.yaml
 
 The `.html/` and `.tmp/` directories should be excluded from any VCS, since they contain temporary files.
 

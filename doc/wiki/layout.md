@@ -8,7 +8,7 @@ Markdoc wikis have the following layout:
     |-- .tmp/
     |-- static/
     |-- wiki/
-    `-- config.yaml
+    `-- markdoc.yaml
 
 The `.html/` and `.tmp/` directories should be excluded from any VCS, since they contain temporary files.
 
@@ -30,5 +30,5 @@ Static media files (such as CSS and JavaScript) should be put in this directory.
 : `WIKI_ROOT/wiki/`
 This contains the actual *text* of your wiki, in `.md` Markdown-formatted files. It is assumed they are UTF-8 encoded. Any files without a valid extension will be ignored.
 
-: `WIKI_ROOT/config.yaml`
+: `WIKI_ROOT/markdoc.yaml`
 This is the main configuration point for your wiki, in a YAML-formatted file. Consult the [configuration docs](/configuration) for more information.
