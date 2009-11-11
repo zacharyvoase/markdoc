@@ -1,0 +1,70 @@
+Quickstart
+==========
+
+Installation
+------------
+
+    #!/bin/bash
+    hg clone ssh://hg@bitbucket.org/zacharyvoase/markdoc
+    cd markdoc/
+    pip install -r REQUIREMENTS
+    python setup.py develop
+
+I’ll make an `easy_install`-friendly version as soon as this assumes some semblance of stability.
+
+Making a Wiki
+-------------
+
+Note that, at the moment, this process is unimplemented. This is, however, how I would *like* it to behave:
+
+    #!/bin/bash
+    markdoc init my-wiki
+    cd my-wiki/
+    vim wiki/index.md
+    # ... write some documentation ...
+    markdoc serve --build
+    # .. open http://localhost:8008/ in a browser ...
+
+Requirements
+============
+
+The minimum requirements to run the Markdoc utility are:
+
+  * Python 2.4 or later
+  * A UNIX (or at least UNIX-like) operating system
+  * [pip](http://pip.openplans.org/) (you can get it via `easy_install -U pip`)
+  * [rsync](http://www.samba.org/rsync/) -- installed out of the box with most modern OSes, including Mac OS X and Ubuntu
+
+Layout
+======
+
+Markdoc wikis have the following layout:
+
+    WIKI_ROOT/
+    |-- .html/
+    |-- .templates/
+    |-- .tmp/
+    |-- static/
+    |-- wiki/
+    `-- config.yaml
+
+: `WIKI_ROOT/`
+The root of the wiki, containing all of the files required for the `markdoc` utility to build and serve the wiki.
+
+: `WIKI_ROOT/.html/`
+Holds the compiled HTML and static files. It is directly served from by the Markdoc webserver.
+
+: `WIKI_ROOT/.templates/`
+Contains the Jinja2 templates for documents and directory listings. It comes with some sensible (and pretty) defaults, but you can override these if you wish.
+
+: `WIKI_ROOT/.tmp/`
+Used as a temporary build destination directory for rendered Markdown files. This directory is then rsync’d to `WIKI_ROOT/.html/` with `WIKI_ROOT/static`; the incremental nature of this operation means the server can keep running in one process whilst another runs `markdoc build`. This can be helpful in a number of situations.
+
+: `WIKI_ROOT/static/`
+Static media files (such as CSS and JavaScript) should be put in this directory. They will be copied to `.html/` by rsync during the build operation.
+
+: `WIKI_ROOT/wiki/`
+This contains the actual *text* of your wiki, in `.md` Markdown-formatted files. It is assumed they are UTF-8 encoded. Any files without a valid extension will be ignored.
+
+: `WIKI_ROOT/config.yaml`
+This is the main configuration point for your wiki, in a YAML-formatted file. You can find more information in the Markdoc documentation.
