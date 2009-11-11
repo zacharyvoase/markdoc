@@ -59,11 +59,9 @@ class MarkdocWSGIApplication(object):
         return p.pardir not in p.relpath(directory, start=self.htroot)
     
     def get_response(self, request):
-        if request.path_info == '/':
-            return self.index(request)
-        elif not request.path_info.endswith('/'):
-            return self.file(request)
-        return self.directory(request)
+        if request.path_info.endswith('/'):
+            return self.directory(request)
+        return self.file(request)
     
     def directory(self, request):
         
@@ -77,9 +75,14 @@ class MarkdocWSGIApplication(object):
         * Return a HTTP 404 ‘Not Found’.
         """
         
-        index_filename = p.join(self.htroot, request.path_info, 'index.html')
+        index_filename = p.join(self.htroot, request.path_info.lstrip('/'), 'index.html')
         if p.exists(index_filename):
             return serve_file(index_filename)
+        
+        directory_filename = p.join(self.htroot, request.path_info.strip('/'))
+        if p.isfile(directory_filename):
+            return temp_redirect(request.path_info.rstrip('/'))
+        
         return self.not_found(request)
     
     def file(self, request):
@@ -105,7 +108,7 @@ class MarkdocWSGIApplication(object):
             filename = filename + '.html'
         else:
             if p.isdir(filename):
-                return self.temp_redirect(request.path_info + '/')
+                return temp_redirect(request.path_info + '/')
             return self.not_found(request)
         
         return serve_file(filename)
@@ -151,21 +154,22 @@ class MarkdocWSGIApplication(object):
     
     forbidden = lambda self, request: self.error(request, 403)
     not_found = lambda self, request: self.error(request, 404)
+
+
+def redirect(location, permanent=False):
+    """Issue an optionally-permanent redirect to another location."""
     
-    def redirect(self, location, permanent=False):
-        """Issue an optionally-permanent redirect to another location."""
-        
-        response = webob.Response()
-        response.status = 301 if permanent else 302
-        response.location = location
-        
-        del response.content_type
-        del response.content_length
-        
-        return response
+    response = webob.Response()
+    response.status = 301 if permanent else 302
+    response.location = location
     
-    temp_redirect = lambda self, location: self.redirect(location, permanent=False)
-    perm_redirect = lambda self, location: self.redirect(location, permanent=True)
+    del response.content_type
+    del response.content_length
+    
+    return response
+
+temp_redirect = lambda location: redirect(location, permanent=False)
+perm_redirect = lambda location: redirect(location, permanent=True)
 
 
 def serve_file(filename, content_type=None, chunk_size=4096):
