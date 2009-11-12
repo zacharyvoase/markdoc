@@ -49,7 +49,7 @@ class MarkdocConfig(dict):
         
         fp = open(config_file)
         try:
-            config = yaml.load(fp)
+            config = yaml.load(fp) or {}
         finally:
             fp.close()
         
