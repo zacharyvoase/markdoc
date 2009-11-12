@@ -23,8 +23,13 @@ class Config(dict):
     
     def __init__(self, config_file, config):
         super(Config, self).__init__(config)
-        self.setdefault('meta', {})['config_file'] = config_file
-        self['meta'].setdefault('root', os.path.dirname(config_file))
+        
+        self['document-extensions'] = set(self.get('document-extensions',
+            ['.md', '.mdown', '.markdown', '.wiki', '.text']))
+        
+        meta = self.setdefault('meta', {})
+        meta['config_file'] = config_file
+        meta.setdefault('root', os.path.dirname(config_file))
     
     @classmethod
     def for_directory(cls, directory=None):
