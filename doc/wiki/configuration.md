@@ -8,6 +8,7 @@ Here we’ll go through an example and show how the various settings affect Mark
 
     :::yaml
     hide-prefix: "."
+    document-extensions: [.md, .mdown, .markdown, .wiki, .text]
     generate-listing: always
     listing-filename: "_list.html"
     
@@ -28,6 +29,9 @@ Remember that Markdoc uses sensible defaults for *all* of these options, so it�
 
 `hide-prefix` (default `.`)
 : This determines how Markdoc finds and writes to hidden directories like `.tmp`, `.templates` and `.html`. You may wish to set this to `'_'` if your VCS or operating system doesn’t play nicely with period-prefixed filenames.
+
+`document-extensions` (default `[.md, .mdown, .markdown, .wiki, .text]`)
+: Markdoc will only render files from the document root which have one of these extensions.
 
 `generate-listing` (default `always`)
 : This affects how listings are generated for directories in your Markdoc wiki (including the top level). Set this to either `always`, `sometimes` or `never`. The semantics are as follows:
