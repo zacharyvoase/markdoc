@@ -1,7 +1,7 @@
     >>> from markdoc.builder import Builder
     >>> b = Builder(CONFIG)
 
-Make sure breadcrumbs are generated properly:
+You can generate breadcrumbs for a document, based on its absolute path (which will be relativized to the wiki root):
 
     >>> b.crumbs(CONFIG_DIR + 'wiki/index.md')
     [('index', None)]
@@ -14,3 +14,12 @@ Make sure breadcrumbs are generated properly:
     
     >>> b.crumbs(CONFIG_DIR + 'wiki/somedir/something.md')
     [('index', '/'), ('somedir', '/somedir/'), ('something', None)]
+
+You can also walk through all files in the wiki, using the `walk()` method:
+
+    >>> import os
+    >>> for filepath, crumbs in b.walk():
+    ...     print os.path.relpath(filepath, start=CONFIG['meta']['root'])
+    wiki/file1.md
+    wiki/file2.md
+    wiki/file3.md
