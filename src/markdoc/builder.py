@@ -51,3 +51,36 @@ class Builder(object):
         
         crumbs.append((terminus, None))
         return crumbs
+    
+    def walk(self):
+        
+        """
+        Walk through the wiki, yielding info for each document.
+        
+        For each document encountered, a `(filename, crumbs)` tuple will be
+        yielded.
+        """
+        
+        wiki_dir = os.path.join(self.config['meta']['root'], 'wiki')
+        
+        for dirpath, subdirs, files in os.walk(wiki_dir):
+            remove_hidden(subdirs); subdirs.sort()
+            remove_hidden(files); files.sort()
+            
+            for filename in files:
+                name, extension = os.path.splitext(filename)
+                if extension in self.config['document-extensions']:
+                    full_filename = os.path.join(dirpath, filename)
+                    yield (full_filename, self.crumbs(full_filename))
+
+
+def remove_hidden(names):
+    """Remove (in-place) all strings starting with a '.' in the given list."""
+    
+    i = 0
+    while i < len(names):
+        if names[i].startswith('.'):
+            names.pop(i)
+        else:
+            i += 1
+    return names
