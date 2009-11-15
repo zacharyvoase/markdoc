@@ -38,12 +38,16 @@ You can also walk through all files in the wiki, using the `walk()` method:
     >>> import os
     >>> for filepath in b.walk():
     ...     print filepath
+    an_empty_file.md
     file1.md
     file2.md
     file3.md
 
 Rendering
 =========
+
+Titles
+------
 
 The `get_title()` function deals with retrieving titles from files. Initially, the file content itself is used to try to get a title. Either text in a specially formatted HTML comment, like this:
 
@@ -59,3 +63,14 @@ If those both fail, the filename is used to produce a title:
 
     >>> get_title('some_title.arbitraryextension', '')
     'Some Title'
+
+Since this is linked to the documents themselves, you can use the `title()` method on the builder instance to get the title for a given document:
+
+    >>> b.title('file1.md')
+    u'Hello'
+    >>> b.title('file2.md')
+    u'World'
+    >>> b.title('file3.md')
+    u'Foo'
+    >>> b.title('an_empty_file.md')
+    'An Empty File'
