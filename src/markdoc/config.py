@@ -19,7 +19,20 @@ class ConfigNotFound(markdoc.exc.AbortError):
 
 class Config(dict):
     
-    """A dictionary which represents a single wiki's Markdoc configuration."""
+    """
+    A dictionary which represents a single wiki's Markdoc configuration.
+    
+    When instantiating this dictionary, if you aren't using an actual
+    configuration file, just remember to set `config['meta']['root']` to the
+    wiki root; you can use `None` as the value for config_file. For example:
+        
+        # With a filename:
+        config = Config('filename.yaml', {...})
+        
+        # Without a filename:
+        config = Config(None, {'meta': {'root': '/path/to/wiki/root/'}, ...})
+    
+    """
     
     def __init__(self, config_file, config):
         super(Config, self).__init__(config)
@@ -29,7 +42,8 @@ class Config(dict):
         
         meta = self.setdefault('meta', {})
         meta['config_file'] = config_file
-        meta.setdefault('root', os.path.dirname(config_file))
+        if 'root' not in meta:
+            meta['root'] = os.path.dirname(config_file)
     
     @classmethod
     def for_directory(cls, directory=None):
