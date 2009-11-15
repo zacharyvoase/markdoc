@@ -1,18 +1,19 @@
+    >>> import os.path as p
     >>> from markdoc.builder import Builder
     >>> b = Builder(CONFIG)
 
 You can generate breadcrumbs for a document, based on its absolute path (which will be relativized to the wiki root):
 
-    >>> b.crumbs(WIKI_ROOT + 'wiki/index.md')
+    >>> b.crumbs(p.join(WIKI_ROOT, 'wiki', 'index.md'))
     [('index', None)]
     
-    >>> b.crumbs(WIKI_ROOT + 'wiki/somefile.md')
+    >>> b.crumbs(p.join(WIKI_ROOT, 'wiki', 'somefile.md'))
     [('somefile', None)]
     
-    >>> b.crumbs(WIKI_ROOT + 'wiki/somedir/index.md')
+    >>> b.crumbs(p.join(WIKI_ROOT, 'wiki', 'somedir', 'index.md'))
     [('index', '/'), ('somedir', None)]
     
-    >>> b.crumbs(WIKI_ROOT + 'wiki/somedir/something.md')
+    >>> b.crumbs(p.join(WIKI_ROOT, 'wiki', 'somedir', 'something.md'))
     [('index', '/'), ('somedir', '/somedir/'), ('something', None)]
 
 You can also just use relative paths (relative to `WIKI_ROOT/wiki`):
@@ -23,10 +24,10 @@ You can also just use relative paths (relative to `WIKI_ROOT/wiki`):
     >>> b.crumbs('somefile.md')
     [('somefile', None)]
     
-    >>> b.crumbs('somedir/index.md')
+    >>> b.crumbs(p.join('somedir', 'index.md'))
     [('index', '/'), ('somedir', None)]
     
-    >>> b.crumbs('somedir/something.md')
+    >>> b.crumbs(p.join('somedir', 'something.md'))
     [('index', '/'), ('somedir', '/somedir/'), ('something', None)]
 
 You can also walk through all files in the wiki, using the `walk()` method:
