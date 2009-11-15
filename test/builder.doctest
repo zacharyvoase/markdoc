@@ -3,16 +3,16 @@
 
 You can generate breadcrumbs for a document, based on its absolute path (which will be relativized to the wiki root):
 
-    >>> b.crumbs(CONFIG_DIR + 'wiki/index.md')
+    >>> b.crumbs(WIKI_ROOT + 'wiki/index.md')
     [('index', None)]
     
-    >>> b.crumbs(CONFIG_DIR + 'wiki/somefile.md')
+    >>> b.crumbs(WIKI_ROOT + 'wiki/somefile.md')
     [('somefile', None)]
     
-    >>> b.crumbs(CONFIG_DIR + 'wiki/somedir/index.md')
+    >>> b.crumbs(WIKI_ROOT + 'wiki/somedir/index.md')
     [('index', '/'), ('somedir', None)]
     
-    >>> b.crumbs(CONFIG_DIR + 'wiki/somedir/something.md')
+    >>> b.crumbs(WIKI_ROOT + 'wiki/somedir/something.md')
     [('index', '/'), ('somedir', '/somedir/'), ('something', None)]
 
 You can also walk through all files in the wiki, using the `walk()` method:
