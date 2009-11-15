@@ -2,6 +2,7 @@
 
 import os
 import operator
+import re
 
 from markdoc.cache import DocumentCache
 
@@ -88,3 +89,18 @@ def remove_hidden(names):
         else:
             i += 1
     return names
+
+
+def get_title(filename, data):
+    """Try to retrieve a title from a filename and its contents."""
+    
+    match = re.search(r'<!-- ?title:(.+)-->', data, re.IGNORECASE)
+    if match:
+        return match.group(1).strip()
+    
+    match = re.search(r'<h1[^>]*>([^<]+)</h1>', data, re.IGNORECASE)
+    if match:
+        return match.group(1)
+    
+    name, extension = os.path.splitext(os.path.basename(filename))
+    return re.sub(r'[-_]+', ' ', name).title()
