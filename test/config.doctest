@@ -1,0 +1,14 @@
+    >>> from markdoc.config import Config
+
+You can make a config based on a directory (which will usually be a wiki root):
+
+    >>> dir_config = Config.for_directory(WIKI_ROOT)
+    >>> dir_config['9d03e32c6cb1455388a170e3bb0c2030']
+    '7010d5d5871143d089cb662cb540cbd5'
+
+You can also make one based on a YAML filename:
+
+    >>> import os.path as p
+    >>> file_config = Config.for_file(p.join(WIKI_ROOT, 'markdoc.yaml'))
+    >>> file_config['9d03e32c6cb1455388a170e3bb0c2030']
+    '7010d5d5871143d089cb662cb540cbd5'
