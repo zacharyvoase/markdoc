@@ -4,7 +4,7 @@ import os
 import operator
 import re
 
-from markdoc.cache import DocumentCache
+from markdoc.cache import DocumentCache, RenderCache
 
 
 class Builder(object):
@@ -14,6 +14,8 @@ class Builder(object):
     def __init__(self, config):
         self.config = config
         self.doc_cache = DocumentCache(base=os.path.join(self.config['meta']['root'], 'wiki'))
+        render_func = lambda doc: self.config.markdown().convert(doc)
+        self.render_cache = RenderCache(render_func, self.doc_cache)
     
     def crumbs(self, path):
         
@@ -77,6 +79,12 @@ class Builder(object):
                 if extension in self.config['document-extensions']:
                     full_filename = os.path.join(dirpath, filename)
                     yield os.path.relpath(full_filename, start=self.doc_cache.base)
+    
+    def render(self, path, cache=True):
+        return self.render_cache.render(path, cache=cache)
+    
+    def title(self, path, cache=True):
+        return get_title(path, self.render(path, cache=cache))
 
 
 def remove_hidden(names):
