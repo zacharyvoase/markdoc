@@ -75,7 +75,7 @@ class Builder(object):
                 name, extension = os.path.splitext(filename)
                 if extension in self.config['document-extensions']:
                     full_filename = os.path.join(dirpath, filename)
-                    yield (full_filename, self.crumbs(full_filename))
+                    yield os.path.relpath(full_filename, start=self.doc_cache.base)
 
 
 def remove_hidden(names):
