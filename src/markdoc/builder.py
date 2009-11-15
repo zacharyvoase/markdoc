@@ -3,6 +3,8 @@
 import os
 import operator
 
+from markdoc.cache import DocumentCache
+
 
 class Builder(object):
     
@@ -10,6 +12,7 @@ class Builder(object):
     
     def __init__(self, config):
         self.config = config
+        self.doc_cache = DocumentCache(base=os.path.join(self.config['meta']['root'], 'wiki'))
     
     def crumbs(self, filename):
         
