@@ -31,7 +31,7 @@ class Builder(object):
         
         * `a/b/c/wiki/subdir/index.md` =>
           `[('index', '/'), ('subdir', None)]`
-          
+        
         * `a/b/c/wiki/subdir/file.md` =>
           `[('index', '/'), ('subdir', '/subdir/'), ('file', None)]
         
