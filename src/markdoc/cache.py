@@ -83,6 +83,36 @@ class DocumentCache(object):
         return result
 
 
+class RenderCache(object):
+    
+    def __init__(self, render_func, document_cache):
+        self.render_func = render_func
+        self.doc_cache = document_cache
+        # The two-cache structure allows us to garbage collect rendered results
+        # for old versions of documents.
+        # pathname => document hash
+        self.hash_cache = {}
+        # document hash => rendered results
+        self.result_cache = {}
+    
+    def render(self, path, cache=True):
+        """Render the contents of a filename, optionally using the cache."""
+        
+        document = self.doc_cache.get(path, cache=cache)
+        
+        if cache:
+            doc_hash = hash(document)
+            if path in self.hash_cache and self.hash_cache[path] != doc_hash:
+                self.result_cache.pop(self.hash_cache[path], None)
+                self.hash_cache[path] = doc_hash
+            
+            if doc_hash not in self.result_cache:
+                self.result_cache[doc_hash] = self.render_func(document)
+            return self.result_cache[doc_hash]
+        else:
+            return self.render_func(document)
+
+
 def read_from(filename, encoding='utf-8'):
     """Read data from a filename, optionally with an encoding."""
     
