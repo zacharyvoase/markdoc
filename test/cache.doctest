@@ -1,0 +1,53 @@
+Set up the document cache with a 'root' directory:
+
+    >>> import os
+    >>> from markdoc.cache import DocumentCache
+    >>> cache = DocumentCache(base=os.path.join(CONFIG['meta']['root'], 'wiki'))
+
+You can fetch files from the document cache:
+
+    >>> cache.get('file1.md')
+    u'# Hello\n'
+    >>> cache.get('file2.md')
+    u'# World\n'
+    >>> cache.get('file3.md')
+    u'# Foo\n'
+
+The contents of these files will then be cached:
+
+    >>> print sorted(cache.relative(path) for path in cache.cache)
+    ['file1.md', 'file2.md', 'file3.md']
+
+You can also fetch them without using the cache:
+
+    >>> cache.cache.clear()
+    >>> cache.cache
+    {}
+    
+    >>> cache.get('file1.md', cache=False)
+    u'# Hello\n'
+    >>> cache.get('file2.md', cache=False)
+    u'# World\n'
+    >>> cache.get('file3.md', cache=False)
+    u'# Foo\n'
+    
+    >>> cache.cache
+    {}
+
+You can force the document cache to refresh its cached content for each of these files:
+
+    >>> cache.refresh_cache('file1.md')
+    >>> cache.refresh_cache('file2.md')
+    >>> cache.refresh_cache('file3.md')
+    
+    >>> len(cache.cache)
+    3
+
+And then make sure they actually *have* updated to the latest version:
+
+    >>> cache.has_latest_version('file1.md')
+    True
+    >>> cache.has_latest_version('file2.md')
+    True
+    >>> cache.has_latest_version('file3.md')
+    True
