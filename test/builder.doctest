@@ -1,6 +1,9 @@
     >>> import os.path as p
-    >>> from markdoc.builder import Builder
+    >>> from markdoc.builder import Builder, get_title
     >>> b = Builder(CONFIG)
+
+Filesystem Interaction
+======================
 
 You can generate breadcrumbs for a document, based on its absolute path (which will be relativized to the wiki root):
 
@@ -38,3 +41,21 @@ You can also walk through all files in the wiki, using the `walk()` method:
     file1.md
     file2.md
     file3.md
+
+Rendering
+=========
+
+The `get_title()` function deals with retrieving titles from files. Initially, the file content itself is used to try to get a title. Either text in a specially formatted HTML comment, like this:
+
+    >>> get_title(None, '<!-- title: Some Title -->')
+    'Some Title'
+
+Or the first `<h1>` element:
+
+    >>> get_title(None, '<h1>Some Title</h1>')
+    'Some Title'
+
+If those both fail, the filename is used to produce a title:
+
+    >>> get_title('some_title.arbitraryextension', '')
+    'Some Title'
