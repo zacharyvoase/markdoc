@@ -14,7 +14,7 @@ class Builder(object):
         self.config = config
         self.doc_cache = DocumentCache(base=os.path.join(self.config['meta']['root'], 'wiki'))
     
-    def crumbs(self, filename):
+    def crumbs(self, path):
         
         """
         Produce a breadcrumbs list for the given filename.
@@ -37,9 +37,10 @@ class Builder(object):
         
         """
         
-        doc_root = os.path.join(self.config['meta']['root'], 'wiki')
-        rel_path = os.path.relpath(filename, start=doc_root)
-        rel_components = rel_path.split(os.path.sep)
+        if os.path.isabs(path):
+            path = self.doc_cache.relative(path)
+        
+        rel_components = path.split(os.path.sep)
         terminus = os.path.splitext(rel_components.pop())[0]
         
         if not rel_components:
