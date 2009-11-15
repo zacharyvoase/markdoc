@@ -58,21 +58,27 @@ class Config(dict):
         if directory is None:
             directory = os.getcwd()
         
-        config_file = os.path.join(directory, 'markdoc.yaml')
+        filename = os.path.join(directory, 'markdoc.yaml')
+        return cls.for_file(filename)
+    
+    @classmethod
+    def for_file(cls, filename):
+        """Get the configuration from a given YAML file."""
         
-        if not os.path.exists(config_file):
-            relpath = os.path.relpath(directory)
+        if not os.path.exists(filename):
+            relpath = os.path.relpath(os.path.dirname(filename), start=os.getcwd())
+            basename = os.path.basename(filename)
             if relpath == '.':
-                raise ConfigNotFound("markdoc.yaml was not found in the current directory")
-            raise ConfigNotFound("markdoc.yaml was not found in %s" % relpath)
+                raise ConfigNotFound("%s was not found in the current directory" % basename)
+            raise ConfigNotFound("%s was not found in %s" % (basename, relpath))
         
-        fp = open(config_file)
+        fp = open(filename)
         try:
             config = yaml.load(fp) or {}
         finally:
             fp.close()
         
-        return cls(config_file, config)
+        return cls(filename, config)
     
     @property
     def template_env(self):
