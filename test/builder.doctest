@@ -46,6 +46,15 @@ You can also walk through all files in the wiki, using the `walk()` method:
 Rendering
 =========
 
+You can render documents with the `Builder.render()` method:
+
+    >>> b.render('file1.md')
+    u'<h1>Hello</h1>'
+    >>> b.render('file2.md')
+    u'<h1>World</h1>'
+    >>> b.render('file3.md')
+    u'<h1>Foo</h1>'
+
 Titles
 ------
 
