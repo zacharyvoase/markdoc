@@ -105,6 +105,10 @@ def build(config, args):
         html = builder.render_document(rel_filename)
         out_filename = p.join(config.temp_dir,
             p.splitext(rel_filename)[0] + p.extsep + 'html')
+        
+        if not p.exists(p.dirname(out_filename)):
+            os.makedirs(p.dirname(out_filename))
+        
         fp = codecs.open(out_filename, 'w', encoding='utf-8')
         try:
             fp.write(html)
