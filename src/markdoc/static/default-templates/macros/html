@@ -1,0 +1,19 @@
+{% macro cssimport(css_href, media="screen, projection") -%}
+    <link rel="stylesheet" type="text/css" href="{{ css_href }}" {% if media %}media="{{ media }}" {% endif %}/>
+{%- endmacro %}
+
+{% macro css() -%}
+    <style type="text/css">
+        {{ caller() }}
+    </style>
+{%- endmacro %}
+
+{% macro jsimport(js_href) -%}
+    <script type="application/javascript" src="{{ js_href }}"></script>
+{%- endmacro %}
+
+{% macro js() -%}
+    <script type="text/javascript">
+        {{ caller() }}
+    </script>
+{%- endmacro %}
