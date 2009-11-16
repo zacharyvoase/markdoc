@@ -13,9 +13,13 @@ class Builder(object):
     
     def __init__(self, config):
         self.config = config
-        self.doc_cache = DocumentCache(base=os.path.join(self.config['meta']['root'], 'wiki'))
+        
+        document_base = os.path.join(self.config['meta']['root'], 'wiki')
+        self.doc_cache = DocumentCache(base=document_base)
+        
         render_func = lambda path, doc: self.config.markdown().convert(doc)
         self.render_cache = RenderCache(render_func, self.doc_cache)
+        
         render_doc_func = lambda path, doc: self.render_document(path, cache=False)
         self.document_render_cache = RenderCache(render_doc_func, self.render_cache)
     
