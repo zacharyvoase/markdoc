@@ -39,15 +39,13 @@ some semblance of stability.
 Making a Wiki
 -------------
 
-Note that, at the moment, this process is unimplemented. This is, however, how I
-would *like* it to behave:
-
     #!/bin/bash
     markdoc init my-wiki
     cd my-wiki/
-    vim wiki/index.md
+    vim wiki/somefile.md
     # ... write some documentation ...
-    markdoc serve --build
+    markdoc build
+    markdoc serve
     # .. open http://localhost:8008/ in a browser ...
 
 Requirements
