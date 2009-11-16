@@ -83,3 +83,36 @@ Since this is linked to the documents themselves, you can use the `title()` meth
     u'Foo'
     >>> b.title('an_empty_file.md')
     'An Empty File'
+
+Documents
+---------
+
+You can render whole documents using `Builder.render_document()`:
+
+    >>> print b.render_document('file1.md')
+    <?xml version="1.0" encoding="utf-8"?>
+    <!DOCTYPE html>
+    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+      <title>Hello</title>
+      <link rel="stylesheet" type="text/css" href="/example.css" />
+    </head>
+    <body>
+      <h1>Hello</h1>
+    </body>
+    </html>
+    
+    >>> print b.render_document('file2.md')
+    <?xml version="1.0" encoding="utf-8"?>
+    <!DOCTYPE html>
+    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+      <title>World</title>
+      <link rel="stylesheet" type="text/css" href="/example.css" />
+    </head>
+    <body>
+      <h1>World</h1>
+    </body>
+    </html>
+
+This uses the `document.html` Jinja2 template, by default located in `WIKI_ROOT/.templates/`, to produce the documents.
