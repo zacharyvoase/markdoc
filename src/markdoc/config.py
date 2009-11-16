@@ -3,6 +3,7 @@
 """Utilities for working with Markdoc configurations."""
 
 import os
+import os.path as p
 
 import cherrypy.wsgiserver
 import jinja2
@@ -43,30 +44,30 @@ class Config(dict):
         meta = self.setdefault('meta', {})
         meta['config_file'] = config_file
         if 'root' not in meta:
-            meta['root'] = os.path.dirname(config_file)
+            meta['root'] = p.dirname(config_file)
     
     @property
     def html_dir(self):
         self.setdefault('hide-prefix', '.')
-        return os.path.join(self['meta']['root'], self['hide-prefix'] + 'html')
+        return p.join(self['meta']['root'], self['hide-prefix'] + 'html')
     
     @property
     def static_dir(self):
-        return os.path.join(self['meta']['root'], 'static')
+        return p.join(self['meta']['root'], 'static')
     
     @property
     def wiki_dir(self):
-        return os.path.join(self['meta']['root'], 'wiki')
+        return p.join(self['meta']['root'], 'wiki')
     
     @property
     def temp_dir(self):
         self.setdefault('hide-prefix', '.')
-        return os.path.join(self['meta']['root'], self['hide-prefix'] + 'tmp')
+        return p.join(self['meta']['root'], self['hide-prefix'] + 'tmp')
     
     @property
     def template_dir(self):
         self.setdefault('hide-prefix', '.')
-        return os.path.join(self['meta']['root'], self['hide-prefix'] + 'templates')
+        return p.join(self['meta']['root'], self['hide-prefix'] + 'templates')
     
     @classmethod
     def for_directory(cls, directory=None):
@@ -81,16 +82,16 @@ class Config(dict):
         if directory is None:
             directory = os.getcwd()
         
-        filename = os.path.join(directory, 'markdoc.yaml')
+        filename = p.join(directory, 'markdoc.yaml')
         return cls.for_file(filename)
     
     @classmethod
     def for_file(cls, filename):
         """Get the configuration from a given YAML file."""
         
-        if not os.path.exists(filename):
-            relpath = os.path.relpath(os.path.dirname(filename), start=os.getcwd())
-            basename = os.path.basename(filename)
+        if not p.exists(filename):
+            relpath = p.relpath(p.dirname(filename), start=os.getcwd())
+            basename = p.basename(filename)
             if relpath == '.':
                 raise ConfigNotFound("%s was not found in the current directory" % basename)
             raise ConfigNotFound("%s was not found in %s" % (basename, relpath))
@@ -106,10 +107,14 @@ class Config(dict):
     @property
     def template_env(self):
         if not getattr(self, '__template_env', None):
-            loader = jinja2.FileSystemLoader(self.template_dir)
+            loader = jinja2.FileSystemLoader([
+                self.template_dir, markdoc.default_template_dir])
+            
             environment = jinja2.Environment(loader=loader)
             environment.globals['config'] = self
+            
             self.__template_env = environment
+        
         return self.__template_env
     
     def markdown(self, **config):
