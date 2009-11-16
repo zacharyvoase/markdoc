@@ -5,8 +5,6 @@
 import os
 import os.path as p
 
-import cherrypy.wsgiserver
-import jinja2
 import markdown
 import yaml
 
@@ -107,6 +105,8 @@ class Config(dict):
     @property
     def template_env(self):
         if not getattr(self, '__template_env', None):
+            # Lazy import to save time when running the `markdoc` command.
+            import jinja2
             
             loader_path = [self.template_dir]
             if self.setdefault('use-default-templates', True):
@@ -145,6 +145,9 @@ class Config(dict):
         parameters by passing in keyword arguments which will be passed along to
         the `CherryPyWSGIServer` constructor.
         """
+        
+        # Lazy import, to save time for non-server commands.
+        import cherrypy.wsgiserver
         
         svconfig = self.setdefault('server', {})
         get_conf = lambda key, default: svconfig.setdefault(key, extra_config.pop(key, default))
