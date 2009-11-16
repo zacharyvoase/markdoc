@@ -11,6 +11,8 @@ Here we’ll go through an example and show how the various settings affect Mark
     document-extensions: [.md, .mdown, .markdown, .wiki, .text]
     generate-listing: always
     listing-filename: "_list.html"
+    use-default-static: true
+    use-default-templates: true
     
     markdown:
       safe_mode: false
@@ -42,6 +44,12 @@ Remember that Markdoc uses sensible defaults for *all* of these options, so it�
 
 `listing-filename` (default `_list.html`)
 : This specifies the filename that directory listings are saved under; see the documentation for `generate-listing` just above for more information.
+
+`use-default-static` (default `true`)
+: If true, Markdoc’s default set of static media will be synchronized to the HTML root when building.
+
+`use-default-templates` (default `true`)
+: If true, Jinja2 will look in Markdoc’s set of default templates when rendering documents and listings.
 
 `markdown` (default is empty)
 : This should hold a dictionary with keyword arguments for the `markdown.Markdown` constructor. You can see an example above; also try consulting the Python Markdown library documentation to see what values can be given here.
