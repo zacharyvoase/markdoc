@@ -16,17 +16,20 @@ def main(cmd_args=None):
     else:
         args = parser.parse_args()
     
-    try:
-        args.config = os.path.abspath(args.config)
-        
-        if os.path.isdir(args.config):
-            config = Config.for_directory(args.config)
-        elif os.path.isfile(args.config):
-            config = Config.for_file(args.config)
-        else:
-            raise ConfigNotFound("Couldn't locate Markdoc config.")
-    except ConfigNotFound, exc:
-        parser.error(str(exc))
+    if args.command != 'init':
+        try:
+            args.config = os.path.abspath(args.config)
+            
+            if os.path.isdir(args.config):
+                config = Config.for_directory(args.config)
+            elif os.path.isfile(args.config):
+                config = Config.for_file(args.config)
+            else:
+                raise ConfigNotFound("Couldn't locate Markdoc config.")
+        except ConfigNotFound, exc:
+            parser.error(str(exc))
+    else:
+        config = None
     
     command = getattr(commands, args.command.replace('-', '_'))
     return command(config, args)
