@@ -126,13 +126,14 @@ class Builder(object):
                 sub_directories.append(file_dict)
             
             else:
+                if (basename in skip_files or basename.startswith('.') or
+                    basename.startswith('_')):
+                    continue
+                
                 file_dict['slug'] = os.path.splitext(basename)[0]
                 file_dict['size'] = os.path.getsize(fs_abs_path)
                 
                 if os.path.splitext(basename)[1] == (os.path.extsep + 'html'):
-                    if (basename in skip_files or basename.startswith('.') or
-                        basename.startswith('_')):
-                        continue
                     # Get the title from the file.
                     contents = read_from(fs_abs_path)
                     file_dict['title'] = get_title(file_dict['slug'], contents)
