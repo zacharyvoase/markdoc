@@ -8,6 +8,7 @@ import re
 import shutil
 import subprocess
 
+import markdoc
 from markdoc.builder import Builder
 from markdoc.cli.parser import subparsers
 
@@ -28,6 +29,39 @@ def show_config(config, args):
     """Pretty-print the current Markdoc configuration."""
     
     pprint.pprint(config)
+
+
+@command
+def init(_, args):
+    """Initialize a new Markdoc repository."""
+    
+    if not args.destination:
+        destination = os.getcwd()
+    else:
+        destination = p.abspath(args.destination)
+    
+    if os.path.exists(destination) and os.listdir(destination):
+        init.parser.error("destination isn't empty")
+    elif not os.path.exists(destination):
+        os.makedirs(destination)
+    elif not os.path.isdir(destination):
+        init.parser.error("destination isn't a directory")
+    
+    default_templates = p.join(p.dirname(p.abspath(markdoc.__file__)), 'static', 'default-templates')
+    default_static = p.join(p.dirname(p.abspath(markdoc.__file__)), 'static', 'default-static')
+    
+    shutil.copytree(default_templates, p.join(destination, '.templates'))
+    shutil.copytree(default_static, p.join(destination, 'static'))
+    os.makedirs(p.join(destination, 'wiki'))
+    
+    config_filename = p.join(destination, 'markdoc.yaml')
+    fp = open(config_filename, 'w')
+    try:
+        fp.write('{}\n')
+    finally:
+        fp.close()
+
+init.parser.add_argument('destination')
 
 
 ## Cleanup
