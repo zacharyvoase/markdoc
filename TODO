@@ -1,2 +1,3 @@
-Server
-: Implement `markdoc serve` command, using CherryPy WSGI server.
+`markdoc init` command
+: Write an initialization command which will prepare a directory
+  to host a Markdoc wiki.
