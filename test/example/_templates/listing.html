@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>ls /{{ directory }}</title>
+  <link rel="stylesheet" type="text/css" href="/example.css" />
+</head>
+<body>
+  
+  <h1>Listing for /{{ directory }}</h1>
+  
+  {% if sub_directories %}
+    <h2>Sub-directories</h2>
+    <ul id="subdirs">
+      {% for sub_dir in sub_directories %}
+        <li><a href="{{ sub_dir.href }}">{{ sub_dir.basename }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  
+  {% if pages %}
+    <h2>Pages</h2>
+    <ul id="pages">
+      {% for page in pages %}
+        <li><a href="{{ page.href }}">{{ page.title }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  
+  {% if files %}
+    <h2>Files</h2>
+    <ul id="files">
+      {% for file in files %}
+        <li><a href="{{ file.href }}">{{ file.basename }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+</body>
+</html>
