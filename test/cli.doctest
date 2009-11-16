@@ -1,5 +1,7 @@
 First we have to set up a Python function for running the command-line tool. Since the main entry point is the `markdoc.cli.main.main()` function, we can just call that directly, with some defaults for the current wiki root:
 
+    >>> import os
+    >>> import os.path as p
     >>> from markdoc.cli.main import main
     >>> def markdoc(*args):
     ...     try:
@@ -28,6 +30,17 @@ If you leave out the `--quiet` option, Markdoc will print some additional loggin
 
 The static media will now be in the HTML root:
 
-    >>> import os.path as p
-    >>> p.isfile(p.join(WIKI_ROOT, '_html', 'example.css'))
-    True
+    >>> os.listdir(CONFIG.html_dir)
+    ['example.css']
+
+There are three other commands -- `clean-html`, `clean-temp`, and `sync-html` -- which are used in the background by the `build` task. `markdoc build` will compile all the HTML, and then synchronize both built HTML and static media into the HTML root (usually `WIKI_ROOT/.html`).
+
+    >>> markdoc('--quiet', 'build')
+    0
+    
+    >>> print '\n'.join(sorted(os.listdir(CONFIG.html_dir)))
+    an_empty_file.html
+    example.css
+    file1.html
+    file2.html
+    file3.html
