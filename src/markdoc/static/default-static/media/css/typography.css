@@ -1,4 +1,3 @@
-
 html {
 	font-family: "Helvetica Neue", Helvetica, Arial, Geneva, sans-serif;
 	font-size: 10pt;
@@ -54,9 +53,16 @@ p#footer a {
 	text-decoration: none;
 }
 
+p code {
+	font-size: 8pt;
+}
+
 pre, code, tt, table#subdirs tr td.name, table#files tr td.name, table tr td.size {
 	font-family: "DejaVu Sans Mono", "Bitstream Vera Sans Mono", Menlo, Inconsolata, Consolas, Monaco, "Courier New", Courier;
-	font-size: 8pt;
+}
+
+table#subdirs code, table#files code {
+	font-size: 10pt;
 }
 
 table.codehilitetable div.linenodiv {
