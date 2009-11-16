@@ -143,14 +143,14 @@ class Config(dict):
         
         bind = get_conf('bind', '127.0.0.1')
         port = get_conf('port', 8008)
-        num_threads = get_conf('num_threads', 10)
+        numthreads = get_conf('numthreads', 10)
         server_name = get_conf('server_name', None)
         request_queue_size = get_conf('request_queue_size', 5)
         timeout = get_conf('timeout', 10)
         
         bind_addr = (bind, port)
         kwargs = {
-            'num_threads': num_threads,
+            'numthreads': numthreads,
             'server_name': server_name,
             'request_queue_size': request_queue_size,
             'timeout': timeout}
