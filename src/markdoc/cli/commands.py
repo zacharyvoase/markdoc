@@ -42,4 +42,6 @@ def sync_static(config, args):
     
     subprocess.check_call(command)
 
-sync_static.parser.add_argument('--quiet', '-q', help='Suppress non-error output')
+sync_static.parser.add_argument('--quiet', '-q',
+    action='store_true', default=False,
+    help="Suppress non-error output")
