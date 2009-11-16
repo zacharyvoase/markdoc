@@ -5,3 +5,5 @@ dist/
 MANIFEST
 .DS_Store
 *.pyc
+doc/.tmp/
+doc/.html/
