@@ -4,6 +4,7 @@ import codecs
 import os
 import os.path as p
 import pprint
+import re
 import shutil
 import subprocess
 
@@ -153,3 +154,37 @@ def build_listing(config, args):
         
         if not index_file_exists:
             shutil.copyfile(list_filename, p.join(fs_dir, 'index.html'))
+
+## Serving
+
+IPV4_RE = re.compile(r'^(25[0-5]|2[0-4]\d|[0-1]?\d?\d)(\.(25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}$')
+
+@command
+def serve(config, args):
+    """Serve the built HTML from the HTML root."""
+    
+    # This should be a lazy import, otherwise it'll slow down the whole CLI.
+    from markdoc.wsgi import MarkdocWSGIApplication
+    
+    app = MarkdocWSGIApplication(config)
+    
+    extra_config = {}
+    if args.port:
+        extra_config['port'] = args.port
+    if args.interface:
+        if not IPV4_RE.match(args.interface):
+            serve.parser.error('Invalid interface specifier: %r' % args.interface)
+        extra_config['bind'] = args.interface
+    
+    server = config.server_maker(**extra_config)(app)
+    try:
+        server.start()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        server.stop()
+
+serve.parser.add_argument('-p', '--port', type=int, default=None,
+    help="Listen on specified port (default is 8008)")
+serve.parser.add_argument('-i', '--interface', default=None,
+    help="Bind to specified interface (defaults to loopback only)")
