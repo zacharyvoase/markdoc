@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Not Found: <code>{{ request.path_info|e }}</code></h1>
+<p>
+  We couldn&#8217;t find what you were looking for.
+  {% if not is_index %}You could try going <a href="/">home</a>.{% endif %}
+</p>
+{% endblock %}
