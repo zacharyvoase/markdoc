@@ -107,10 +107,12 @@ class RenderCache(object):
                 self.hash_cache[path] = doc_hash
             
             if doc_hash not in self.result_cache:
-                self.result_cache[doc_hash] = self.render_func(document)
+                self.result_cache[doc_hash] = self.render_func(path, document)
             return self.result_cache[doc_hash]
         else:
             return self.render_func(document)
+    
+    get = render # For compatibility with the document cache.
 
 
 def read_from(filename, encoding='utf-8'):

@@ -14,8 +14,10 @@ class Builder(object):
     def __init__(self, config):
         self.config = config
         self.doc_cache = DocumentCache(base=os.path.join(self.config['meta']['root'], 'wiki'))
-        render_func = lambda doc: self.config.markdown().convert(doc)
+        render_func = lambda path, doc: self.config.markdown().convert(doc)
         self.render_cache = RenderCache(render_func, self.doc_cache)
+        render_doc_func = lambda path, doc: self.render_document(path, cache=False)
+        self.document_render_cache = RenderCache(render_doc_func, self.render_cache)
     
     def crumbs(self, path):
         
@@ -86,7 +88,10 @@ class Builder(object):
     def title(self, path, cache=True):
         return get_title(path, self.render(path, cache=cache))
     
-    def render_document(self, path):
+    def render_document(self, path, cache=True):
+        if cache:
+            return self.document_render_cache.render(path)
+        
         context = {}
         context['content'] = self.render(path)
         context['title'] = self.title(path)
