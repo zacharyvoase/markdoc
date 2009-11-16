@@ -5,6 +5,9 @@ import os
 
 __version__ = '0.1'
 static_dir = os.path.join(os.path.dirname(__file__), 'static')
+default_static_dir = os.path.join(static_dir, 'default-static')
+default_template_dir = os.path.join(static_dir, 'default-templates')
+
 
 if not hasattr(os.path, 'relpath'):
     def relpath(path, start=os.path.curdir):
