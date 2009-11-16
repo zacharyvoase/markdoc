@@ -132,26 +132,25 @@ class Config(dict):
         
         The server-making callable should be passed a WSGI application, and it
         will return an instance of `cherrypy.wsgiserver.CherryPyWSGIServer`.
+        
+        You can optionally override any of the hardwired configuration
+        parameters by passing in keyword arguments which will be passed along to
+        the `CherryPyWSGIServer` constructor.
         """
         
         svconfig = self.setdefault('server', {})
+        get_conf = lambda key, default: svconfig.setdefault(key, extra_config.pop(key, default))
         
-        bind = svconfig.setdefault('bind', '127.0.0.1')
-        if 'bind' in extra_config:
-            bind = extra_config.pop('bind')
-        
-        port = svconfig.setdefault('port', 8008)
-        if 'port' in extra_config:
-            port = extra_config.pop('port')
-        
-        num_threads = svconfig.setdefault('num_threads', 10)
-        server_name = svconfig.setdefault('server_name', None)
-        request_queue_size = svconfig.setdefault('request_queue_size', 5)
-        timeout = svconfig.setdefault('timeout', 10)
+        bind = get_conf('bind', '127.0.0.1')
+        port = get_conf('port', 8008)
+        num_threads = get_conf('num_threads', 10)
+        server_name = get_conf('server_name', None)
+        request_queue_size = get_conf('request_queue_size', 5)
+        timeout = get_conf('timeout', 10)
         
         bind_addr = (bind, port)
         kwargs = {
-            'num_threads': threads,
+            'num_threads': num_threads,
             'server_name': server_name,
             'request_queue_size': request_queue_size,
             'timeout': timeout}
