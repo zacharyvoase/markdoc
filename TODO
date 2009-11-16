@@ -1,3 +1,6 @@
 `markdoc init` command
-: Write an initialization command which will prepare a directory
-  to host a Markdoc wiki.
+: Write an initialization command which will prepare a directory to host a 
+  Markdoc wiki.
+
+Logging
+: Add some basic logging across Markdoc, most importantly the server.
