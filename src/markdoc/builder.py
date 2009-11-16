@@ -4,7 +4,7 @@ import os
 import operator
 import re
 
-from markdoc.cache import DocumentCache, RenderCache
+from markdoc.cache import DocumentCache, RenderCache, read_from
 
 
 class Builder(object):
@@ -82,6 +82,63 @@ class Builder(object):
                 if extension in self.config['document-extensions']:
                     full_filename = os.path.join(dirpath, filename)
                     yield os.path.relpath(full_filename, start=self.config.wiki_dir)
+    
+    def listing_context(self, directory):
+        
+        """
+        Generate the template context for a directory listing.
+        
+        This method accepts a relative path, with the base assumed to be the
+        HTML root. This means listings must be generated after the wiki is
+        built, allowing them to list static media too. 
+        
+        Directories should always be '/'-delimited when specified, since it is
+        assumed that they are URL paths, not filesystem paths.
+        """
+        
+        # Ensure the directory name ends with '/'. 
+        directory = directory.strip('/')
+        
+        # Resolve to filesystem paths.
+        fs_rel_dir = os.path.sep.join(directory.split('/'))
+        fs_abs_dir = os.path.join(self.config.html_dir, fs_rel_dir)
+        
+        sub_directories, pages, files = [], [], []
+        for basename in os.listdir(fs_abs_dir):
+            fs_abs_path = os.path.join(fs_abs_dir, basename)
+            file_dict = {
+                'basename': basename,
+                'href': directory + '/' + basename}
+            if not file_dict['href'].startswith('/'):
+                file_dict['href'] = '/' + file_dict['href']
+            
+            if os.path.isdir(fs_abs_path):
+                file_dict['href'] += '/'
+                sub_directories.append(file_dict)
+            
+            elif os.path.splitext(basename)[1] == (os.path.extsep + 'html'):
+                # Get the slug from the filename.
+                file_dict['slug'] = os.path.splitext(basename)[0]
+                # Get the title from the file.
+                contents = read_from(fs_abs_path)
+                file_dict['title'] = get_title(file_dict['slug'], contents)
+                # Remove .html from the end of the href.
+                file_dict['href'] = os.path.splitext(file_dict['href'])[0]
+                file_dict['size'] = os.path.getsize(fs_abs_path)
+                # file_dict['humansize'] = humansize(file_dict['size'])
+                pages.append(file_dict)
+            
+            else:
+                file_dict['size'] = os.path.getsize(fs_abs_path)
+                # file_dict['humansize'] = humansize(file_dict['size'])
+                files.append(file_dict)
+        
+        return {
+            'directory': directory,
+            'sub_directories': sub_directories,
+            'pages': pages,
+            'files': files,
+        }
     
     def render(self, path, cache=True):
         return self.render_cache.render(path, cache=cache)
