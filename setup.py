@@ -26,6 +26,18 @@ def find_packages():
     return packages
 
 
+def find_package_data():
+    files = []
+    src_root = os.path.join(os.path.dirname(__file__), 'src', 'markdoc')
+    static_root = os.path.join(src_root, 'static')
+    for dirpath, subdirs, filenames in os.walk(static_root):
+        for filename in filenames:
+            if not filename.startswith('.') or filename.startswith('_'):
+                abs_path = os.path.join(dirpath, filename)
+                files.append(os.path.relpath(abs_path, start=src_root))
+    return files
+
+
 distutils.core.setup(**{
     'name':         'markdoc',
     'version':      get_version(),
@@ -36,5 +48,6 @@ distutils.core.setup(**{
     'license':      'X11',
     'packages':     find_packages(),
     'package_dir':  {'': 'src'},
+    'package_data': {'markdoc': find_package_data()},
     'scripts':      ['bin/markdoc'],
 })
