@@ -125,7 +125,7 @@ class Config(dict):
         config.update(mdconfig) # Include any extra kwargs.
         return markdown.Markdown(**mdconfig)
     
-    def server_maker(self, **config):
+    def server_maker(self, **extra_config):
         
         """
         Return a server-making callable to create a CherryPy WSGI server.
@@ -135,8 +135,15 @@ class Config(dict):
         """
         
         svconfig = self.setdefault('server', {})
+        
         bind = svconfig.setdefault('bind', '127.0.0.1')
+        if 'bind' in extra_config:
+            bind = extra_config.pop('bind')
+        
         port = svconfig.setdefault('port', 8008)
+        if 'port' in extra_config:
+            port = extra_config.pop('port')
+        
         num_threads = svconfig.setdefault('num_threads', 10)
         server_name = svconfig.setdefault('server_name', None)
         request_queue_size = svconfig.setdefault('request_queue_size', 5)
@@ -148,5 +155,6 @@ class Config(dict):
             'server_name': server_name,
             'request_queue_size': request_queue_size,
             'timeout': timeout}
+        kwargs.update(extra_config)
         
         return lambda wsgi_app: cherrypy.wsgiserver.CherryPyWSGIServer(bind_addr, wsgi_app, **kwargs)
