@@ -21,12 +21,10 @@ The `show-config` command will show the current Markdoc config:
 
 `sync-static` will compile the wiki's static media into the HTML root:
 
-    >>> exit_code = markdoc('sync-static') # doctest: +ELLIPSIS
-    rsync -vax ...
-    >>> exit_code
+    >>> markdoc('--quiet', 'sync-static') # doctest: +ELLIPSIS
     0
 
-The `rsync -vax ...` output shows the command that's being run behind the scenes; the rsync output itself will also be displayed on the terminal. Passing the `--quiet` option will switch both off.
+If you leave out the `--quiet` option, Markdoc will print some additional logging information, including the `rsync` command that's run in the background; the rsync output itself will also be written to the terminal.
 
 The static media will now be in the HTML root:
 
