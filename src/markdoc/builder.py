@@ -85,6 +85,15 @@ class Builder(object):
     
     def title(self, path, cache=True):
         return get_title(path, self.render(path, cache=cache))
+    
+    def render_document(self, path):
+        context = {}
+        context['content'] = self.render(path)
+        context['title'] = self.title(path)
+        context['crumbs'] = self.crumbs(path)
+        
+        template = self.config.template_env.get_template('document.html')
+        return template.render(context)
 
 
 def remove_hidden(names):
