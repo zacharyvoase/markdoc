@@ -45,6 +45,29 @@ class Config(dict):
         if 'root' not in meta:
             meta['root'] = os.path.dirname(config_file)
     
+    @property
+    def html_dir(self):
+        self.setdefault('hide-prefix', '.')
+        return os.path.join(self['meta']['root'], self['hide-prefix'] + 'html')
+    
+    @property
+    def static_dir(self):
+        return os.path.join(self['meta']['root'], 'static')
+    
+    @property
+    def wiki_dir(self):
+        return os.path.join(self['meta']['root'], 'wiki')
+    
+    @property
+    def temp_dir(self):
+        self.setdefault('hide-prefix', '.')
+        return os.path.join(self['meta']['root'], self['hide-prefix'] + 'tmp')
+    
+    @property
+    def template_dir(self):
+        self.setdefault('hide-prefix', '.')
+        return os.path.join(self['meta']['root'], self['hide-prefix'] + 'templates')
+    
     @classmethod
     def for_directory(cls, directory=None):
         
@@ -83,9 +106,7 @@ class Config(dict):
     @property
     def template_env(self):
         if not getattr(self, '__template_env', None):
-            hide_prefix = self.setdefault('hide-prefix', '.')
-            template_dir = os.path.join(self['meta']['root'], hide_prefix + 'templates')
-            loader = jinja2.FileSystemLoader(template_dir)
+            loader = jinja2.FileSystemLoader(self.template_dir)
             environment = jinja2.Environment(loader=loader)
             environment.globals['config'] = self
             self.__template_env = environment
