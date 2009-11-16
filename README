@@ -1,3 +1,25 @@
+Markdoc is a Markdown-based system for creating documentation and wikis. It has
+a few selling points:
+
+* Wikis are made up completely of plaintext files, so you can easily put them 
+  under version control.
+
+* Wikis compile into standalone HTML directories, which can be distributed as 
+  tarballs or served by a HTTP server.
+
+* You can optionally include static media which will be compiled into the HTML 
+  directory alongside all your rendered pages.
+
+* Markdoc comes with a fully-functional pure-Python WSGI application and HTTP 
+  server for serving up compiled wikis.
+
+* You can render your wiki with a variety of Markdown extensions, such as 
+  Pygments-based code highlighting, extended syntax for definition lists, TOC 
+  generation, et cetera.
+
+* You can completely customize how your wiki is rendered by editing the Jinja2
+  templates used to convert rendered Markdown into full HTML documents.
+
 Quickstart
 ==========
 
@@ -10,12 +32,14 @@ Installation
     pip install -r REQUIREMENTS
     python setup.py install
 
-I’ll make an `easy_install`-friendly version as soon as this project assumes some semblance of stability.
+I’ll make an `easy_install`-friendly version as soon as this project assumes
+some semblance of stability.
 
 Making a Wiki
 -------------
 
-Note that, at the moment, this process is unimplemented. This is, however, how I would *like* it to behave:
+Note that, at the moment, this process is unimplemented. This is, however, how I
+would *like* it to behave:
 
     #!/bin/bash
     markdoc init my-wiki
@@ -33,7 +57,9 @@ The minimum requirements to run the Markdoc utility are:
   * Python 2.4 or later
   * A UNIX (or at least UNIX-like) operating system
   * [pip](http://pip.openplans.org/) (you can get it via `easy_install -U pip`)
-  * [rsync](http://www.samba.org/rsync/) -- installed out of the box with most modern OSes, including Mac OS X and Ubuntu. In the future Markdoc may include a pure-Python implementation.
+  * [rsync](http://www.samba.org/rsync/) -- installed out of the box with most
+    modern OSes, including Mac OS X and Ubuntu. In the future Markdoc may
+    include a pure-Python implementation.
 
 Layout
 ======
@@ -48,6 +74,8 @@ Markdoc wikis have the following layout:
     |-- wiki/
     `-- markdoc.yaml
 
-The `.html/` and `.tmp/` directories should be excluded from any VCS, since they contain temporary files.
+The `.html/` and `.tmp/` directories should be excluded from any VCS, since they
+contain temporary files.
 
-Consult the layout documentation in `doc/wiki/layout.md` for more information on the roles of various subdirectories.
+Consult the layout documentation in `doc/wiki/layout.md` for more information on
+the roles of various subdirectories.
