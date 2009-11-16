@@ -11,11 +11,13 @@ The wiki should now be built in the HTML root:
     >>> import os
     >>> import os.path as p
     >>> print '\n'.join(os.listdir(CONFIG.html_dir))
+    _list.html
     an_empty_file.html
     example.css
     file1.html
     file2.html
     file3.html
+    index.html
     subdir
 
 Now we can try getting some listings. The bulk of the process occurs in the `Builder.listing_context()` method, which builds a template context dictionary for rendering the Jinja2 `listing.html` template. First we have to get a `Builder` instance:
@@ -28,7 +30,10 @@ Now we can get the listing for the HTML root itself, just by passing the empty s
     >>> import pprint
     >>> pprint.pprint(b.listing_context(''))
     {'directory': '',
-     'files': [{'basename': 'example.css', 'href': '/example.css', 'size': 27}],
+     'files': [{'basename': 'example.css',
+                'href': '/example.css',
+                'size': 27,
+                'slug': 'example'}],
      'pages': [{'basename': 'an_empty_file.html',
                 'href': '/an_empty_file',
                 'size': 248,
