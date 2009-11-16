@@ -53,7 +53,7 @@ p#footer a {
 	text-decoration: none;
 }
 
-p code {
+p code, ul code, ol code, dl code, blockquote code, tbody code, thead code {
 	font-size: 8pt;
 }
 
@@ -86,4 +86,9 @@ pre {
 
 table thead th {
 	font-weight: bold;
+}
+
+.list-crumb {
+	color: #777;
+	font-variant: italic;
 }

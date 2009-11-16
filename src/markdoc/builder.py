@@ -174,11 +174,13 @@ class Builder(object):
         return template.render(context)
     
     def render_listing(self, path):
+        import jinja2
+        
         context = self.listing_context(path)
         
         crumbs = []
         if path in ['', '/']:
-            crumbs.append(('index', None))
+            crumbs.append(('index', '/'))
         else:
             crumbs.append(('index', '/'))
             current_dir = ''
@@ -186,8 +188,7 @@ class Builder(object):
                 crumbs.append((component,
                     '/'.join([current_dir, component]) + '/'))
                 current_dir += '/' + component
-            last, _ = crumbs.pop()
-            crumbs.append((last, None))
+        crumbs.append((jinja2.Markup('<span class="list-crumb">list</span>'), None))
         
         context['crumbs'] = crumbs
         

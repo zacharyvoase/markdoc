@@ -67,11 +67,6 @@ code {
 	white-space: nowrap;
 }
 
-a {
-	margin-left: -0.1em;
-	padding: 0 0.2em 0.1em 0.2em;
-}
-
 a code {
 	background: none;
 	border: none;

@@ -27,7 +27,7 @@
               {% if href == None %}
                 {{ name|e }}
               {% else %}
-                <a href="{{ href|e }}">{{ name|e }}</a> &#187;
+                <a href="{{ href|e }}">{{ name|e }}</a>{% if loop.revindex0 %} &#187;{% endif %}
               {% endif %}
             {% endfor %}
           {% endif %}
