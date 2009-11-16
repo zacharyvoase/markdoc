@@ -52,7 +52,9 @@ class Builder(object):
         terminus = os.path.splitext(rel_components.pop())[0]
         
         if not rel_components:
-            return [(terminus, None)]
+            if terminus == 'index':
+                return [('index', None)]
+            return [('index', '/'), (terminus, None)]
         elif terminus == 'index':
             terminus = os.path.splitext(rel_components.pop())[0]
         

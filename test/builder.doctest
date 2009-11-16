@@ -11,7 +11,7 @@ You can generate breadcrumbs for a document, based on its absolute path (which w
     [('index', None)]
     
     >>> b.crumbs(p.join(WIKI_ROOT, 'wiki', 'somefile.md'))
-    [('somefile', None)]
+    [('index', '/'), ('somefile', None)]
     
     >>> b.crumbs(p.join(WIKI_ROOT, 'wiki', 'somedir', 'index.md'))
     [('index', '/'), ('somedir', None)]
@@ -25,7 +25,7 @@ You can also just use relative paths (relative to `WIKI_ROOT/wiki`):
     [('index', None)]
     
     >>> b.crumbs('somefile.md')
-    [('somefile', None)]
+    [('index', '/'), ('somefile', None)]
     
     >>> b.crumbs(p.join('somedir', 'index.md'))
     [('index', '/'), ('somedir', None)]
