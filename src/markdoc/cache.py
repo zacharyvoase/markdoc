@@ -101,7 +101,7 @@ class RenderCache(object):
         document = self.doc_cache.get(path, cache=cache)
         
         if cache:
-            doc_hash = hash(document)
+            doc_hash = (hash(path), hash(document))
             if path in self.hash_cache and self.hash_cache[path] != doc_hash:
                 self.result_cache.pop(self.hash_cache[path], None)
                 self.hash_cache[path] = doc_hash
