@@ -174,7 +174,7 @@ class Builder(object):
         else:
             crumbs.append(('index', '/'))
             current_dir = ''
-            for component in path.split('/'):
+            for component in path.strip('/').split('/'):
                 crumbs.append((component,
                     '/'.join([current_dir, component]) + '/'))
                 current_dir += '/' + component
