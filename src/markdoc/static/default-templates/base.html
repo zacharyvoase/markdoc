@@ -20,20 +20,20 @@
   <body>
     <div id="content">
 
-      <div id="breadcrumbs">
-        <p>
-          {% if crumbs %}
-            {% for name, href in crumbs %}
-              {% if href == None %}
-                {{ name|e }}
-              {% else %}
-                <a href="{{ href|e }}">{{ name|e }}</a>{% if loop.revindex0 %} &#187;{% endif %}
-              {% endif %}
-            {% endfor %}
-          {% endif %}
-        </p>
-      </div> <!-- div#breadcrumbs -->
-    
+      {% if crumbs %}
+        <div id="breadcrumbs">
+          <p>
+              {% for name, href in crumbs %}
+                {% if href == None %}
+                  {{ name|e }}
+                {% else %}
+                  <a href="{{ href|e }}">{{ name|e }}</a>{% if loop.revindex0 %} &#187;{% endif %}
+                {% endif %}
+              {% endfor %}
+          </p>
+        </div> <!-- div#breadcrumbs -->
+      {% endif %}
+      
       {% block body %}
       {% endblock %}
     
