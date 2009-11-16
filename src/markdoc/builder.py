@@ -164,6 +164,27 @@ class Builder(object):
         
         template = self.config.template_env.get_template('document.html')
         return template.render(context)
+    
+    def render_listing(self, path):
+        context = self.listing_context(path)
+        
+        crumbs = []
+        if path in ['', '/']:
+            crumbs.append(('index', None))
+        else:
+            crumbs.append(('index', '/'))
+            current_dir = ''
+            for component in path.split('/'):
+                crumbs.append((component,
+                    '/'.join([current_dir, component]) + '/'))
+                current_dir += '/' + component
+            last, _ = crumbs.pop()
+            crumbs.append((last, None))
+        
+        context['crumbs'] = crumbs
+        
+        template = self.config.template_env.get_template('listing.html')
+        return template.render(context)
 
 
 def remove_hidden(names):
