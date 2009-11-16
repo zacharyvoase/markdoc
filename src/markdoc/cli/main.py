@@ -3,7 +3,7 @@
 import os
 import argparse
 
-from markdoc.cli import tasks
+from markdoc.cli import commands
 from markdoc.cli.parser import parser
 from markdoc.config import Config, ConfigNotFound
 
@@ -28,7 +28,7 @@ def main(cmd_args=None):
     except ConfigNotFound, exc:
         parser.error(str(exc))
     
-    command = getattr(tasks, args.command.replace('-', '_'))
+    command = getattr(commands, args.command.replace('-', '_'))
     return command(config, args)
 
 

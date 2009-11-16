@@ -18,3 +18,4 @@ config = parser.add_argument('--config', '-c', default=os.getcwd(),
          "containing markdoc.yaml)")
 
 subparsers = parser.add_subparsers(dest='command', title='commands', metavar='CMD')
+
