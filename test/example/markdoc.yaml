@@ -1,2 +1,4 @@
 hide-prefix: "_"
+use-default-templates: no
+use-default-static: no
 9d03e32c6cb1455388a170e3bb0c2030: 7010d5d5871143d089cb662cb540cbd5

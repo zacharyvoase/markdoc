@@ -17,7 +17,10 @@ The `show-config` command will show the current Markdoc config:
      'document-extensions': set(['.markdown', '.md', '.mdown', '.text', '.wiki']),
      'hide-prefix': '_',
      'meta': {'config_file': '.../example/markdoc.yaml',
-              'root': '.../example'}}
+              'root': '.../example'},
+     'use-default-static': False,
+     'use-default-templates': False}
+
     >>> exit_code
     0
 
