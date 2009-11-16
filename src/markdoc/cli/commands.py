@@ -53,7 +53,7 @@ def clean_temp(config, args):
 
 @command
 def sync_static(config, args):
-    """Synchronize static files into the HTML root."""
+    """Sync static files into the HTML root."""
     
     if not p.exists(config.html_dir):
         os.makedirs(config.html_dir)
@@ -73,7 +73,7 @@ def sync_static(config, args):
 
 @command
 def sync_html(config, args):
-    """Synchronize built HTML and static files into the HTML root."""
+    """Sync built HTML and static media into the HTML root."""
     
     if not p.exists(config.html_dir):
         os.makedirs(config.html_dir)
@@ -96,7 +96,7 @@ def sync_html(config, args):
 
 @command
 def build(config, args):
-    """Compile HTML for the wiki and synchronize it into the HTML root."""
+    """Compile wiki to HTML and sync to the HTML root."""
     
     clean_temp(config, args)
     
