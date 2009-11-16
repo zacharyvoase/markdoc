@@ -9,7 +9,7 @@
       {% block title %}{{ title }}{% endblock %}
     </title>
     
-    {%- import "macros/html" as html -%}
+    {% import "macros/html" as html -%}
     
     {{ html.cssimport("/media/css/reset.css") }}
     {{ html.cssimport("/media/css/layout.css") }}
@@ -34,13 +34,13 @@
         </p>
       </div> <!-- div#breadcrumbs -->
     
-    {% block body %}
-    {% endblock %}
+      {% block body %}
+      {% endblock %}
+    
+      <p id="footer">
+        Powered by <a href="http://bitbucket.org/zacharyvoase/markdoc">Markdoc</a>.
+      </p>
     
     </div> <!-- div#content -->
-    
-    <p id="footer">
-      Powered by <a href="http://bitbucket.org/zacharyvoase/markdoc">Markdoc</a>.
-    </p>
   </body>
 </html>
