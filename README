@@ -1,5 +1,6 @@
-Markdoc is a Markdown-based system for creating documentation and wikis. It has
-a few selling points:
+Markdoc is a A lightweight Markdown-based wiki build tool. It’s geared towards
+managing technical documentation, but can be used for a range of purposes. It
+has a few notable selling points:
 
 * Wikis are made up completely of plaintext files, so you can easily put them 
   under version control.

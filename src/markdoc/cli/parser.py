@@ -4,13 +4,14 @@ import os
 
 import argparse
 
+import markdoc
 from markdoc.config import Config
 
 
 parser = argparse.ArgumentParser(**{
     'prog': 'markdoc',
-    'description': 'A Markdown-based documentation build tool',
-    'version': '1.0'
+    'description': 'A lightweight Markdown-based wiki build tool.',
+    'version': markdoc.__version__,
 })
 
 config = parser.add_argument('--config', '-c', default=os.getcwd(),
