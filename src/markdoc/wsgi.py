@@ -49,15 +49,10 @@ class MarkdocWSGIApplication(object):
         response = self.get_response(request)
         return response(environ, start_response)
     
-    @property
-    def htroot(self):
-        hide_prefix = self.config.setdefault('hide-prefix', '.')
-        return p.join(self.config['meta']['root'], hide_prefix + 'html')
-    
     def is_safe(self, directory):
         """Make sure the given absolute path does not point above the htroot."""
         
-        return p.pardir not in p.relpath(directory, start=self.htroot)
+        return p.pardir not in p.relpath(directory, start=self.config.html_dir)
     
     def get_response(self, request):
         if request.path_info.endswith('/'):
@@ -76,11 +71,11 @@ class MarkdocWSGIApplication(object):
         * Return a HTTP 404 ‘Not Found’.
         """
         
-        index_filename = p.join(self.htroot, request.path_info.lstrip('/'), 'index.html')
+        index_filename = p.join(self.config.html_dir, request.path_info.lstrip('/'), 'index.html')
         if p.exists(index_filename):
             return serve_file(index_filename)
         
-        directory_filename = p.join(self.htroot, request.path_info.strip('/'))
+        directory_filename = p.join(self.config.html_dir, request.path_info.strip('/'))
         if p.isfile(directory_filename):
             return temp_redirect(request.path_info.rstrip('/'))
         
@@ -99,7 +94,7 @@ class MarkdocWSGIApplication(object):
         * Return a HTTP 404 ‘Not Found’.
         """
         
-        filename = p.abspath(p.join(self.htroot, request.path_info.lstrip('/')))
+        filename = p.abspath(p.join(self.config.html_dir, request.path_info.lstrip('/')))
         if not self.is_safe(filename):
             return self.forbidden(request)
         

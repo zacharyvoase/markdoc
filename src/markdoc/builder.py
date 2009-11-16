@@ -14,8 +14,7 @@ class Builder(object):
     def __init__(self, config):
         self.config = config
         
-        document_base = os.path.join(self.config['meta']['root'], 'wiki')
-        self.doc_cache = DocumentCache(base=document_base)
+        self.doc_cache = DocumentCache(base=self.config.wiki_dir)
         
         render_func = lambda path, doc: self.config.markdown().convert(doc)
         self.render_cache = RenderCache(render_func, self.doc_cache)
@@ -74,9 +73,7 @@ class Builder(object):
         yielded.
         """
         
-        wiki_dir = os.path.join(self.config['meta']['root'], 'wiki')
-        
-        for dirpath, subdirs, files in os.walk(wiki_dir):
+        for dirpath, subdirs, files in os.walk(self.config.wiki_dir):
             remove_hidden(subdirs); subdirs.sort()
             remove_hidden(files); files.sort()
             
@@ -84,7 +81,7 @@ class Builder(object):
                 name, extension = os.path.splitext(filename)
                 if extension in self.config['document-extensions']:
                     full_filename = os.path.join(dirpath, filename)
-                    yield os.path.relpath(full_filename, start=self.doc_cache.base)
+                    yield os.path.relpath(full_filename, start=self.config.wiki_dir)
     
     def render(self, path, cache=True):
         return self.render_cache.render(path, cache=cache)
