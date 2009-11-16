@@ -41,6 +41,12 @@ Now we can get the listing for the HTML root itself, just by passing the empty s
                 'size': 248,
                 'slug': 'an_empty_file',
                 'title': 'An Empty File'},
+               {'basename': 'file3.html',
+                'href': '/file3',
+                'humansize': '250B',
+                'size': 250,
+                'slug': 'file3',
+                'title': u'Foo'},
                {'basename': 'file1.html',
                 'href': '/file1',
                 'humansize': '254B',
@@ -52,13 +58,7 @@ Now we can get the listing for the HTML root itself, just by passing the empty s
                 'humansize': '254B',
                 'size': 254,
                 'slug': 'file2',
-                'title': u'World'},
-               {'basename': 'file3.html',
-                'href': '/file3',
-                'humansize': '250B',
-                'size': 250,
-                'slug': 'file3',
-                'title': u'Foo'}],
+                'title': u'World'}],
      'sub_directories': [{'basename': 'subdir', 'href': '/subdir/'}]}
 
 We can also get the listings for subdirectories, by passing in their paths, relative to the HTML root:

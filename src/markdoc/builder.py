@@ -144,6 +144,10 @@ class Builder(object):
                 else:
                     files.append(file_dict)
         
+        sub_directories.sort(key=lambda directory: directory['basename'])
+        pages.sort(key=lambda page: page['title'])
+        files.sort(key=lambda file_: file_['basename'])
+        
         return {
             'directory': directory,
             'sub_directories': sub_directories,
