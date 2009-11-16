@@ -6,7 +6,7 @@ All Markdoc wikis are configured via a single `markdoc.yaml` file in the wiki ro
 
 Here we’ll go through an example and show how the various settings affect Markdoc’s behavior:
 
-    :::yaml
+    #!yaml
     hide-prefix: "."
     document-extensions: [.md, .mdown, .markdown, .wiki, .text]
     generate-listing: always
@@ -35,9 +35,10 @@ Remember that Markdoc uses sensible defaults for *all* of these options, so it�
 
 `generate-listing` (default `always`)
 : This affects how listings are generated for directories in your Markdoc wiki (including the top level). Set this to either `always`, `sometimes` or `never`. The semantics are as follows:
-    * `never` never generates any listings.
-    * `sometimes` only generates a listing when there is no `index` or `index.html` file in a directory. This listing is saved as both `index.html` and the value of the `listing-filename` setting.
-    * `always` generates a listing for every directory, and saves it under the value of the `listing-filename` setting, and as `index.html` if an index file does not already exist.
+  
+  * `never` never generates any listings.
+  * `sometimes` only generates a listing when there is no `index` or `index.html` file in a directory. This listing is saved as both `index.html` and the value of the `listing-filename` setting.
+  * `always` generates a listing for every directory, and saves it under the value of the `listing-filename` setting, and as `index.html` if an index file does not already exist.
 
 `listing-filename` (default `_list.html`)
 : This specifies the filename that directory listings are saved under; see the documentation for `generate-listing` just above for more information.
