@@ -1,1 +1,2 @@
 recursive-include src/markdoc/static/ *
+global-exclude .DS_Store
