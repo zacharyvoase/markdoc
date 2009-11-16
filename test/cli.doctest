@@ -39,9 +39,11 @@ There are three other commands -- `clean-html`, `clean-temp`, and `sync-html` --
     0
     
     >>> print '\n'.join(sorted(os.listdir(CONFIG.html_dir)))
+    _list.html
     an_empty_file.html
     example.css
     file1.html
     file2.html
     file3.html
+    index.html
     subdir
