@@ -24,4 +24,5 @@ distutils.core.setup(**{
     'license':      'X11',
     'packages':     find_packages(),
     'package_dir':  {'': 'src'},
+    'scripts':      ['bin/markdoc'],
 })
