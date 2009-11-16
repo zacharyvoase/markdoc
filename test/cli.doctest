@@ -2,13 +2,34 @@ First we have to set up a Python function for running the command-line tool. Sin
 
     >>> from markdoc.cli.main import main
     >>> def markdoc(*args):
-    ...     return main(['-c', WIKI_ROOT] + list(args))
+    ...     try:
+    ...         main(['-c', WIKI_ROOT] + list(args))
+    ...     except SystemExit, exc:
+    ...         return exc.code
+    ...     return 0
 
 The `show-config` command will show the current Markdoc config:
 
-    >>> markdoc('show-config') # doctest: +ELLIPSIS
+    >>> exit_code = markdoc('show-config') # doctest: +ELLIPSIS
     {'9d03e32c6cb1455388a170e3bb0c2030': '7010d5d5871143d089cb662cb540cbd5',
      'document-extensions': set(['.markdown', '.md', '.mdown', '.text', '.wiki']),
      'hide-prefix': '_',
      'meta': {'config_file': '.../example/markdoc.yaml',
               'root': '.../example'}}
+    >>> exit_code
+    0
+
+`sync-static` will compile the wiki's static media into the HTML root:
+
+    >>> exit_code = markdoc('sync-static') # doctest: +ELLIPSIS
+    rsync -vax ...
+    >>> exit_code
+    0
+
+The `rsync -vax ...` output shows the command that's being run behind the scenes; the rsync output itself will also be displayed on the terminal. Passing the `--quiet` option will switch both off.
+
+The static media will now be in the HTML root:
+
+    >>> import os.path as p
+    >>> p.isfile(p.join(WIKI_ROOT, '_html', 'example.css'))
+    True
