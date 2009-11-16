@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import logging
 import os
 
 
@@ -27,3 +28,16 @@ if not hasattr(os.path, 'relpath'):
             return os.path.curdir
         return os.path.join(*rel_list)
     os.path.relpath = relpath
+
+
+default_date_format = '%d %b %Y %H:%M:%S'
+default_formatter = logging.Formatter(
+    u'%(asctime)s | %(levelname)-7s | %(name)s | %(message)s',
+    datefmt=default_date_format)
+
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(default_formatter)
+console_handler.setLevel(logging.DEBUG)
+
+logging.getLogger('markdoc').addHandler(console_handler)
+logging.getLogger('markdoc').setLevel(logging.INFO) # Default level.
