@@ -1,0 +1,14 @@
+First we have to set up a Python function for running the command-line tool. Since the main entry point is the `markdoc.cli.main.main()` function, we can just call that directly, with some defaults for the current wiki root:
+
+    >>> from markdoc.cli.main import main
+    >>> def markdoc(*args):
+    ...     return main(['-c', WIKI_ROOT] + list(args))
+
+The `show-config` command will show the current Markdoc config:
+
+    >>> markdoc('show-config') # doctest: +ELLIPSIS
+    {'9d03e32c6cb1455388a170e3bb0c2030': '7010d5d5871143d089cb662cb540cbd5',
+     'document-extensions': set(['.markdown', '.md', '.mdown', '.text', '.wiki']),
+     'hide-prefix': '_',
+     'meta': {'config_file': '.../example/markdoc.yaml',
+              'root': '.../example'}}
