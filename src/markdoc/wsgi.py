@@ -197,6 +197,9 @@ def serve_file(filename, content_type=None, chunk_size=4096):
     if content_type is None:
         content_type = mimetypes.guess_type(filename)[0] or 'application/octet-stream'
     
+    if content_type.startswith('text/html'):
+        content_type = content_type.replace('text/html', 'application/xhtml+xml')
+    
     def chunked_read(chunk_size=4096):
         fp = open(filename, 'rb')
         try:
