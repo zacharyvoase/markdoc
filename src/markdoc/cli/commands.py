@@ -47,11 +47,8 @@ def init(_, args):
     elif not os.path.isdir(destination):
         init.parser.error("destination isn't a directory")
     
-    default_templates = p.join(p.dirname(p.abspath(markdoc.__file__)), 'static', 'default-templates')
-    default_static = p.join(p.dirname(p.abspath(markdoc.__file__)), 'static', 'default-static')
-    
-    shutil.copytree(default_templates, p.join(destination, '.templates'))
-    shutil.copytree(default_static, p.join(destination, 'static'))
+    os.makedirs(p.join(destination, '.templates'))
+    os.makedirs(p.join(destination, 'static'))
     os.makedirs(p.join(destination, 'wiki'))
     
     config_filename = p.join(destination, 'markdoc.yaml')
@@ -96,7 +93,10 @@ def sync_static(config, args):
     command = 'rsync -vax --ignore-errors --exclude=".*" --exclude="_*"'.split()
     if args.quiet:
         command.append('-q')
-    # rsync needs the paths to have trailing slashes to work correctly.
+    
+    if config.setdefault('use-default-static', True):
+        # rsync needs the paths to have trailing slashes to work correctly.
+        command.append(p.join(markdoc.default_static_dir, ''))
     command.append(p.join(config.static_dir, ''))
     command.append(p.join(config.html_dir, ''))
     
@@ -118,6 +118,8 @@ def sync_html(config, args):
         command.append('-q')
     # rsync needs the paths to have trailing slashes to work correctly.
     command.append(p.join(config.temp_dir, ''))
+    if config.setdefault('use-default-static', True):
+        command.append(p.join(markdoc.default_static_dir, ''))
     command.append(p.join(config.static_dir, ''))
     command.append(p.join(config.html_dir, ''))
     
