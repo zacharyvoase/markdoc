@@ -94,6 +94,9 @@ class Builder(object):
         
         Directories should always be '/'-delimited when specified, since it is
         assumed that they are URL paths, not filesystem paths.
+        
+        For information on what the produced context will look like, consult the
+        `listing` doctest.
         """
         
         # Ensure the directory name ends with '/'. 
@@ -102,6 +105,10 @@ class Builder(object):
         # Resolve to filesystem paths.
         fs_rel_dir = os.path.sep.join(directory.split('/'))
         fs_abs_dir = os.path.join(self.config.html_dir, fs_rel_dir)
+        skip_files = [
+            self.config.setdefault('listing-filename', '_list.html'),
+            'index.html'
+        ]
         
         sub_directories, pages, files = [], [], []
         for basename in os.listdir(fs_abs_dir):
@@ -116,22 +123,22 @@ class Builder(object):
                 file_dict['href'] += '/'
                 sub_directories.append(file_dict)
             
-            elif os.path.splitext(basename)[1] == (os.path.extsep + 'html'):
-                # Get the slug from the filename.
-                file_dict['slug'] = os.path.splitext(basename)[0]
-                # Get the title from the file.
-                contents = read_from(fs_abs_path)
-                file_dict['title'] = get_title(file_dict['slug'], contents)
-                # Remove .html from the end of the href.
-                file_dict['href'] = os.path.splitext(file_dict['href'])[0]
-                file_dict['size'] = os.path.getsize(fs_abs_path)
-                # file_dict['humansize'] = humansize(file_dict['size'])
-                pages.append(file_dict)
-            
             else:
+                file_dict['slug'] = os.path.splitext(basename)[0]
                 file_dict['size'] = os.path.getsize(fs_abs_path)
-                # file_dict['humansize'] = humansize(file_dict['size'])
-                files.append(file_dict)
+                
+                if os.path.splitext(basename)[1] == (os.path.extsep + 'html'):
+                    if (basename in skip_files or basename.startswith('.') or
+                        basename.startswith('_')):
+                        continue
+                    # Get the title from the file.
+                    contents = read_from(fs_abs_path)
+                    file_dict['title'] = get_title(file_dict['slug'], contents)
+                    # Remove .html from the end of the href.
+                    file_dict['href'] = os.path.splitext(file_dict['href'])[0]
+                    pages.append(file_dict)
+                else:
+                    files.append(file_dict)
         
         return {
             'directory': directory,
