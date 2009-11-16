@@ -1,0 +1,7 @@
+markdown:
+  extensions:
+    - codehilite
+    - def_list
+    - headerid
+    - toc
+
