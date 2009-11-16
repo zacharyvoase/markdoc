@@ -107,8 +107,11 @@ class Config(dict):
     @property
     def template_env(self):
         if not getattr(self, '__template_env', None):
-            loader = jinja2.FileSystemLoader([
-                self.template_dir, markdoc.default_template_dir])
+            
+            loader_path = [self.template_dir]
+            if self.setdefault('use-default-templates', True):
+                loader_path.append(markdoc.default_template_dir)
+            loader = jinja2.FileSystemLoader(loader_path)
             
             environment = jinja2.Environment(loader=loader)
             environment.globals['config'] = self
