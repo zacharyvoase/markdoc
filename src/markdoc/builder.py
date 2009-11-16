@@ -132,6 +132,7 @@ class Builder(object):
                 
                 file_dict['slug'] = os.path.splitext(basename)[0]
                 file_dict['size'] = os.path.getsize(fs_abs_path)
+                file_dict['humansize'] = humansize(file_dict['size'])
                 
                 if os.path.splitext(basename)[1] == (os.path.extsep + 'html'):
                     # Get the title from the file.
@@ -215,3 +216,13 @@ def get_title(filename, data):
     
     name, extension = os.path.splitext(os.path.basename(filename))
     return re.sub(r'[-_]+', ' ', name).title()
+
+
+def humansize(size, base=1024):
+    import decimal
+    import math
+    
+    i = int(math.log(size, base))
+    prefix = 'BKMGTPEZY'[i]
+    number = decimal.Decimal(size) / (base ** i)
+    return str(number.to_integral()) + prefix
