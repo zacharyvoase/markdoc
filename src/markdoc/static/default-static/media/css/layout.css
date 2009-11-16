@@ -62,10 +62,8 @@ code {
 	border: 1px solid #999;
 	border-left: none;
 	border-right: none;
-	padding-left: 4px;
-	padding-right: 4px;
-	margin-left: 1px;
-	margin-right: 1px;
+	padding-left: 2px;
+	padding-right: 2px;
 	white-space: nowrap;
 }
 

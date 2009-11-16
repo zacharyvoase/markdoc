@@ -56,6 +56,7 @@ p#footer a {
 
 pre, code, tt, table#subdirs tr td.name, table#files tr td.name, table tr td.size {
 	font-family: "DejaVu Sans Mono", "Bitstream Vera Sans Mono", Menlo, Inconsolata, Consolas, Monaco, "Courier New", Courier;
+	font-size: 8pt;
 }
 
 table.codehilitetable div.linenodiv {
