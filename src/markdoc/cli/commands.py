@@ -116,3 +116,43 @@ def build(config, args):
             fp.close()
     
     sync_html(config, args)
+    build_listing(config, args)
+
+
+@command
+def build_listing(config, args):
+    """Create listings for all directories in the HTML root (post-build)."""
+    
+    list_basename = config.setdefault('listing-filename', '_list.html')
+    builder = Builder(config)
+    generate_listing = config.get('generate-listing', 'always').lower()
+    always_list = True
+    if generate_listing == 'never':
+        return # No need to continue.
+    elif generate_listing == 'sometimes':
+        always_list = False
+    
+    for fs_dir, _, _ in os.walk(config.html_dir):
+        rel_fs_dir = p.relpath(fs_dir, start=config.html_dir)
+        directory = '/' + '/'.join(rel_fs_dir.replace(p.curdir, '').split(p.sep))
+        
+        index_file = None
+        if p.exists(p.join(fs_dir, 'index.html')):
+            index_file = p.join(fs_dir, 'index.html')
+        elif p.exists(p.join(fs_dir, 'index')):
+            index_file = p.join(fs_dir, 'index')
+        
+        if (not always_list) and (index_file is not None):
+            continue
+        
+        context = builder.listing_context(directory)
+        listing = config.template_env.get_template('listing.html').render(context)
+        
+        fp = codecs.open(p.join(fs_dir, list_basename), 'w', encoding='utf-8')
+        try:
+            fp.write(listing)
+        finally:
+            fp.close()
+        
+        if index_file is None:
+            shutil.copyfile(p.join(fs_dir, list_basename), p.join(fs_dir, 'index.html'))
