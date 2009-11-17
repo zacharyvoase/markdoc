@@ -1,3 +1,4 @@
+wiki-name: Markdoc Documentation
 markdown:
   extensions:
     - codehilite
