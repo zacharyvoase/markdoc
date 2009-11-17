@@ -178,15 +178,11 @@ class Builder(object):
         
         context = self.listing_context(path)
         
-        crumbs = []
-        if path in ['', '/']:
-            crumbs.append(('index', '/'))
-        else:
-            crumbs.append(('index', '/'))
+        crumbs = [('index', '/')]
+        if path not in ['', '/']:
             current_dir = ''
             for component in path.strip('/').split('/'):
-                crumbs.append((component,
-                    '/'.join([current_dir, component]) + '/'))
+                crumbs.append((component, '%s/%s/' % (current_dir, component)))
                 current_dir += '/' + component
         crumbs.append((jinja2.Markup('<span class="list-crumb">list</span>'), None))
         
