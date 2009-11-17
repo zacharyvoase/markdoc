@@ -7,6 +7,7 @@ All Markdoc wikis are configured via a single `markdoc.yaml` file in the wiki ro
 Here we’ll go through an example and show how the various settings affect Markdoc’s behavior:
 
     #!yaml
+    wiki-name: "My Wiki"
     hide-prefix: "."
     document-extensions: [.md, .mdown, .markdown, .wiki, .text]
     generate-listing: always
@@ -28,6 +29,9 @@ Here we’ll go through an example and show how the various settings affect Mark
       server_name: 'server.example.com'
 
 Remember that Markdoc uses sensible defaults for *all* of these options, so it’s perfectly OK to have an empty markdoc.yaml file. You still need one though.
+
+`wiki-name` (no default)
+: Specify the name of your wiki; this will appear in the title and footer in the default Markdoc templates.
 
 `hide-prefix` (default `.`)
 : This determines how Markdoc finds and writes to hidden directories like `.tmp`, `.templates` and `.html`. You may wish to set this to `'_'` if your VCS or operating system doesn’t play nicely with period-prefixed filenames.
