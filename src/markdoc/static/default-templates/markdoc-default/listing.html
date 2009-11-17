@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}ls /{{ directory|e }}{% endblock %}
+
+{% block body %}
+  <h1><code>ls /{{ directory|e }}</code></h1>
+
+  {% if sub_directories %}
+  <h2>Directories</h2>
+
+  <table id="subdirs">
+    {% for subdir in sub_directories %}
+      <tr>
+        <td class="name">
+          <a class="dirlink" href="{{ subdir.href|e }}">
+            {{ subdir.basename|e }}/
+          </a>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+
+  {% if pages %}
+  <h2>Pages</h2>
+
+  <table id="pages">
+    {% for page in pages %}
+      <tr>
+        <td class="size">{{ page.humansize }}</td>
+        <td class="name">
+          <a href="{{ page.href|e }}" title="{{ page.title|e }}">
+            {{ page.title|e }}
+          </a>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+
+  {% if files %}
+  <h2>Files</h2>
+
+  <table id="files">
+    {% for file in files %}
+      <tr>
+        <td class="size">{{ file.humansize }}</td>
+        <td class="name">
+          <a href="{{ file.href|e }}">
+            <code>{{ file.basename|e }}</code>
+          </a>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+{% endblock %}

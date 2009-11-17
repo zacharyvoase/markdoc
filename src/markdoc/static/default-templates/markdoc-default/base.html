@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+    
+    <title>
+      {% if 'wiki-name' in config %}{{ config['wiki-name']|e }} » {% endif -%}
+      {% block title %}{{ title }}{% endblock %}
+    </title>
+    
+    {% import "macros/html" as html -%}
+    
+    {{ html.cssimport("/media/css/reset.css") }}
+    {{ html.cssimport("/media/css/layout.css") }}
+    {{ html.cssimport("/media/css/typography.css") }}
+    {{ html.cssimport("/media/css/pygments.css") }}
+  </head>
+  
+  <body>
+    <div id="content">
+
+      {% if crumbs %}
+        <div id="breadcrumbs">
+          <p>
+              {% for name, href in crumbs %}
+                {% if href == None %}
+                  {{ name|e }}
+                {% else %}
+                  <a href="{{ href|e }}">{{ name|e }}</a>{% if loop.revindex0 %} &#187;{% endif %}
+                {% endif %}
+              {% endfor %}
+          </p>
+        </div> <!-- div#breadcrumbs -->
+      {% endif %}
+      
+      {% block body %}
+      {% endblock %}
+    
+      <p id="footer">
+        {% if 'wiki-name' in config %}
+          {{ config['wiki-name']|e }} &mdash;
+        {% endif %}
+        Powered by <a href="http://bitbucket.org/zacharyvoase/markdoc">Markdoc</a>.
+      </p>
+    
+    </div> <!-- div#content -->
+  </body>
+</html>
