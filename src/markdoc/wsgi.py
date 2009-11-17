@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import logging
 import mimetypes
 import os.path as p
 
@@ -43,10 +44,12 @@ class MarkdocWSGIApplication(object):
     
     def __init__(self, config):
         self.config = config
+        self.log = logging.getLogger('markdoc.wsgi')
     
     def __call__(self, environ, start_response):
         request = webob.Request(environ)
         response = self.get_response(request)
+        self.log.info('%s %s - %d' % (request.method, request.path_info, response.status_int))
         return response(environ, start_response)
     
     def is_safe(self, directory):
