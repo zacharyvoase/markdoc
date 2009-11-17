@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import logging
 import os
 import argparse
 
@@ -30,6 +31,9 @@ def main(cmd_args=None):
             parser.error(str(exc))
     else:
         config = None
+    
+    if args.quiet:
+        logging.getLogger('markdoc').setLevel(logging.ERROR)
     
     command = getattr(commands, args.command.replace('-', '_'))
     return command(config, args)
