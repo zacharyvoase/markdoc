@@ -67,6 +67,13 @@ code {
 	white-space: nowrap;
 }
 
+pre code {
+	border: none;
+	padding: 0;
+	background: none;
+	white-space: pre-wrap;
+}
+
 a code {
 	background: none;
 	border: none;
