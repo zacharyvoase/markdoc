@@ -6,6 +6,7 @@
     <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
     
     <title>
+      {% if 'wiki-name' in config %}{{ config['wiki-name']|e }} » {% endif -%}
       {% block title %}{{ title }}{% endblock %}
     </title>
     
@@ -38,6 +39,9 @@
       {% endblock %}
     
       <p id="footer">
+        {% if 'wiki-name' in config %}
+          {{ config['wiki-name']|e }} &mdash;
+        {% endif %}
         Powered by <a href="http://bitbucket.org/zacharyvoase/markdoc">Markdoc</a>.
       </p>
     
