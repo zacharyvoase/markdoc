@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import codecs
+from functools import wraps
 import os
 import os.path as p
 import pprint
@@ -14,12 +15,20 @@ from markdoc.cli.parser import subparsers
 
 
 def command(function):
-    """Decorator to declare a function as a Markdoc CLI task."""
+    """Decorator/wrapper to declare a function as a Markdoc CLI task."""
     
-    function.parser = subparsers.add_parser(
-        function.__name__.replace('_', '-'),
-        help=function.__doc__.rstrip('.'))
-    return function
+    cmd_name = function.__name__.replace('_', '-')
+    help = (function.__doc__ or '').rstrip('.') or None
+    parser = subparsers.add_parser(cmd_name, help=help)
+    
+    @wraps(function)
+    def wrapper(config, args):
+        if not args.quiet:
+            print '--> markdoc', cmd_name
+        return function(config, args)
+    wrapper.parser = parser
+    
+    return wrapper
 
 
 ## Utilities
