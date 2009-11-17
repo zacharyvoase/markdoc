@@ -55,7 +55,7 @@ class MarkdocWSGIApplication(object):
     def is_safe(self, directory):
         """Make sure the given absolute path does not point above the htroot."""
         
-        return p.pardir not in p.relpath(directory, start=self.config.html_dir)
+        return p.pardir not in p.relpath(directory, start=self.config.html_dir).split(p.sep)
     
     def get_response(self, request):
         if request.path_info.endswith('/'):
@@ -76,11 +76,12 @@ class MarkdocWSGIApplication(object):
         * Return a HTTP 404 ‘Not Found’.
         """
         
-        index_filename = p.join(self.config.html_dir, request.path_info.lstrip('/'), 'index.html')
-        if p.exists(index_filename):
+        path_parts = request.path_info.strip('/').split('/')
+        index_filename = p.join(self.config.html_dir, *(path_parts + ['index.html']))
+        if p.exists(index_filename) and self.is_safe(index_filename):
             return serve_file(index_filename)
         
-        directory_filename = p.join(self.config.html_dir, request.path_info.strip('/'))
+        directory_filename = p.join(self.config.html_dir, *path_parts)
         if p.isfile(directory_filename) or p.isfile(directory_filename + p.extsep + 'html'):
             return temp_redirect(request.path_info.rstrip('/'))
         
@@ -99,14 +100,15 @@ class MarkdocWSGIApplication(object):
         * Return a HTTP 404 ‘Not Found’.
         """
         
-        filename = p.abspath(p.join(self.config.html_dir, request.path_info.lstrip('/')))
+        path_parts = request.path_info.strip('/').split('/')
+        filename = p.abspath(p.join(self.config.html_dir, *path_parts))
         if not self.is_safe(filename):
             return self.forbidden(request)
         
         if p.isfile(filename):
             pass
-        elif p.isfile(filename + '.html'):
-            filename = filename + '.html'
+        elif p.isfile(filename + p.extsep + 'html'):
+            filename = filename + p.extsep + 'html'
         else:
             if p.isdir(filename):
                 return temp_redirect(request.path_info + '/')
