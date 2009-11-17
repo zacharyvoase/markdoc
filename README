@@ -1,3 +1,7 @@
+<!--*-markdown-*-->
+
+# Markdoc README
+
 Markdoc is a A lightweight Markdown-based wiki build tool. It’s geared towards
 managing technical documentation, but can be used for a range of purposes. It
 has a few notable selling points:
@@ -33,9 +37,6 @@ Installation
     pip install -r REQUIREMENTS
     python setup.py install
 
-I’ll make an `easy_install`-friendly version as soon as this project assumes
-some semblance of stability.
-
 Making a Wiki
 -------------
 
@@ -60,10 +61,15 @@ The minimum requirements to run the Markdoc utility are:
     modern OSes, including Mac OS X and Ubuntu. In the future Markdoc may
     include a pure-Python implementation.
 
+`pip` is used to install all of the Python dependencies, which are individually
+listed in the `REQUIREMENTS` file alongside this README. If you don't want to
+use `pip`, you can manually go through this list and run
+`easy_install <package>` on each package name.
+
 Layout
 ======
 
-Markdoc wikis have the following layout:
+Markdoc wikis have the following default layout:
 
     WIKI_ROOT/
     |-- .html/
