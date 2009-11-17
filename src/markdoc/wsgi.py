@@ -71,6 +71,8 @@ class MarkdocWSGIApplication(object):
           serve it if it exists; else
         * If a file of the same name exists in the parent directory, return a
           redirect to it (without the trailing slash); else
+        * If a file of the same name with a 'html' extension exists in the
+          parent directory, redirect to it (without the trailing slash); else
         * Return a HTTP 404 ‘Not Found’.
         """
         
@@ -79,7 +81,7 @@ class MarkdocWSGIApplication(object):
             return serve_file(index_filename)
         
         directory_filename = p.join(self.config.html_dir, request.path_info.strip('/'))
-        if p.isfile(directory_filename):
+        if p.isfile(directory_filename) or p.isfile(directory_filename + p.extsep + 'html'):
             return temp_redirect(request.path_info.rstrip('/'))
         
         return self.not_found(request)
