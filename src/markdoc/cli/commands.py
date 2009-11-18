@@ -132,8 +132,9 @@ def sync_static(config, args):
         command.append(p.join(markdoc.default_static_dir, ''))
         display_cmd.append(p.basename(markdoc.default_static_dir) + '/')
     
-    command.append(p.join(config.static_dir, ''))
-    display_cmd.append(p.basename(config.static_dir) + '/')
+    if p.isdir(config.static_dir):
+        command.append(p.join(config.static_dir, ''))
+        display_cmd.append(p.basename(config.static_dir) + '/')
     
     command.append(p.join(config.html_dir, ''))
     display_cmd.append(p.basename(config.html_dir) + '/')
@@ -166,8 +167,9 @@ def sync_html(config, args):
         command.append(p.join(markdoc.default_static_dir, ''))
         display_cmd.append(p.basename(markdoc.default_static_dir) + '/')
     
-    command.append(p.join(config.static_dir, ''))
-    display_cmd.append(p.basename(config.static_dir) + '/')
+    if p.isdir(config.static_dir):
+        command.append(p.join(config.static_dir, ''))
+        display_cmd.append(p.basename(config.static_dir) + '/')
     
     command.append(p.join(config.html_dir, ''))
     display_cmd.append(p.basename(config.html_dir) + '/')

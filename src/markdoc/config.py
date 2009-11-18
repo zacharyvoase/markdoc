@@ -108,7 +108,9 @@ class Config(dict):
             # Lazy import to save time when running the `markdoc` command.
             import jinja2
             
-            loader_path = [self.template_dir]
+            loader_path = []
+            if p.isdir(self.template_dir):
+                loader_path.append(self.template_dir)
             if self.setdefault('use-default-templates', True):
                 loader_path.append(markdoc.default_template_dir)
             loader = jinja2.FileSystemLoader(loader_path)
