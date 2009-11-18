@@ -37,7 +37,7 @@ Remember that Markdoc uses sensible defaults for *all* of these options, so itâ€
 : This determines how Markdoc finds and writes to hidden directories like `.tmp`, `.templates` and `.html`. You may wish to set this to `'_'` if your VCS or operating system doesnâ€™t play nicely with period-prefixed filenames.
 
 `document-extensions` (default `[.md, .mdown, .markdown, .wiki, .text]`)
-: Markdoc will only render files from the document root which have one of these extensions.
+: Markdoc will only render files from the document root which have one of these extensions. If one of the extensions is an empty string (`''`), then all files (including those without an extension) will be considered pages. Setting this parameter to the empty list (`[]`) assumes it is actually `['']`.
 
 `generate-listing` (default `always`)
 : This affects how listings are generated for directories in your Markdoc wiki (including the top level). Set this to either `always`, `sometimes` or `never`. The semantics are as follows:
