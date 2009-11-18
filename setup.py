@@ -59,13 +59,12 @@ def find_package_data():
 
 
 distutils.core.setup(**{
-    'name':         'markdoc',
+    'name':         'Markdoc',
     'version':      get_version(),
     'author':       'Zachary Voase',
     'author_email': 'zacharyvoase@me.com',
     'url':          'http://bitbucket.org/zacharyvoase/markdoc',
     'description':  'A lightweight Markdown-based wiki build tool.',
-    'license':      'X11',
     'packages':     find_packages(),
     'package_dir':  {'': 'src'},
     'package_data': {'markdoc': find_package_data()},
