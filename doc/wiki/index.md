@@ -9,3 +9,5 @@ You should start by looking at the [quickstart](/quickstart) document. That shou
 See the [configuration](/configuration) documentation for in-depth knowledge about how to write a good `markdoc.yaml` file. The [layout](/layout) documentation will tell you about the basic wiki filesystem layout. After that, the [UnFAQ](/unfaq) page hopefully answers any remaining questions you might have.
 
 The Markdoc project’s goals and history are described in the [about](/about) page. If you’d like to know more about the internals of the rendering process, see the [rendering](/rendering) page.
+
+To see the complete list of pages in this wiki, just see the [directory listing](/_list).
