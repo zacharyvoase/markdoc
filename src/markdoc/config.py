@@ -38,6 +38,9 @@ class Config(dict):
         
         self['document-extensions'] = set(self.get('document-extensions',
             ['.md', '.mdown', '.markdown', '.wiki', '.text']))
+
+        if not self['document-extensions']:
+            self['document-extensions'].add('')
         
         meta = self.setdefault('meta', {})
         meta['config_file'] = config_file
