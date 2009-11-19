@@ -131,9 +131,9 @@ class Config(dict):
         # Set up the default markdown configuration.
         mdconfig = self.setdefault('markdown', {})
         mdconfig.setdefault('extensions', [])
-        mdconfig.setdefault('extension_configs', {})
-        mdconfig.setdefault('safe_mode', False)
-        mdconfig.setdefault('output_format', 'xhtml1')
+        mdconfig.setdefault('extension_configs', mdconfig.get('extension-configs', {}))
+        mdconfig.setdefault('safe_mode', mdconfig.get('safe-mode', False))
+        mdconfig.setdefault('output_format', mdconfig.get('output-format', 'xhtml1'))
         
         config.update(mdconfig) # Include any extra kwargs.
         return markdown.Markdown(**mdconfig)
