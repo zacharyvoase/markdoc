@@ -9,6 +9,7 @@ import pprint
 import re
 import shutil
 import subprocess
+import sys
 
 import markdoc
 from markdoc.builder import Builder
@@ -25,7 +26,7 @@ def command(function):
     @wraps(function)
     def wrapper(config, args):
         if not args.quiet:
-            print '--> markdoc', cmd_name
+            print >>sys.stderr, '--> markdoc', cmd_name
         return function(config, args)
     wrapper.parser = parser
     
