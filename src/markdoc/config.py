@@ -158,11 +158,16 @@ class Config(dict):
         import cherrypy.wsgiserver
         
         svconfig = self.setdefault('server', {})
-        get_conf = lambda key, default: svconfig.setdefault(key, extra_config.pop(key, default))
+        
+        def get_conf(key, default):
+            return svconfig.setdefault(key,
+                # Look for `some-key` as well as `some_key`.
+                svconfig.get(key.replace('_', '-'),
+                    extra_config.pop(key, default)))
         
         bind = get_conf('bind', '127.0.0.1')
         port = get_conf('port', 8008)
-        numthreads = get_conf('numthreads', 10)
+        numthreads = get_conf('numthreads', get_conf('num_threads', 10))
         server_name = get_conf('server_name', None)
         request_queue_size = get_conf('request_queue_size', 5)
         timeout = get_conf('timeout', 10)
