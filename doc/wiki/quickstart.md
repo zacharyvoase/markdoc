@@ -1,6 +1,6 @@
 # Quickstart
 
-Markdoc is not yet available as an `easy_install`-able package, but it does use distutils so you can install it with relative ease on any system with Python.
+Markdoc uses distutils so you can install it with relative ease on any system with Python.
 
 ## Requirements
 
@@ -27,17 +27,36 @@ use `pip`, you can manually go through this list and run
     $ python setup.py install
 
 ## Making a Wiki
-    
+
+### Initializing the Wiki
+
+The `markdoc init` command creates a new wiki. It also accepts a `--vcs-ignore` option which will automatically create the appropriate ignore file for your VCS.
+
     #!bash
-    $ markdoc init my-wiki
+    $ markdoc init my-wiki --vcs-ignore hg
     --> markdoc init
     # ...logging output...
+
+### Editing Pages
+
+Documents in a Markdoc wiki are located under the `wiki/` subdirectory, and are plain Markdown files. Typically documents have a `.md` file extension, but in the [wiki configuration](/configuration#building) you can specify others.
+
     $ cd my-wiki/
     $ vim wiki/somefile.md
-    # ... write some documentation ...
+    # ... write some documents ...
+
+### Building
+
+Markdoc comes with a default set of templates and stylesheets, so you can build your wiki right away. Just run `markdoc build`, and all the HTML will be generated and output into the `.html/` sub-directory (known as the HTML root).
+
     $ markdoc build
     --> markdoc build
     # ...more logging output...
+
+### Serving
+
+You can view all the HTML in a browser easily by running the built-in server. `markdoc serve` accepts a large number of options, but on its own will serve your documentation on port 8008.
+
     $ markdoc serve
     --> markdoc serve
     # ...even more logging output...
