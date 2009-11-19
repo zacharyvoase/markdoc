@@ -50,25 +50,28 @@ class Config(dict):
     @property
     def html_dir(self):
         self.setdefault('hide-prefix', '.')
-        return p.join(self['meta']['root'], self['hide-prefix'] + 'html')
+        return p.join(self['meta']['root'],
+            self.get('html-dir', self['hide-prefix'] + 'html'))
     
     @property
     def static_dir(self):
-        return p.join(self['meta']['root'], 'static')
+        return p.join(self['meta']['root'], self.get('static-dir', 'static'))
     
     @property
     def wiki_dir(self):
-        return p.join(self['meta']['root'], 'wiki')
+        return p.join(self['meta']['root'], self.get('wiki-dir', 'wiki'))
     
     @property
     def temp_dir(self):
         self.setdefault('hide-prefix', '.')
-        return p.join(self['meta']['root'], self['hide-prefix'] + 'tmp')
+        return p.join(self['meta']['root'],
+            self.get('temp-dir', self['hide-prefix'] + 'tmp'))
     
     @property
     def template_dir(self):
         self.setdefault('hide-prefix', '.')
-        return p.join(self['meta']['root'], self['hide-prefix'] + 'templates')
+        return p.join(self['meta']['root'],
+            self.get('template-dir', self['hide-prefix'] + 'templates'))
     
     @classmethod
     def for_directory(cls, directory=None):
