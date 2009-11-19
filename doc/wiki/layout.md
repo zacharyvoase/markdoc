@@ -33,3 +33,5 @@ The `.html/` and `.tmp/` directories should be excluded from any VCS, since they
 
 `WIKI_ROOT/.tmp/`
 : The *temporary directory*: a temporary build destination for rendered Markdown files. This directory is then rsync’d to the HTML root along with the static directory; the incremental nature of this operation means the Markdoc web server can keep running in one process whilst another runs `markdoc build`.
+
+Note that all of the default locations for these directories can be overridden in the `markdoc.yaml` file. For example, you may wish to use `WIKI_ROOT/pages/` instead of `WIKI_ROOT/wiki/`, or `WIKI_ROOT/.build/` instead of `WIKI_ROOT/.html/`. Consult the [configuration documentation](/configuration) for more information.
