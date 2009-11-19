@@ -255,14 +255,15 @@ additional levels of `>`:
 Blockquotes can contain other Markdown elements, including headers, lists, and
 code blocks:
 
-	> ## This is a header.
-	> 
-	> 1.   This is the first list item.
-	> 2.   This is the second list item.
-	> 
-	> Here's some example code:
-	> 
-	>     return shell_exec("echo $input | $markdown_script");
+    :::text
+    > ## This is a header.
+    > 
+    > 1.   This is the first list item.
+    > 2.   This is the second list item.
+    > 
+    > Here's some example code:
+    > 
+    >     return shell_exec("echo $input | $markdown_script");
 
 Any decent text editor should make email-style quoting easy. For example, with
 BBEdit, you can make a selection and choose Increase Quote Level from the Text
@@ -599,9 +600,10 @@ That is:
 
 The following three link definitions are equivalent:
 
-	[foo]: http://example.com/  "Optional Title Here"
-	[foo]: http://example.com/  'Optional Title Here'
-	[foo]: http://example.com/  (Optional Title Here)
+    :::text
+    [foo]: http://example.com/  "Optional Title Here"
+    [foo]: http://example.com/  'Optional Title Here'
+    [foo]: http://example.com/  (Optional Title Here)
 
 The link URL may, optionally, be surrounded by angle brackets:
 
@@ -621,8 +623,9 @@ and are stripped from your document in the HTML output.
 Link definition names may consist of letters, numbers, spaces, and punctuation
 -- but they are *not* case sensitive. E.g. these two links:
 
-	[link text][a]
-	[link text][A]
+    :::text
+    [link text][a]
+    [link text][A]
 
 are equivalent.
 
@@ -631,20 +634,24 @@ which case the link text itself is used as the name. Just use an empty set of
 square brackets -- e.g., to link the word "Google" to the google.com web site,
 you could simply write:
 
-	[Google][]
+    :::text
+    [Google][]
 
 And then define the link:
 
-	[Google]: http://google.com/
+    :::text
+    [Google]: http://google.com/
 
 Because link names may contain spaces, this shortcut even works for multiple
 words in the link text:
 
-	Visit [Daring Fireball][] for more information.
+    :::text
+    Visit [Daring Fireball][] for more information.
 
 And then define the link:
-	
-	[Daring Fireball]: http://daringfireball.net/
+
+    :::text
+    [Daring Fireball]: http://daringfireball.net/
 
 Link definitions can be placed anywhere in your Markdown document. I tend to put
 them immediately after each paragraph in which they're used, but if you want,
