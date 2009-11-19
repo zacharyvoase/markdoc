@@ -77,10 +77,61 @@ def init(_, args):
     finally:
         fp.close()
     
+    if args.vcs_ignore:
+        config = markdoc.config.Config.for_directory(destination)
+        args = vcs_ignore.parser.parse_args([args.vcs_ignore])
+        vcs_ignore(config, args)
+    
     log.info('Wiki initialization complete')
     log.info('Your new wiki is at: %s' % destination)
 
-init.parser.add_argument('destination')
+init.parser.add_argument('destination', default=None,
+    help="Create wiki here (if omitted, defaults to current directory)")
+init.parser.add_argument('--vcs-ignore', choices=['hg', 'git', 'cvs', 'bzr'],
+    help="Create an ignore file for the specified VCS.")
+
+
+@command
+def vcs_ignore(config, args):
+    """Create a VCS ignore file for a wiki."""
+    
+    log = logging.getLogger('markdoc.vcs-ignore')
+    log.info('Creating ignore file for %s' % args.vcs)
+    wiki_root = config['meta']['root'] # shorter local alias.
+    
+    ignore_file_lines = []
+    ignore_file_lines.append(p.relpath(config.html_dir, start=wiki_root))
+    ignore_file_lines.append(p.relpath(config.temp_dir, start=wiki_root))
+    if args.vcs == 'hg':
+        ignore_file_lines.insert(0, 'syntax: glob')
+        ignore_file_lines.insert(1, '')
+    
+    if args.output == '-':
+        log.info('Writing ignore file to stdout')
+        fp = sys.stdout
+    else:
+        if not args.output:
+            filename = p.join(wiki_root, '.%signore' % args.vcs)
+        else:
+            filename = p.join(wiki_root, args.output)
+        log.info('Writing ignore file to %s' % p.relpath(filename, start=wiki_root))
+        fp = open(filename, 'w')
+    
+    try:
+        fp.write('\n'.join(ignore_file_lines) + '\n')
+    finally:
+        if fp is not sys.stdout:
+            fp.close()
+    
+    log.info('Ignore file written.')
+
+vcs_ignore.parser.add_argument('vcs', default='hg', nargs='?',
+    choices=['hg', 'git', 'cvs', 'bzr'],
+    help="Create ignore file for specified VCS (default 'hg')")
+vcs_ignore.parser.add_argument('-o', '--output', default=None, metavar='FILENAME',
+    help="Write output to the specified filename, relative to the wiki root. "
+         "Default is to generate the filename from the VCS. "
+         "'-' will write to stdout.")
 
 
 ## Cleanup
