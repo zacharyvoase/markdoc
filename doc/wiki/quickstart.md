@@ -1,6 +1,6 @@
 # Quickstart
 
-Markdoc uses distutils so you can install it with relative ease on any system with Python.
+Markdoc uses distutils, so you can install it with relative ease on any system with Python.
 
 ## Requirements
 
