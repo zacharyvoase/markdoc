@@ -35,7 +35,7 @@ default_formatter = logging.Formatter(
     u'%(asctime)s | %(levelname)-7s | %(name)s | %(message)s',
     datefmt=default_date_format)
 
-console_handler = logging.StreamHandler()
+console_handler = logging.StreamHandler() # By default, outputs to stderr.
 console_handler.setFormatter(default_formatter)
 console_handler.setLevel(logging.DEBUG)
 
