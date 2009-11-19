@@ -253,6 +253,7 @@ def build_listing(config, args):
             log.info("cp %s/%s %s/%s" % (directory, list_basename, directory, 'index.html'))
             shutil.copyfile(list_filename, p.join(fs_dir, 'index.html'))
 
+
 ## Serving
 
 IPV4_RE = re.compile(r'^(25[0-5]|2[0-4]\d|[0-1]?\d?\d)(\.(25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}$')
@@ -268,8 +269,12 @@ def serve(config, args):
     app = MarkdocWSGIApplication(config)
     
     extra_config = {}
-    if args.port:
-        extra_config['port'] = args.port
+    extra_config['port'] = args.port
+    extra_config['numthreads'] = args.num_threads
+    if args.server_name:
+        extra_config['server_name'] = args.server_name
+    extra_config['request_queue_size'] = args.queue_size
+    extra_config['timeout'] = args.timeout
     if args.interface:
         if not IPV4_RE.match(args.interface):
             serve.parser.error('invalid interface specifier: %r' % args.interface)
@@ -286,7 +291,15 @@ def serve(config, args):
         log.info('Shutting down gracefully')
         server.stop()
 
-serve.parser.add_argument('-p', '--port', type=int, default=None,
+serve.parser.add_argument('-p', '--port', type=int, default=8008,
     help="Listen on specified port (default is 8008)")
 serve.parser.add_argument('-i', '--interface', default=None,
     help="Bind to specified interface (defaults to loopback only)")
+serve.parser.add_argument('-t', '--num-threads', type=int, default=10, metavar='N',
+    help="Use N threads to handle requests (default is 10)")
+serve.parser.add_argument('-n', '--server-name', default=None, metavar='NAME',
+    help="Use an explicit server name (default to an autodetected value)")
+serve.parser.add_argument('-q', '--queue-size', type=int, default=5, metavar='SIZE',
+    help="Set request queue size (default is 5)")
+serve.parser.add_argument('--timeout', type=int, default=10,
+    help="Set the socket timeout for connections (default is 10)")
