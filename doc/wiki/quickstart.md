@@ -9,14 +9,9 @@ The minimum requirements to run the Markdoc utility are:
   * Python 2.4 or later (2.5+ highly recommended)
   * A UNIX (or at least POSIX-compliant) operating system
   * [pip](http://pip.openplans.org/) (you can get it via `easy_install -U pip`)
-  * [rsync](http://www.samba.org/rsync/) -- installed out of the box with most
-    modern OSes, including Mac OS X and Ubuntu. In the future Markdoc may
-    include a pure-Python implementation.
+  * [rsync](http://www.samba.org/rsync/) -- installed out of the box with most modern OSes, including Mac OS X and Ubuntu. In the future Markdoc may include a pure-Python implementation.
 
-`pip` is used to install all of the Python dependencies, which are individually
-listed in the `REQUIREMENTS` file alongside this README. If you don't want to
-use `pip`, you can manually go through this list and run
-`easy_install <package>` on each package name.
+`pip` is used to install all of the Python dependencies, which are individually listed in the `REQUIREMENTS` file alongside this README. If you don't want to use `pip`, you can manually go through this list and run `easy_install <package>` on each package name.
 
 ## Installation
 
