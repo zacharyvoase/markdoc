@@ -30,10 +30,8 @@ if not hasattr(os.path, 'relpath'):
     os.path.relpath = relpath
 
 
-default_date_format = '%d %b %Y %H:%M:%S'
 default_formatter = logging.Formatter(
-    u'%(asctime)s | %(levelname)-7s | %(name)s | %(message)s',
-    datefmt=default_date_format)
+    u'%(name)s: %(levelname)s: %(message)s')
 
 console_handler = logging.StreamHandler() # By default, outputs to stderr.
 console_handler.setFormatter(default_formatter)
