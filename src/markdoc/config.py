@@ -16,6 +16,17 @@ class ConfigNotFound(markdoc.exc.AbortError):
     pass
 
 
+class ConfigMeta(type):
+    
+    def __new__(mcls, name, bases, attrs):
+        cls = type.__new__(mcls, name, bases, attrs)
+        cls._defaults = {}
+        return cls
+    
+    def register_default(cls, key, default_value):
+        cls._defaults[key] = default_value
+
+
 class Config(dict):
     
     """
@@ -33,12 +44,14 @@ class Config(dict):
     
     """
     
+    __metaclass__ = ConfigMeta
+    
     def __init__(self, config_file, config):
         super(Config, self).__init__(config)
         
         self['document-extensions'] = set(self.get('document-extensions',
             ['.md', '.mdown', '.markdown', '.wiki', '.text']))
-
+        
         if not self['document-extensions']:
             self['document-extensions'].add('')
         
@@ -46,6 +59,19 @@ class Config(dict):
         meta['config_file'] = config_file
         if 'root' not in meta:
             meta['root'] = p.dirname(config_file)
+    
+    def __getitem__(self, key):
+        try:
+            return dict.__getitem__(self, key)
+        except KeyError:
+            if key in self._defaults:
+                return self._defaults[key]
+            raise
+    
+    def __delitem__(self, key):
+        if (key not in self) and (key in self._defaults):
+            return
+        return dict.__delitem__(self, key)
     
     @property
     def html_dir(self):
