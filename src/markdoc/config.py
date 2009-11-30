@@ -2,6 +2,7 @@
 
 """Utilities for working with Markdoc configurations."""
 
+import copy
 import os
 import os.path as p
 
@@ -65,7 +66,8 @@ class Config(dict):
             return dict.__getitem__(self, key)
         except KeyError:
             if key in self._defaults:
-                return self._defaults[key]
+                self[key] = copy.copy(self._defaults[key])
+                return self[key]
             raise
     
     def __delitem__(self, key):
