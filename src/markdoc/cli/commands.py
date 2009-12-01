@@ -320,19 +320,18 @@ def serve(config, args):
     log = logging.getLogger('markdoc.serve')
     app = MarkdocWSGIApplication(config)
     
-    extra_config = {}
-    extra_config['port'] = args.port
-    extra_config['numthreads'] = args.num_threads
+    config['server.port'] = args.port
+    config['server.num-threads'] = args.num_threads
     if args.server_name:
-        extra_config['server_name'] = args.server_name
-    extra_config['request_queue_size'] = args.queue_size
-    extra_config['timeout'] = args.timeout
+        config['server.name'] = args.server_name
+    config['server.request-queue-size'] = args.queue_size
+    config['server.timeout'] = args.timeout
     if args.interface:
         if not IPV4_RE.match(args.interface):
             serve.parser.error('invalid interface specifier: %r' % args.interface)
-        extra_config['bind'] = args.interface
+        config['server.bind'] = args.interface
     
-    server = config.server_maker(**extra_config)(app)
+    server = config.server_maker()(app)
     
     try:
         log.info('Serving on http://%s:%d' % server.bind_addr)
@@ -355,3 +354,4 @@ serve.parser.add_argument('-q', '--queue-size', type=int, default=5, metavar='SI
     help="Set request queue size (default is 5)")
 serve.parser.add_argument('--timeout', type=int, default=10,
     help="Set the socket timeout for connections (default is 10)")
+
