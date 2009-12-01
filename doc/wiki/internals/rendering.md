@@ -67,3 +67,32 @@ The distinction between *files* and *pages* is useful because you can display li
 The last crumb is special in that it displays the string `"list"` but with a class of `list-crumb`; in the default templates and media this is displayed in a light grey to indicate that it is a special page.
 
 The semantics of listing generation are determined by the `generate-listing` setting; `always` will always generate a listing (even if it clobbers an existing file called `_list.html`), `sometimes` will only generate a listing when there is no `index.html` file for a directory, and `never` will never generate listings.
+
+## Relative Links
+
+For portability, all URLs pointing to files and pages within the current Markdoc wiki should be relative. This allows built wiki HTML to be hosted under a sub-directory and still maintain link integrity.
+
+In practice, this is achieved in two parts:
+
+*   A Markdown extension which causes absolute path URLs in links (such as
+    `/path/to/somefile`) to be converted to relative ones (like `../somefile`).
+
+*   A callable passed to every template context which, when called with an
+    absolute path URL, will convert it to a relative one. This variable is
+    `make_relative()`, and an example of its use can be seen in this snippet
+    from the default base template:
+        
+        :::text
+        <head>
+          <!--...snip...-->
+          
+          {% import "macros/html" as html -%}
+          
+          {{ html.cssimport(make_relative("/media/css/reset.css")) }}
+          {{ html.cssimport(make_relative("/media/css/layout.css")) }}
+          {{ html.cssimport(make_relative("/media/css/typography.css")) }}
+          {{ html.cssimport(make_relative("/media/css/pygments.css")) }}
+        </head>
+    
+    If you override the default templates, make sure to use this callable to  
+    relativize the media URLs and breadcrumb links.
