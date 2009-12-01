@@ -10,12 +10,30 @@ Config.register_default('markdown.safe-mode', False)
 Config.register_default('markdown.output-format', 'xhtml1')
 
 
+def unflatten_extension_configs(config):
+    """Unflatten the markdown extension configs from the config dictionary."""
+    
+    configs = config['markdown.extension-configs']
+    
+    for key, value in config.iteritems():
+        if not key.startswith('markdown.extension-configs.'):
+            continue
+        
+        parts = key[len('markdown.extension-configs.'):].split('.')
+        extension_config = configs
+        for part in parts[:-1]:
+            extension_config = extension_config.setdefault(part, {})
+        extension_config[parts[-1]] = value
+    
+    return configs
+
+
 def get_markdown_instance(config, **extra_config):
     """Return a `markdown.Markdown` instance for a given configuration."""
     
     mdconfig = dict(
         extensions=config['markdown.extensions'],
-        extension_configs=config['markdown.extension-configs'],
+        extension_configs=unflatten_extension_configs(config),
         safe_mode=config['markdown.safe-mode'],
         output_format=config['markdown.output-format'])
     
