@@ -2,31 +2,32 @@
 
 import distutils.core
 import os
+import os.path as p
 import re
 
 
-if not hasattr(os.path, 'relpath'):
-    def relpath(path, start=os.path.curdir):
+if not hasattr(p, 'relpath'):
+    def relpath(path, start=p.curdir):
         """Return a relative version of a path"""
         
         if not path:
             raise ValueError("no path specified")
         
-        start_list = os.path.abspath(start).split(os.path.sep)
-        path_list = os.path.abspath(path).split(os.path.sep)
+        start_list = p.abspath(start).split(p.sep)
+        path_list = p.abspath(path).split(p.sep)
         
         # Work out how much of the filepath is shared by start and path.
-        i = len(os.path.commonprefix([start_list, path_list]))
+        i = len(p.commonprefix([start_list, path_list]))
         
-        rel_list = [os.path.pardir] * (len(start_list)-i) + path_list[i:]
+        rel_list = [p.pardir] * (len(start_list)-i) + path_list[i:]
         if not rel_list:
-            return os.path.curdir
-        return os.path.join(*rel_list)
-    os.path.relpath = relpath
+            return p.curdir
+        return p.join(*rel_list)
+    p.relpath = relpath
 
 
 def get_version():
-    filename = os.path.join(os.path.dirname(__file__),
+    filename = p.join(p.dirname(__file__),
         'src', 'markdoc', '__init__.py')
     fp = open(filename)
     try:
@@ -38,23 +39,23 @@ def get_version():
 
 def find_packages():
     packages = []
-    root = os.path.join(os.path.dirname(__file__), 'src')
+    root = p.join(p.dirname(__file__), 'src')
     for dirpath, subdirs, filenames in os.walk(root):
         if '__init__.py' in filenames:
-            rel = os.path.relpath(dirpath, start=root)
-            packages.append(rel.replace(os.path.sep, '.'))
+            rel = p.relpath(dirpath, start=root)
+            packages.append(rel.replace(p.sep, '.'))
     return packages
 
 
 def find_package_data():
     files = []
-    src_root = os.path.join(os.path.dirname(__file__), 'src', 'markdoc')
-    static_root = os.path.join(src_root, 'static')
+    src_root = p.join(p.dirname(__file__), 'src', 'markdoc')
+    static_root = p.join(src_root, 'static')
     for dirpath, subdirs, filenames in os.walk(static_root):
         for filename in filenames:
             if not filename.startswith('.') or filename.startswith('_'):
-                abs_path = os.path.join(dirpath, filename)
-                files.append(os.path.relpath(abs_path, start=src_root))
+                abs_path = p.join(dirpath, filename)
+                files.append(p.relpath(abs_path, start=src_root))
     return files
 
 
