@@ -29,6 +29,7 @@ def template_dir(config):
 
 
 Config.register_default('hide-prefix', '.')
+Config.register_default('use-default-static', True)
 Config.register_func_default('html-dir', lambda cfg, key: html_dir(cfg))
 Config.register_func_default('static-dir', lambda cfg, key: static_dir(cfg))
 Config.register_func_default('wiki-dir', lambda cfg, key: wiki_dir(cfg))

@@ -179,7 +179,7 @@ def sync_static(config, args):
     command = 'rsync -vaxq --ignore-errors --exclude=".*" --exclude="_*"'.split()
     display_cmd = command[:]
     
-    if config.setdefault('use-default-static', True):
+    if config['use-default-static']:
         # rsync needs the paths to have trailing slashes to work correctly.
         command.append(p.join(markdoc.default_static_dir, ''))
         display_cmd.append(p.basename(markdoc.default_static_dir) + '/')
@@ -215,7 +215,7 @@ def sync_html(config, args):
     command.append(p.join(config.temp_dir, ''))
     display_cmd.append(p.basename(config.temp_dir) + '/')
     
-    if config.setdefault('use-default-static', True):
+    if config['use-default-static']:
         command.append(p.join(markdoc.default_static_dir, ''))
         display_cmd.append(p.basename(markdoc.default_static_dir) + '/')
     
@@ -270,7 +270,7 @@ def build_listing(config, args):
     
     log = logging.getLogger('markdoc.build-listing')
     
-    list_basename = config.setdefault('listing-filename', '_list.html')
+    list_basename = config['listing-filename']
     builder = Builder(config)
     generate_listing = config.get('generate-listing', 'always').lower()
     always_list = True
