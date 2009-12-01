@@ -35,15 +35,15 @@ class RelativeLinksTreeProcessor(markdown.treeprocessors.Treeprocessor):
 def make_relative(curr_path, href):
     """Given a current path and a href, return an equivalent relative path."""
     
-    curr_list = curr_path.split('/')
-    href_list = href.split('/')
+    curr_list = curr_path.lstrip('/').split('/')
+    href_list = href.lstrip('/').split('/')
     
     # How many path components are shared between the two paths?
     i = len(p.commonprefix([curr_list, href_list]))
     
-    rel_list = (['..'] * (len(curr_list) - i)) + href_list[i:]
-    if not rel_list:
-        return curr_path
+    rel_list = (['..'] * (len(curr_list) - i - 1)) + href_list[i:]
+    if not rel_list or rel_list == ['']:
+        return './'
     return '/'.join(rel_list)
 
 
