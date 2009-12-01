@@ -13,7 +13,6 @@ First we have to set up a Python function for running the command-line tool. Sin
 The `show-config` command will show the current Markdoc config:
 
     >>> exit_code = markdoc('show-config') # doctest: +ELLIPSIS
-    --> markdoc show-config
     {'9d03e32c6cb1455388a170e3bb0c2030': '7010d5d5871143d089cb662cb540cbd5',
      'document-extensions': set(['.markdown', '.md', '.mdown', '.text', '.wiki']),
      'hide-prefix': '_',
