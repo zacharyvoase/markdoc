@@ -8,6 +8,8 @@ Config.register_default('markdown.extensions', ())
 Config.register_func_default('markdown.extension-configs', lambda cfg, key: {})
 Config.register_default('markdown.safe-mode', False)
 Config.register_default('markdown.output-format', 'xhtml1')
+Config.register_default('document-extensions',
+    frozenset(['.md', '.mdown', '.markdown', '.wiki', '.text']))
 
 
 def unflatten_extension_configs(config):

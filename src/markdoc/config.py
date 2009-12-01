@@ -64,12 +64,6 @@ class Config(dict):
     def __init__(self, config_file, config):
         super(Config, self).__init__(flatten(config))
         
-        self['document-extensions'] = set(self.get('document-extensions',
-            ['.md', '.mdown', '.markdown', '.wiki', '.text']))
-        
-        if not self['document-extensions']:
-            self['document-extensions'].add('')
-        
         self['meta.config-file'] = config_file
         self['meta.root'] = p.dirname(config_file)
     
@@ -90,32 +84,6 @@ class Config(dict):
             return # fail silently.
         return dict.__delitem__(self, key)
     
-    @property
-    def html_dir(self):
-        self.setdefault('hide-prefix', '.')
-        return p.join(self['meta.root'],
-            self.get('html-dir', self['hide-prefix'] + 'html'))
-    
-    @property
-    def static_dir(self):
-        return p.join(self['meta.root'], self.get('static-dir', 'static'))
-    
-    @property
-    def wiki_dir(self):
-        return p.join(self['meta.root'], self.get('wiki-dir', 'wiki'))
-    
-    @property
-    def temp_dir(self):
-        self.setdefault('hide-prefix', '.')
-        return p.join(self['meta.root'],
-            self.get('temp-dir', self['hide-prefix'] + 'tmp'))
-    
-    @property
-    def template_dir(self):
-        self.setdefault('hide-prefix', '.')
-        return p.join(self['meta.root'],
-            self.get('template-dir', self['hide-prefix'] + 'templates'))
-    
     @classmethod
     def for_directory(cls, directory=None):
         
@@ -128,7 +96,6 @@ class Config(dict):
         
         if directory is None:
             directory = os.getcwd()
-        
         filename = p.join(directory, 'markdoc.yaml')
         return cls.for_file(filename)
     
