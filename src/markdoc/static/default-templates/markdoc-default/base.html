@@ -19,10 +19,10 @@
     
     {% import "macros/html" as html -%}
     
-    {{ html.cssimport("/media/css/reset.css") }}
-    {{ html.cssimport("/media/css/layout.css") }}
-    {{ html.cssimport("/media/css/typography.css") }}
-    {{ html.cssimport("/media/css/pygments.css") }}
+    {{ html.cssimport(make_relative("/media/css/reset.css")) }}
+    {{ html.cssimport(make_relative("/media/css/layout.css")) }}
+    {{ html.cssimport(make_relative("/media/css/typography.css")) }}
+    {{ html.cssimport(make_relative("/media/css/pygments.css")) }}
   </head>
   
   <body>
@@ -35,7 +35,7 @@
                 {% if href == None %}
                   {{ name|e }}
                 {% else %}
-                  <a href="{{ href|e }}">{{ name|e }}</a>{% if loop.revindex0 %} &#187;{% endif %}
+                  <a href="{{ make_relative(href)|e }}">{{ name|e }}</a>{% if loop.revindex0 %} &#187;{% endif %}
                 {% endif %}
               {% endfor %}
           </p>

@@ -12,7 +12,7 @@
     {% for subdir in sub_directories %}
       <tr>
         <td class="name">
-          <a class="dirlink" href="{{ subdir.href|e }}">
+          <a class="dirlink" href="{{ make_relative(subdir.href)|e }}">
             {{ subdir.basename|e }}/
           </a>
         </td>
@@ -29,7 +29,7 @@
       <tr>
         <td class="size">{{ page.humansize }}</td>
         <td class="name">
-          <a href="{{ page.href|e }}" title="{{ page.title|e }}">
+          <a href="{{ make_relative(page.href)|e }}" title="{{ page.title|e }}">
             {{ page.title|e }}
           </a>
         </td>
@@ -46,7 +46,7 @@
       <tr>
         <td class="size">{{ file.humansize }}</td>
         <td class="name">
-          <a href="{{ file.href|e }}">
+          <a href="{{ make_relative(file.href)|e }}">
             <code>{{ file.basename|e }}</code>
           </a>
         </td>
