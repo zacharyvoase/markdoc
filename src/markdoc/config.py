@@ -170,19 +170,6 @@ class Config(dict):
             self.__template_env = environment
         
         return self.__template_env
-    
-    def markdown(self, **config):
-        """Return a `markdown.Markdown` instance for this configuration."""
-        
-        # Set up the default markdown configuration.
-        mdconfig = self.setdefault('markdown', {})
-        mdconfig.setdefault('extensions', [])
-        mdconfig.setdefault('extension_configs', mdconfig.get('extension-configs', {}))
-        mdconfig.setdefault('safe_mode', mdconfig.get('safe-mode', False))
-        mdconfig.setdefault('output_format', mdconfig.get('output-format', 'xhtml1'))
-        
-        config.update(mdconfig) # Include any extra kwargs.
-        return markdown.Markdown(**mdconfig)
 
 
 def flatten(dictionary, prefix=''):
