@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import os.path as p
+
 from markdoc.config import Config
 import markdown
 
@@ -16,11 +18,11 @@ class RelativeLinksTreeProcessor(markdown.treeprocessors.Treeprocessor):
     
     """A Markdown tree processor to relativize wiki links."""
     
-    def __init__(self, level=0):
-        self.prefix = '../' * level
+    def __init__(self, curr_path='/'):
+        self.curr_path = curr_path
     
     def make_relative(self, href):
-        return (self.prefix.rstrip('/') + '/' + href.lstrip('/')).lstrip('/')
+        return make_relative(self.curr_path, href)
     
     def run(self, tree):
         links = tree.getiterator('a')
@@ -28,6 +30,21 @@ class RelativeLinksTreeProcessor(markdown.treeprocessors.Treeprocessor):
             if link.attrib['href'].startswith('/'):
                 link.attrib['href'] = self.make_relative(link.attrib['href'])
         return tree
+
+
+def make_relative(curr_path, href):
+    """Given a current path and a href, return an equivalent relative path."""
+    
+    curr_list = curr_path.split('/')
+    href_list = href.split('/')
+    
+    # How many path components are shared between the two paths?
+    i = len(p.commonprefix([curr_list, href_list]))
+    
+    rel_list = (['..'] * (len(curr_list) - i)) + href_list[i:]
+    if not rel_list:
+        return curr_path
+    return '/'.join(rel_list)
 
 
 def unflatten_extension_configs(config):
@@ -48,7 +65,7 @@ def unflatten_extension_configs(config):
     return configs
 
 
-def get_markdown_instance(config, level=0, **extra_config):
+def get_markdown_instance(config, curr_path='/', **extra_config):
     """Return a `markdown.Markdown` instance for a given configuration."""
     
     mdconfig = dict(
@@ -60,7 +77,7 @@ def get_markdown_instance(config, level=0, **extra_config):
     mdconfig.update(extra_config) # Include any extra kwargs.
     
     md_instance = markdown.Markdown(**mdconfig)
-    md_instance.treeprocessors['relative_links'] = RelativeLinksTreeProcessor(level=level)
+    md_instance.treeprocessors['relative_links'] = RelativeLinksTreeProcessor(curr_path=curr_path)
     return md_instance
 
 # Add it as a method to `markdoc.config.Config`.

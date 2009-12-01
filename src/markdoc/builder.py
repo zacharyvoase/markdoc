@@ -23,7 +23,7 @@ class Builder(object):
         
         def render_func(path, doc):
             level = len(path.lstrip('/').split('/')) - 1
-            return self.config.markdown(level=level).convert(doc)
+            return self.config.markdown(curr_path=path).convert(doc)
         self.render_cache = RenderCache(render_func, self.doc_cache)
         
         render_doc_func = lambda path, doc: self.render_document(path, cache=False)
