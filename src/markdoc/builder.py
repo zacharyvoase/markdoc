@@ -6,6 +6,10 @@ import operator
 import re
 
 from markdoc.cache import DocumentCache, RenderCache, read_from
+from markdoc.config import Config
+
+
+Config.register_default('listing-filename', '_list.html')
 
 
 class Builder(object):
@@ -108,10 +112,7 @@ class Builder(object):
         # Resolve to filesystem paths.
         fs_rel_dir = p.sep.join(directory.split('/'))
         fs_abs_dir = p.join(self.config.html_dir, fs_rel_dir)
-        skip_files = [
-            self.config.setdefault('listing-filename', '_list.html'),
-            'index.html'
-        ]
+        skip_files = set([self.config['listing-filename'], 'index.html'])
         
         sub_directories, pages, files = [], [], []
         for basename in os.listdir(fs_abs_dir):
