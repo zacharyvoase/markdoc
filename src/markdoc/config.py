@@ -80,7 +80,7 @@ class Config(dict):
             if key in self._defaults:
                 self[key] = copy.copy(self._defaults[key])
             elif key in self._func_defaults:
-                self[key] = self._func_defaults[key]()
+                self[key] = self._func_defaults[key](self, key)
             else:
                 raise
             return dict.__getitem__(self, key)
