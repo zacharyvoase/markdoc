@@ -21,7 +21,9 @@ class Builder(object):
         
         self.doc_cache = DocumentCache(base=self.config.wiki_dir)
         
-        render_func = lambda path, doc: self.config.markdown().convert(doc)
+        def render_func(path, doc):
+            level = len(path.lstrip('/').split('/')) - 1
+            return self.config.markdown(level=level).convert(doc)
         self.render_cache = RenderCache(render_func, self.doc_cache)
         
         render_doc_func = lambda path, doc: self.render_document(path, cache=False)
