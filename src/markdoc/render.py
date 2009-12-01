@@ -5,7 +5,7 @@ import markdown
 
 
 Config.register_default('markdown.extensions', ())
-Config.register_func_default('markdown.extension-configs', lambda: {})
+Config.register_func_default('markdown.extension-configs', lambda cfg, key: {})
 Config.register_default('markdown.safe-mode', False)
 Config.register_default('markdown.output-format', 'xhtml1')
 
