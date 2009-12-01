@@ -39,7 +39,7 @@ Here we’ll go through an example and show how the various settings affect Mark
       bind: '127.0.0.1'
       port: 8010
       num-threads: 10
-      server-name: 'server.example.com'
+      name: 'server.example.com'
       request-queue-size: 5
       timeout: 10
 
