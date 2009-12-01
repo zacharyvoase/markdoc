@@ -28,13 +28,14 @@ Now we can try getting some listings. The bulk of the process occurs in the `Bui
 Now we can get the listing for the HTML root itself, just by passing the empty string:
 
     >>> import pprint
-    >>> pprint.pprint(b.listing_context(''))
+    >>> pprint.pprint(b.listing_context('')) # doctest: +ELLIPSIS
     {'directory': '',
      'files': [{'basename': 'example.css',
                 'href': '/example.css',
                 'humansize': '27B',
                 'size': 27,
                 'slug': 'example'}],
+     'make_relative': <function <lambda> at 0x...>,
      'pages': [{'basename': 'an_empty_file.html',
                 'href': '/an_empty_file',
                 'humansize': '248B',
@@ -63,9 +64,10 @@ Now we can get the listing for the HTML root itself, just by passing the empty s
 
 We can also get the listings for subdirectories, by passing in their paths, relative to the HTML root:
 
-    >>> pprint.pprint(b.listing_context('/subdir'))
+    >>> pprint.pprint(b.listing_context('/subdir')) # doctest: +ELLIPSIS
     {'directory': 'subdir',
      'files': [],
+     'make_relative': <function <lambda> at 0x...>,
      'pages': [{'basename': 'hello.html',
                 'href': '/subdir/hello',
                 'humansize': '268B',
