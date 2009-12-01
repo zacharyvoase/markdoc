@@ -48,7 +48,7 @@ class Config(dict):
     A dictionary which represents a single wiki's Markdoc configuration.
     
     When instantiating this dictionary, if you aren't using an actual
-    configuration file, just remember to set `config['meta']['root']` to the
+    configuration file, just remember to set `config['meta.root']` to the
     wiki root; you can use `None` as the value for config_file. For example:
         
         # With a filename:
@@ -62,7 +62,7 @@ class Config(dict):
     __metaclass__ = ConfigMeta
     
     def __init__(self, config_file, config):
-        super(Config, self).__init__(config)
+        super(Config, self).__init__(flatten(config))
         
         self['document-extensions'] = set(self.get('document-extensions',
             ['.md', '.mdown', '.markdown', '.wiki', '.text']))
@@ -70,10 +70,8 @@ class Config(dict):
         if not self['document-extensions']:
             self['document-extensions'].add('')
         
-        meta = self.setdefault('meta', {})
-        meta['config_file'] = config_file
-        if 'root' not in meta:
-            meta['root'] = p.dirname(config_file)
+        self['meta.config-file'] = config_file
+        self['meta.root'] = p.dirname(config_file)
     
     def __getitem__(self, key):
         try:
@@ -95,27 +93,27 @@ class Config(dict):
     @property
     def html_dir(self):
         self.setdefault('hide-prefix', '.')
-        return p.join(self['meta']['root'],
+        return p.join(self['meta.root'],
             self.get('html-dir', self['hide-prefix'] + 'html'))
     
     @property
     def static_dir(self):
-        return p.join(self['meta']['root'], self.get('static-dir', 'static'))
+        return p.join(self['meta.root'], self.get('static-dir', 'static'))
     
     @property
     def wiki_dir(self):
-        return p.join(self['meta']['root'], self.get('wiki-dir', 'wiki'))
+        return p.join(self['meta.root'], self.get('wiki-dir', 'wiki'))
     
     @property
     def temp_dir(self):
         self.setdefault('hide-prefix', '.')
-        return p.join(self['meta']['root'],
+        return p.join(self['meta.root'],
             self.get('temp-dir', self['hide-prefix'] + 'tmp'))
     
     @property
     def template_dir(self):
         self.setdefault('hide-prefix', '.')
-        return p.join(self['meta']['root'],
+        return p.join(self['meta.root'],
             self.get('template-dir', self['hide-prefix'] + 'templates'))
     
     @classmethod
@@ -226,3 +224,40 @@ class Config(dict):
         kwargs.update(extra_config)
         
         return lambda wsgi_app: cherrypy.wsgiserver.CherryPyWSGIServer(bind_addr, wsgi_app, **kwargs)
+
+
+def flatten(dictionary, prefix=''):
+    
+    """
+    Flatten nested dictionaries into dotted keys.
+    
+        >>> d = {
+        ...     'a': {
+        ...           'b': 1,
+        ...           'c': {
+        ...                 'd': 2,
+        ...                 'e': {
+        ...                       'f': 3
+        ...                 }
+        ...           }
+        ...      },
+        ...      'g': 4,
+        ... }
+    
+        >>> sorted(flatten(d).items())
+        [('a.b', 1), ('a.c.d', 2), ('a.c.e.f', 3), ('g', 4)]
+    """
+    
+    for key in dictionary.keys():
+        value = dictionary.pop(key)
+        if not isinstance(value, dict):
+            dictionary[prefix + key] = value
+        else:
+            for key2 in value.keys():
+                value2 = value.pop(key2)
+                if not isinstance(value2, dict):
+                    dictionary[prefix + key + '.' + key2] = value2
+                else:
+                    dictionary.update(flatten(value2,
+                        prefix=(prefix + key + '.' + key2 + '.')))
+    return dictionary

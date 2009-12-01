@@ -97,7 +97,7 @@ def vcs_ignore(config, args):
     
     log = logging.getLogger('markdoc.vcs-ignore')
     log.info('Creating ignore file for %s' % args.vcs)
-    wiki_root = config['meta']['root'] # shorter local alias.
+    wiki_root = config['meta.root'] # shorter local alias.
     
     ignore_file_lines = []
     ignore_file_lines.append(p.relpath(config.html_dir, start=wiki_root))
