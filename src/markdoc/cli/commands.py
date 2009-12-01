@@ -54,12 +54,12 @@ def init(_, args):
     else:
         destination = p.abspath(args.destination)
     
-    if os.path.exists(destination) and os.listdir(destination):
+    if p.exists(destination) and os.listdir(destination):
         init.parser.error("destination isn't empty")
-    elif not os.path.exists(destination):
+    elif not p.exists(destination):
         log.info('makedirs %s' % destination)
         os.makedirs(destination)
-    elif not os.path.isdir(destination):
+    elif not p.isdir(destination):
         init.parser.error("destination isn't a directory")
     
     log.info('mkdir %s/.templates/' % destination)
