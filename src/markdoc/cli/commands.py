@@ -78,8 +78,10 @@ def init(_, args):
         fp.close()
     
     if args.vcs_ignore:
+        quiet = args.quiet
         config = markdoc.config.Config.for_directory(destination)
         args = vcs_ignore.parser.parse_args([args.vcs_ignore])
+        args.quiet = quiet
         vcs_ignore(config, args)
     
     log.info('Wiki initialization complete')
