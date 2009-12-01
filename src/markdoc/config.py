@@ -88,8 +88,8 @@ class Config(dict):
             return dict.__getitem__(self, key)
     
     def __delitem__(self, key):
-        if (key not in self) and (key in self._defaults):
-            return
+        if (key not in self):
+            return # fail silently.
         return dict.__delitem__(self, key)
     
     @property
