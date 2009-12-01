@@ -22,10 +22,24 @@ class ConfigMeta(type):
     def __new__(mcls, name, bases, attrs):
         cls = type.__new__(mcls, name, bases, attrs)
         cls._defaults = {}
+        cls._func_defaults = {}
         return cls
     
     def register_default(cls, key, default_value):
+        """Register a default value for a given key."""
+        
         cls._defaults[key] = default_value
+    
+    def register_func_default(cls, key, function):
+        """Register a callable as a functional default for a key."""
+        
+        cls._func_defaults[key] = function
+    
+    def func_default_for(cls, key):
+        """Decorator to define a functional default for a given key."""
+        
+        return lambda function: [cls.register_func_default(key, function),
+                                 function][1]
 
 
 class Config(dict):
@@ -67,8 +81,11 @@ class Config(dict):
         except KeyError:
             if key in self._defaults:
                 self[key] = copy.copy(self._defaults[key])
-                return self[key]
-            raise
+            elif key in self._func_defaults:
+                self[key] = self._func_defaults[key]()
+            else:
+                raise
+            return dict.__getitem__(self, key)
     
     def __delitem__(self, key):
         if (key not in self) and (key in self._defaults):
