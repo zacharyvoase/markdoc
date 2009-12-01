@@ -150,26 +150,6 @@ class Config(dict):
             fp.close()
         
         return cls(filename, config)
-    
-    @property
-    def template_env(self):
-        if not getattr(self, '__template_env', None):
-            # Lazy import to save time when running the `markdoc` command.
-            import jinja2
-            
-            loader_path = []
-            if p.isdir(self.template_dir):
-                loader_path.append(self.template_dir)
-            if self.setdefault('use-default-templates', True):
-                loader_path.append(markdoc.default_template_dir)
-            loader = jinja2.FileSystemLoader(loader_path)
-            
-            environment = jinja2.Environment(loader=loader)
-            environment.globals['config'] = self
-            
-            self.__template_env = environment
-        
-        return self.__template_env
 
 
 def flatten(dictionary, prefix=''):
