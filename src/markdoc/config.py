@@ -183,47 +183,6 @@ class Config(dict):
         
         config.update(mdconfig) # Include any extra kwargs.
         return markdown.Markdown(**mdconfig)
-    
-    def server_maker(self, **extra_config):
-        
-        """
-        Return a server-making callable to create a CherryPy WSGI server.
-        
-        The server-making callable should be passed a WSGI application, and it
-        will return an instance of `cherrypy.wsgiserver.CherryPyWSGIServer`.
-        
-        You can optionally override any of the hardwired configuration
-        parameters by passing in keyword arguments which will be passed along to
-        the `CherryPyWSGIServer` constructor.
-        """
-        
-        # Lazy import, to save time for non-server commands.
-        import cherrypy.wsgiserver
-        
-        svconfig = self.setdefault('server', {})
-        
-        def get_conf(key, default):
-            return svconfig.setdefault(key,
-                # Look for `some-key` as well as `some_key`.
-                svconfig.get(key.replace('_', '-'),
-                    extra_config.pop(key, default)))
-        
-        bind = get_conf('bind', '127.0.0.1')
-        port = get_conf('port', 8008)
-        numthreads = get_conf('numthreads', get_conf('num_threads', 10))
-        server_name = get_conf('server_name', None)
-        request_queue_size = get_conf('request_queue_size', 5)
-        timeout = get_conf('timeout', 10)
-        
-        bind_addr = (bind, port)
-        kwargs = {
-            'numthreads': numthreads,
-            'server_name': server_name,
-            'request_queue_size': request_queue_size,
-            'timeout': timeout}
-        kwargs.update(extra_config)
-        
-        return lambda wsgi_app: cherrypy.wsgiserver.CherryPyWSGIServer(bind_addr, wsgi_app, **kwargs)
 
 
 def flatten(dictionary, prefix=''):
