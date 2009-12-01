@@ -39,3 +39,9 @@ console_handler.setLevel(logging.DEBUG)
 
 logging.getLogger('markdoc').addHandler(console_handler)
 logging.getLogger('markdoc').setLevel(logging.INFO) # Default level.
+
+import markdoc.config
+import markdoc.directories
+import markdoc.render
+import markdoc.server
+import markdoc.templates
