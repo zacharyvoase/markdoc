@@ -26,4 +26,4 @@ def get_temporary_config():
 def clean_temporary_config(config):
     """Delete a temporary configuration's wiki root."""
     
-    shutil.rmtree(p.dirname(config['meta']['root']))
+    shutil.rmtree(p.dirname(config['meta.root']))

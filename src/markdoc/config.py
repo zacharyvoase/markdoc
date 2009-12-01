@@ -2,6 +2,7 @@
 
 """Utilities for working with Markdoc configurations."""
 
+import copy
 import os
 import os.path as p
 
@@ -16,13 +17,38 @@ class ConfigNotFound(markdoc.exc.AbortError):
     pass
 
 
+class ConfigMeta(type):
+    
+    def __new__(mcls, name, bases, attrs):
+        cls = type.__new__(mcls, name, bases, attrs)
+        cls._defaults = {}
+        cls._func_defaults = {}
+        return cls
+    
+    def register_default(cls, key, default_value):
+        """Register a default value for a given key."""
+        
+        cls._defaults[key] = default_value
+    
+    def register_func_default(cls, key, function):
+        """Register a callable as a functional default for a key."""
+        
+        cls._func_defaults[key] = function
+    
+    def func_default_for(cls, key):
+        """Decorator to define a functional default for a given key."""
+        
+        return lambda function: [cls.register_func_default(key, function),
+                                 function][1]
+
+
 class Config(dict):
     
     """
     A dictionary which represents a single wiki's Markdoc configuration.
     
     When instantiating this dictionary, if you aren't using an actual
-    configuration file, just remember to set `config['meta']['root']` to the
+    configuration file, just remember to set `config['meta.root']` to the
     wiki root; you can use `None` as the value for config_file. For example:
         
         # With a filename:
@@ -33,45 +59,30 @@ class Config(dict):
     
     """
     
+    __metaclass__ = ConfigMeta
+    
     def __init__(self, config_file, config):
-        super(Config, self).__init__(config)
+        super(Config, self).__init__(flatten(config))
         
-        self['document-extensions'] = set(self.get('document-extensions',
-            ['.md', '.mdown', '.markdown', '.wiki', '.text']))
-
-        if not self['document-extensions']:
-            self['document-extensions'].add('')
-        
-        meta = self.setdefault('meta', {})
-        meta['config_file'] = config_file
-        if 'root' not in meta:
-            meta['root'] = p.dirname(config_file)
+        self['meta.config-file'] = config_file
+        self['meta.root'] = p.dirname(config_file)
     
-    @property
-    def html_dir(self):
-        self.setdefault('hide-prefix', '.')
-        return p.join(self['meta']['root'],
-            self.get('html-dir', self['hide-prefix'] + 'html'))
+    def __getitem__(self, key):
+        try:
+            return dict.__getitem__(self, key)
+        except KeyError:
+            if key in self._defaults:
+                self[key] = copy.copy(self._defaults[key])
+            elif key in self._func_defaults:
+                self[key] = self._func_defaults[key](self, key)
+            else:
+                raise
+            return dict.__getitem__(self, key)
     
-    @property
-    def static_dir(self):
-        return p.join(self['meta']['root'], self.get('static-dir', 'static'))
-    
-    @property
-    def wiki_dir(self):
-        return p.join(self['meta']['root'], self.get('wiki-dir', 'wiki'))
-    
-    @property
-    def temp_dir(self):
-        self.setdefault('hide-prefix', '.')
-        return p.join(self['meta']['root'],
-            self.get('temp-dir', self['hide-prefix'] + 'tmp'))
-    
-    @property
-    def template_dir(self):
-        self.setdefault('hide-prefix', '.')
-        return p.join(self['meta']['root'],
-            self.get('template-dir', self['hide-prefix'] + 'templates'))
+    def __delitem__(self, key):
+        if (key not in self):
+            return # fail silently.
+        return dict.__delitem__(self, key)
     
     @classmethod
     def for_directory(cls, directory=None):
@@ -85,7 +96,6 @@ class Config(dict):
         
         if directory is None:
             directory = os.getcwd()
-        
         filename = p.join(directory, 'markdoc.yaml')
         return cls.for_file(filename)
     
@@ -107,77 +117,40 @@ class Config(dict):
             fp.close()
         
         return cls(filename, config)
+
+
+def flatten(dictionary, prefix=''):
     
-    @property
-    def template_env(self):
-        if not getattr(self, '__template_env', None):
-            # Lazy import to save time when running the `markdoc` command.
-            import jinja2
-            
-            loader_path = []
-            if p.isdir(self.template_dir):
-                loader_path.append(self.template_dir)
-            if self.setdefault('use-default-templates', True):
-                loader_path.append(markdoc.default_template_dir)
-            loader = jinja2.FileSystemLoader(loader_path)
-            
-            environment = jinja2.Environment(loader=loader)
-            environment.globals['config'] = self
-            
-            self.__template_env = environment
-        
-        return self.__template_env
+    """
+    Flatten nested dictionaries into dotted keys.
     
-    def markdown(self, **config):
-        """Return a `markdown.Markdown` instance for this configuration."""
-        
-        # Set up the default markdown configuration.
-        mdconfig = self.setdefault('markdown', {})
-        mdconfig.setdefault('extensions', [])
-        mdconfig.setdefault('extension_configs', mdconfig.get('extension-configs', {}))
-        mdconfig.setdefault('safe_mode', mdconfig.get('safe-mode', False))
-        mdconfig.setdefault('output_format', mdconfig.get('output-format', 'xhtml1'))
-        
-        config.update(mdconfig) # Include any extra kwargs.
-        return markdown.Markdown(**mdconfig)
+        >>> d = {
+        ...     'a': {
+        ...           'b': 1,
+        ...           'c': {
+        ...                 'd': 2,
+        ...                 'e': {
+        ...                       'f': 3
+        ...                 }
+        ...           }
+        ...      },
+        ...      'g': 4,
+        ... }
     
-    def server_maker(self, **extra_config):
-        
-        """
-        Return a server-making callable to create a CherryPy WSGI server.
-        
-        The server-making callable should be passed a WSGI application, and it
-        will return an instance of `cherrypy.wsgiserver.CherryPyWSGIServer`.
-        
-        You can optionally override any of the hardwired configuration
-        parameters by passing in keyword arguments which will be passed along to
-        the `CherryPyWSGIServer` constructor.
-        """
-        
-        # Lazy import, to save time for non-server commands.
-        import cherrypy.wsgiserver
-        
-        svconfig = self.setdefault('server', {})
-        
-        def get_conf(key, default):
-            return svconfig.setdefault(key,
-                # Look for `some-key` as well as `some_key`.
-                svconfig.get(key.replace('_', '-'),
-                    extra_config.pop(key, default)))
-        
-        bind = get_conf('bind', '127.0.0.1')
-        port = get_conf('port', 8008)
-        numthreads = get_conf('numthreads', get_conf('num_threads', 10))
-        server_name = get_conf('server_name', None)
-        request_queue_size = get_conf('request_queue_size', 5)
-        timeout = get_conf('timeout', 10)
-        
-        bind_addr = (bind, port)
-        kwargs = {
-            'numthreads': numthreads,
-            'server_name': server_name,
-            'request_queue_size': request_queue_size,
-            'timeout': timeout}
-        kwargs.update(extra_config)
-        
-        return lambda wsgi_app: cherrypy.wsgiserver.CherryPyWSGIServer(bind_addr, wsgi_app, **kwargs)
+        >>> sorted(flatten(d).items())
+        [('a.b', 1), ('a.c.d', 2), ('a.c.e.f', 3), ('g', 4)]
+    """
+    
+    for key in dictionary.keys():
+        value = dictionary.pop(key)
+        if not isinstance(value, dict):
+            dictionary[prefix + key] = value
+        else:
+            for key2 in value.keys():
+                value2 = value.pop(key2)
+                if not isinstance(value2, dict):
+                    dictionary[prefix + key + '.' + key2] = value2
+                else:
+                    dictionary.update(flatten(value2,
+                        prefix=(prefix + key + '.' + key2 + '.')))
+    return dictionary

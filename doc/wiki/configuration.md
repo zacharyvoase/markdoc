@@ -149,7 +149,7 @@ All of the server configuration parameters exist in the `server` dictionary (as 
 `num-threads` (default `10`)
 : Use this number of threads to handle requests.
 
-`server-name` (default is autodetected)
+`name` (default is autodetected)
 : Specify a server name. The default will be automatically detected from the socket the server binds to.
 
 `request-queue-size` (default `5`)

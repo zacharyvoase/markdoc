@@ -54,12 +54,12 @@ def init(_, args):
     else:
         destination = p.abspath(args.destination)
     
-    if os.path.exists(destination) and os.listdir(destination):
+    if p.exists(destination) and os.listdir(destination):
         init.parser.error("destination isn't empty")
-    elif not os.path.exists(destination):
+    elif not p.exists(destination):
         log.info('makedirs %s' % destination)
         os.makedirs(destination)
-    elif not os.path.isdir(destination):
+    elif not p.isdir(destination):
         init.parser.error("destination isn't a directory")
     
     log.info('mkdir %s/.templates/' % destination)
@@ -97,7 +97,7 @@ def vcs_ignore(config, args):
     
     log = logging.getLogger('markdoc.vcs-ignore')
     log.info('Creating ignore file for %s' % args.vcs)
-    wiki_root = config['meta']['root'] # shorter local alias.
+    wiki_root = config['meta.root'] # shorter local alias.
     
     ignore_file_lines = []
     ignore_file_lines.append(p.relpath(config.html_dir, start=wiki_root))
@@ -179,7 +179,7 @@ def sync_static(config, args):
     command = 'rsync -vaxq --ignore-errors --exclude=".*" --exclude="_*"'.split()
     display_cmd = command[:]
     
-    if config.setdefault('use-default-static', True):
+    if config['use-default-static']:
         # rsync needs the paths to have trailing slashes to work correctly.
         command.append(p.join(markdoc.default_static_dir, ''))
         display_cmd.append(p.basename(markdoc.default_static_dir) + '/')
@@ -215,7 +215,7 @@ def sync_html(config, args):
     command.append(p.join(config.temp_dir, ''))
     display_cmd.append(p.basename(config.temp_dir) + '/')
     
-    if config.setdefault('use-default-static', True):
+    if config['use-default-static']:
         command.append(p.join(markdoc.default_static_dir, ''))
         display_cmd.append(p.basename(markdoc.default_static_dir) + '/')
     
@@ -270,7 +270,7 @@ def build_listing(config, args):
     
     log = logging.getLogger('markdoc.build-listing')
     
-    list_basename = config.setdefault('listing-filename', '_list.html')
+    list_basename = config['listing-filename']
     builder = Builder(config)
     generate_listing = config.get('generate-listing', 'always').lower()
     always_list = True

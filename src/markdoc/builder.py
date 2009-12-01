@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
 
 import os
+import os.path as p
 import operator
 import re
 
 from markdoc.cache import DocumentCache, RenderCache, read_from
+from markdoc.config import Config
+
+
+Config.register_default('listing-filename', '_list.html')
 
 
 class Builder(object):
@@ -45,18 +50,18 @@ class Builder(object):
         
         """
         
-        if os.path.isabs(path):
+        if p.isabs(path):
             path = self.doc_cache.relative(path)
         
-        rel_components = path.split(os.path.sep)
-        terminus = os.path.splitext(rel_components.pop())[0]
+        rel_components = path.split(p.sep)
+        terminus = p.splitext(rel_components.pop())[0]
         
         if not rel_components:
             if terminus == 'index':
                 return [('index', None)]
             return [('index', '/'), (terminus, None)]
         elif terminus == 'index':
-            terminus = os.path.splitext(rel_components.pop())[0]
+            terminus = p.splitext(rel_components.pop())[0]
         
         crumbs = [('index', '/')]
         for component in rel_components:
@@ -80,10 +85,10 @@ class Builder(object):
             remove_hidden(files); files.sort()
             
             for filename in files:
-                name, extension = os.path.splitext(filename)
+                name, extension = p.splitext(filename)
                 if extension in self.config['document-extensions']:
-                    full_filename = os.path.join(dirpath, filename)
-                    yield os.path.relpath(full_filename, start=self.config.wiki_dir)
+                    full_filename = p.join(dirpath, filename)
+                    yield p.relpath(full_filename, start=self.config.wiki_dir)
     
     def listing_context(self, directory):
         
@@ -105,23 +110,20 @@ class Builder(object):
         directory = directory.strip('/')
         
         # Resolve to filesystem paths.
-        fs_rel_dir = os.path.sep.join(directory.split('/'))
-        fs_abs_dir = os.path.join(self.config.html_dir, fs_rel_dir)
-        skip_files = [
-            self.config.setdefault('listing-filename', '_list.html'),
-            'index.html'
-        ]
+        fs_rel_dir = p.sep.join(directory.split('/'))
+        fs_abs_dir = p.join(self.config.html_dir, fs_rel_dir)
+        skip_files = set([self.config['listing-filename'], 'index.html'])
         
         sub_directories, pages, files = [], [], []
         for basename in os.listdir(fs_abs_dir):
-            fs_abs_path = os.path.join(fs_abs_dir, basename)
+            fs_abs_path = p.join(fs_abs_dir, basename)
             file_dict = {
                 'basename': basename,
                 'href': directory + '/' + basename}
             if not file_dict['href'].startswith('/'):
                 file_dict['href'] = '/' + file_dict['href']
             
-            if os.path.isdir(fs_abs_path):
+            if p.isdir(fs_abs_path):
                 file_dict['href'] += '/'
                 sub_directories.append(file_dict)
             
@@ -130,16 +132,16 @@ class Builder(object):
                     basename.startswith('_')):
                     continue
                 
-                file_dict['slug'] = os.path.splitext(basename)[0]
-                file_dict['size'] = os.path.getsize(fs_abs_path)
+                file_dict['slug'] = p.splitext(basename)[0]
+                file_dict['size'] = p.getsize(fs_abs_path)
                 file_dict['humansize'] = humansize(file_dict['size'])
                 
-                if os.path.splitext(basename)[1] == (os.path.extsep + 'html'):
+                if p.splitext(basename)[1] == (p.extsep + 'html'):
                     # Get the title from the file.
                     contents = read_from(fs_abs_path)
                     file_dict['title'] = get_title(file_dict['slug'], contents)
                     # Remove .html from the end of the href.
-                    file_dict['href'] = os.path.splitext(file_dict['href'])[0]
+                    file_dict['href'] = p.splitext(file_dict['href'])[0]
                     pages.append(file_dict)
                 else:
                     files.append(file_dict)
@@ -215,7 +217,7 @@ def get_title(filename, data):
     if match:
         return match.group(1)
     
-    name, extension = os.path.splitext(os.path.basename(filename))
+    name, extension = p.splitext(p.basename(filename))
     return re.sub(r'[-_]+', ' ', name).title()
 
 
