@@ -231,6 +231,9 @@ def humansize(size, base=1024):
     import decimal
     import math
     
+    if size == 0:
+        return '0B'
+    
     i = int(math.log(size, base))
     prefix = 'BKMGTPEZY'[i]
     number = decimal.Decimal(size) / (base ** i)
