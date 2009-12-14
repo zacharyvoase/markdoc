@@ -1,6 +1,6 @@
 <!-- title: Index -->
 
-# Markdoc Documentation
+# Markdoc
 
 Markdoc is a lightweight Markdown-based wiki system. It’s been designed to allow you to create and manage wikis as quickly and easily as possible.
 
