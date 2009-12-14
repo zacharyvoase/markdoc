@@ -1,9 +1,21 @@
 # -*- coding: utf-8 -*-
 
-import distutils.core
 import os
 import os.path as p
 import re
+
+from distribute_setup import use_setuptools; use_setuptools()
+from setuptools import setup, find_packages
+
+
+rel_file = lambda *args: p.join(p.dirname(p.abspath(__file__)), *args)
+
+def read_from(filename):
+    fp = open(filename)
+    try:
+        return fp.read()
+    finally:
+        fp.close()
 
 
 if not hasattr(p, 'relpath'):
@@ -27,24 +39,14 @@ if not hasattr(p, 'relpath'):
 
 
 def get_version():
-    filename = p.join(p.dirname(__file__),
-        'src', 'markdoc', '__init__.py')
-    fp = open(filename)
-    try:
-        contents = fp.read()
-    finally:
-        fp.close()
-    return re.search(r"__version__ = '([^']+)'", contents).group(1)
+    data = read_from(rel_file('src', 'markdoc', '__init__.py'))
+    return re.search(r"__version__ = '([^']+)'", data).group(1)
 
 
-def find_packages():
-    packages = []
-    root = p.join(p.dirname(__file__), 'src')
-    for dirpath, subdirs, filenames in os.walk(root):
-        if '__init__.py' in filenames:
-            rel = p.relpath(dirpath, start=root)
-            packages.append(rel.replace(p.sep, '.'))
-    return packages
+def get_requirements():
+    data = read_from(rel_file('REQUIREMENTS'))
+    lines = map(lambda s: s.strip(), data.splitlines())
+    return filter(None, lines)
 
 
 def find_package_data():
@@ -58,16 +60,15 @@ def find_package_data():
                 files.append(p.relpath(abs_path, start=src_root))
     return files
 
-
-distutils.core.setup(**{
-    'name':         'Markdoc',
-    'version':      get_version(),
-    'author':       'Zachary Voase',
-    'author_email': 'zacharyvoase@me.com',
-    'url':          'http://bitbucket.org/zacharyvoase/markdoc',
-    'description':  'A lightweight Markdown-based wiki build tool.',
-    'packages':     find_packages(),
-    'package_dir':  {'': 'src'},
-    'package_data': {'markdoc': find_package_data()},
-    'scripts':      ['bin/markdoc'],
-})
+setup(
+    name             = 'Markdoc',
+    version          = get_version(),
+    author           = "Zachary Voase",
+    author_email     = "zacharyvoase@me.com",
+    url              = 'http://bitbucket.org/zacharyvoase/markdoc',
+    description      = "A lightweight Markdown-based wiki build tool.",
+    packages         = find_packages(where='src'),
+    package_dir      = {'': 'src'},
+    entry_points     = {'console_scripts': ['markdoc = markdoc.cli.main:main']},
+    install_requires = get_requirements(),
+)
