@@ -69,6 +69,7 @@ setup(
     description      = "A lightweight Markdown-based wiki build tool.",
     packages         = find_packages(where='src'),
     package_dir      = {'': 'src'},
+    package_data     = {'markdoc': find_package_data()},
     entry_points     = {'console_scripts': ['markdoc = markdoc.cli.main:main']},
     install_requires = get_requirements(),
 )
