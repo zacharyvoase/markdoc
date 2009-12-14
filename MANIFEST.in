@@ -1,2 +1,3 @@
 recursive-include src/markdoc/static/ *
+include distribute_setup.py
 global-exclude .DS_Store
