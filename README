@@ -28,14 +28,20 @@ has a few notable selling points:
 Quickstart
 ==========
 
+Requirements
+------------
+
+The minimum requirements to run the Markdoc utility are:
+
+  * Python 2.4 or later (2.5+ highly recommended)
+  * A UNIX (or at least POSIX-compliant) operating system
+  * [rsync](http://www.samba.org/rsync/) -- installed out of the box with most modern OSes, including Mac OS X and Ubuntu. In the future Markdoc may include a pure-Python implementation.
+
 Installation
 ------------
 
-    #!/bin/bash
-    hg clone ssh://hg@bitbucket.org/zacharyvoase/markdoc
-    cd markdoc/
-    pip install -r REQUIREMENTS
-    python setup.py install
+    #!bash
+    $ easy_install Markdoc
 
 Making a Wiki
 -------------
@@ -48,23 +54,6 @@ Making a Wiki
     markdoc build
     markdoc serve
     # .. open http://localhost:8008/ in a browser ...
-
-Requirements
-============
-
-The minimum requirements to run the Markdoc utility are:
-
-  * Python 2.4 or later
-  * A UNIX (or at least UNIX-like) operating system
-  * [pip](http://pip.openplans.org/) (you can get it via `easy_install -U pip`)
-  * [rsync](http://www.samba.org/rsync/) -- installed out of the box with most
-    modern OSes, including Mac OS X and Ubuntu. In the future Markdoc may
-    include a pure-Python implementation.
-
-`pip` is used to install all of the Python dependencies, which are individually
-listed in the `REQUIREMENTS` file alongside this README. If you don't want to
-use `pip`, you can manually go through this list and run
-`easy_install <package>` on each package name.
 
 Layout
 ======
@@ -82,5 +71,5 @@ Markdoc wikis have the following default layout:
 The `.html/` and `.tmp/` directories should be excluded from any VCS, since they
 contain temporary files.
 
-Consult the layout documentation in `doc/wiki/layout.md` for more information on
-the roles of various subdirectories.
+Consult the layout documentation in `doc/wiki/ref/layout.md` for more
+information on the roles of various subdirectories.
