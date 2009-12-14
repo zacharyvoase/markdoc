@@ -1,6 +1,6 @@
 # About Markdoc
 
-Markdoc is a project which aims to provide a lightweight alternative to large database-powered wiki systems. Below I have included the main goals and philosophy of the Markdoc project; I believe Markdoc currently meets all of these.
+Markdoc is a project which aims to provide a lightweight alternative to large database-powered wiki systems. I’ve listed the main goals of the project below; I believe that, in its current state, it meets all of these.
 
 ## Goals & Philosophy
 

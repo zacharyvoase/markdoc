@@ -2,12 +2,43 @@
 
 # Markdoc Documentation
 
-Markdoc is a lightweight Markdown-based wiki system. It’s been designed to allow you to create and manage wikis as quickly as possible, and with a minimum of difficulty. This documentation is completely Markdoc-powered.
+Markdoc is a lightweight Markdown-based wiki system. It’s been designed to allow you to create and manage wikis as quickly and easily as possible.
 
-You should start by looking at the [quickstart](/quickstart) document. That should give you all the information you need to put together a simple Markdoc wiki. After that, you’ll probably want to [write something](/writing).
+## What is it good for?
 
-See the [configuration](/configuration) documentation for in-depth knowledge on writing a good `markdoc.yaml` file. The [layout](/layout) documentation will tell you about the basic wiki filesystem layout, and the [tips](/tips/) directory has several handy recipes.
+Potential use cases for Markdoc include, but aren’t limited to:
 
-The Markdoc project’s goals and history are described in the [about](/about) page. If you’d like to know more about how Markdoc works at a deeper level, see the [internals directory](/internals/).
+Technical Documentation/Manuals
+:   Markdoc can be used to write and render hand-written guides and manuals for
+    software. Such documentation will normally be separate from
+    automatically-generated API documentation, and might give a higher-level
+    view than API docs alone. It might be used for client documentation for
+    web/desktop applications, or even developer documentation for frameworks.
+
+Internal Project Wikis
+:   Markdoc wikis consist of a single plain-text file per page. By combining a
+    wiki with a DVCS (such as [Mercurial][] or [Git][]), you can collaborate
+    with several other people. Use the DVCS to track, share and merge changes
+    with one another, and view the wiki’s history.
+    
+  [Mercurial]: http://mercurial.selenic.com/
+  [Git]: http://git-scm.com/
+
+Static Site Generation
+:   Markdoc converts wikis into raw HTML files and media. This allows you to
+    manage a blog, personal website or a collection of pages in a Markdoc wiki,
+    perhaps with custom CSS styles, and publish the rendered HTML to a website.
+    Markdoc need not be installed on the hosting site, since the resultant HTML
+    is completely independent.
+
+## Where do I start?
+
+The [quickstart](/quickstart) document has all the information you need to put together a simple Markdoc wiki. The [authoring](/authoring) guide provides a quick introduction to writing Markdoc pages themselves, especially with regards to linking between pages.
+
+## Reference
+
+See the [configuration](/ref/configuration) reference for in-depth knowledge on writing your `markdoc.yaml` file. The [layout](/ref/layout) reference describes the basic filesystem layout for a Markdoc wiki, and the [tips](/tips/) directory contains several handy recipes.
+
+The Markdoc project’s goals and history are described in the [about](/about) page. If you’d like to know more about how Markdoc works at a deeper level, take a look at the [internals directory](/internals/). Developers interested in hacking the utility will likely want the [development](/internals/development) page.
 
 To see the complete list of pages in this wiki, you can browse the [directory listing](/_list).
