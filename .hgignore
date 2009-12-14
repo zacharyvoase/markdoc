@@ -4,6 +4,8 @@ build/
 dist/
 MANIFEST
 .DS_Store
+*.egg-info
 *.pyc
+distribute-*
 doc/.tmp/
 doc/.html/
