@@ -32,8 +32,7 @@ def main(cmd_args=None):
     else:
         config = None
     
-    if args.quiet:
-        logging.getLogger('markdoc').setLevel(logging.ERROR)
+    logging.getLogger('markdoc').setLevel(getattr(logging, args.log_level))
     
     command = getattr(commands, args.command.replace('-', '_'))
     return command(config, args)

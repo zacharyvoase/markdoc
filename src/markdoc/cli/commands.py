@@ -25,8 +25,7 @@ def command(function):
     
     @wraps(function)
     def wrapper(config, args):
-        if not args.quiet:
-            print >>sys.stderr, '--> markdoc', cmd_name
+        logging.getLogger('markdoc').debug('Running markdoc.%s' % cmd_name)
         return function(config, args)
     wrapper.parser = parser
     
@@ -57,19 +56,19 @@ def init(_, args):
     if p.exists(destination) and os.listdir(destination):
         init.parser.error("destination isn't empty")
     elif not p.exists(destination):
-        log.info('makedirs %s' % destination)
+        log.debug('makedirs %s' % destination)
         os.makedirs(destination)
     elif not p.isdir(destination):
         init.parser.error("destination isn't a directory")
     
-    log.info('mkdir %s/.templates/' % destination)
+    log.debug('mkdir %s/.templates/' % destination)
     os.makedirs(p.join(destination, '.templates'))
-    log.info('mkdir %s/static/' % destination)
+    log.debug('mkdir %s/static/' % destination)
     os.makedirs(p.join(destination, 'static'))
-    log.info('mkdir %s/wiki/' % destination)
+    log.debug('mkdir %s/wiki/' % destination)
     os.makedirs(p.join(destination, 'wiki'))
     
-    log.info('Creating markdoc.yaml file')
+    log.debug('Creating markdoc.yaml file')
     config_filename = p.join(destination, 'markdoc.yaml')
     fp = open(config_filename, 'w')
     try:
@@ -78,10 +77,8 @@ def init(_, args):
         fp.close()
     
     if args.vcs_ignore:
-        quiet = args.quiet
         config = markdoc.config.Config.for_directory(destination)
         args = vcs_ignore.parser.parse_args([args.vcs_ignore])
-        args.quiet = quiet
         vcs_ignore(config, args)
     
     log.info('Wiki initialization complete')
@@ -98,7 +95,7 @@ def vcs_ignore(config, args):
     """Create a VCS ignore file for a wiki."""
     
     log = logging.getLogger('markdoc.vcs-ignore')
-    log.info('Creating ignore file for %s' % args.vcs)
+    log.debug('Creating ignore file for %s' % args.vcs)
     wiki_root = config['meta.root'] # shorter local alias.
     
     ignore_file_lines = []
@@ -109,7 +106,7 @@ def vcs_ignore(config, args):
         ignore_file_lines.insert(1, '')
     
     if args.output == '-':
-        log.info('Writing ignore file to stdout')
+        log.debug('Writing ignore file to stdout')
         fp = sys.stdout
     else:
         if not args.output:
@@ -125,7 +122,7 @@ def vcs_ignore(config, args):
         if fp is not sys.stdout:
             fp.close()
     
-    log.info('Ignore file written.')
+    log.debug('Ignore file written.')
 
 vcs_ignore.parser.add_argument('vcs', default='hg', nargs='?',
     choices=['hg', 'git', 'cvs', 'bzr'],
@@ -145,10 +142,10 @@ def clean_html(config, args):
     log = logging.getLogger('markdoc.clean-html')
     
     if p.exists(config.html_dir):
-        log.info('rm -Rf %s' % config.html_dir)
+        log.debug('rm -Rf %s' % config.html_dir)
         shutil.rmtree(config.html_dir)
     
-    log.info('makedirs %s' % config.html_dir)
+    log.debug('makedirs %s' % config.html_dir)
     os.makedirs(config.html_dir)
 
 
@@ -159,10 +156,10 @@ def clean_temp(config, args):
     log = logging.getLogger('markdoc.clean-temp')
     
     if p.exists(config.temp_dir):
-        log.info('rm -Rf %s' % config.temp_dir)
+        log.debug('rm -Rf %s' % config.temp_dir)
         shutil.rmtree(config.temp_dir)
     
-    log.info('makedirs %s' % config.temp_dir)
+    log.debug('makedirs %s' % config.temp_dir)
     os.makedirs(config.temp_dir)
 
 
@@ -175,7 +172,7 @@ def sync_static(config, args):
     log = logging.getLogger('markdoc.sync-static')
     
     if not p.exists(config.html_dir):
-        log.info('makedirs %s' % config.html_dir)
+        log.debug('makedirs %s' % config.html_dir)
         os.makedirs(config.html_dir)
     
     command = ('rsync -vaxq --ignore-errors --exclude=.* --exclude=_*').split()
@@ -193,11 +190,11 @@ def sync_static(config, args):
     command.append(p.join(config.html_dir, ''))
     display_cmd.append(p.basename(config.html_dir) + '/')
     
-    log.info(subprocess.list2cmdline(display_cmd))
+    log.debug(subprocess.list2cmdline(display_cmd))
     
     subprocess.check_call(command)
     
-    log.info('rsync completed')
+    log.debug('rsync completed')
 
 
 @command
@@ -207,7 +204,7 @@ def sync_html(config, args):
     log = logging.getLogger('markdoc.sync-html')
     
     if not p.exists(config.html_dir):
-        log.info('makedirs %s' % config.html_dir)
+        log.debug('makedirs %s' % config.html_dir)
         os.makedirs(config.html_dir)
     
     command = ('rsync -vaxq --delete --ignore-errors --exclude=.* --exclude=_*').split()
@@ -228,11 +225,11 @@ def sync_html(config, args):
     command.append(p.join(config.html_dir, ''))
     display_cmd.append(p.basename(config.html_dir) + '/')
     
-    log.info(subprocess.list2cmdline(display_cmd))
+    log.debug(subprocess.list2cmdline(display_cmd))
     
     subprocess.check_call(command)
     
-    log.info('rsync completed')
+    log.debug('rsync completed')
 
 
 ## Building
@@ -252,10 +249,10 @@ def build(config, args):
             p.splitext(rel_filename)[0] + p.extsep + 'html')
         
         if not p.exists(p.dirname(out_filename)):
-            log.info('makedirs %s' % p.dirname(out_filename))
+            log.debug('makedirs %s' % p.dirname(out_filename))
             os.makedirs(p.dirname(out_filename))
         
-        log.info('Creating %s' % p.relpath(out_filename, start=config.temp_dir))
+        log.debug('Creating %s' % p.relpath(out_filename, start=config.temp_dir))
         fp = codecs.open(out_filename, 'w', encoding='utf-8')
         try:
             fp.write(html)
@@ -277,7 +274,7 @@ def build_listing(config, args):
     generate_listing = config.get('generate-listing', 'always').lower()
     always_list = True
     if generate_listing == 'never':
-        log.info("No listing generated (generate-listing == never)")
+        log.debug("No listing generated (generate-listing == never)")
         return # No need to continue.
     
     for fs_dir, _, _ in os.walk(config.html_dir):
@@ -290,10 +287,10 @@ def build_listing(config, args):
             directory = '/'
         
         if (generate_listing == 'sometimes') and index_file_exists:
-            log.info("No listing generated for %s" % directory)
+            log.debug("No listing generated for %s" % directory)
             continue
         
-        log.info("Generating listing for %s" % directory)
+        log.debug("Generating listing for %s" % directory)
         listing = builder.render_listing(directory)
         list_filename = p.join(fs_dir, list_basename)
         
@@ -304,7 +301,7 @@ def build_listing(config, args):
             fp.close()
         
         if not index_file_exists:
-            log.info("cp %s/%s %s/%s" % (directory, list_basename, directory, 'index.html'))
+            log.debug("cp %s/%s %s/%s" % (directory, list_basename, directory, 'index.html'))
             shutil.copyfile(list_filename, p.join(fs_dir, 'index.html'))
 
 
@@ -339,7 +336,7 @@ def serve(config, args):
         log.info('Serving on http://%s:%d' % server.bind_addr)
         server.start()
     except KeyboardInterrupt:
-        log.info('Interrupted')
+        log.debug('Interrupted')
     finally:
         log.info('Shutting down gracefully')
         server.stop()
