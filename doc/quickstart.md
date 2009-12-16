@@ -38,15 +38,17 @@ The `markdoc init` command creates a new wiki. It also accepts a `--vcs-ignore` 
 
     #!bash
     $ markdoc init my-wiki --vcs-ignore hg
-    --> markdoc init
-    # ...logging output...
+    markdoc.vcs-ignore: INFO: Writing ignore file to .hgignore
+    markdoc.init: INFO: Wiki initialization complete
+    markdoc.init: INFO: Your new wiki is at: .../my-wiki
 
 If you’re using SVN, you have to take a few more steps to set the `svn:ignore` property on the directory:
 
     #!bash
     $ markdoc init my-wiki --vcs-ignore cvs
-    --> markdoc init
-    # ..logging output...
+    markdoc.vcs-ignore: INFO: Writing ignore file to .cvsignore
+    markdoc.init: INFO: Wiki initialization complete
+    markdoc.init: INFO: Your new wiki is at: .../my-wiki
     $ cd my-wiki/
     $ svn propset svn:ignore -F .cvsignore
     $ rm .cvsignore
@@ -64,15 +66,12 @@ Documents in a Markdoc wiki are located under the `wiki/` subdirectory, and are 
 Markdoc comes with a default set of templates and stylesheets, so you can build your wiki right away. Just run `markdoc build`, and all the HTML will be generated and output into the `.html/` sub-directory (known as the HTML root).
 
     $ markdoc build
-    --> markdoc build
-    # ...more logging output...
 
 ### Serving
 
 You can view all the HTML in a browser easily by running the built-in server. `markdoc serve` accepts a large number of options, but on its own will serve your documentation on port 8008.
 
     $ markdoc serve
-    --> markdoc serve
-    # ...even more logging output...
+    markdoc.serve: INFO: Serving on http://127.0.0.1:8008
 
 Now just open <http://localhost:8008/> in your browser, and see your new Markdoc-powered wiki!

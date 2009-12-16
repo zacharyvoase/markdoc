@@ -44,8 +44,6 @@ And you can just start creating pages in the directory.
 To run the build process, just do the usual:
 
     :::bash
-    $ markdoc build
-    # ... logging output ...
-    $ markdoc serve
+    $ markdoc build && markdoc serve
 
 `markdoc` recognizes both `markdoc.yaml` *and* `.markdoc.yaml` implicitly. Because you’ve hidden everything except the actual wiki pages, to most file browsers (including `ls`) the wiki will just look like a directory with a number of text files.

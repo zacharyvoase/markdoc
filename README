@@ -46,13 +46,13 @@ Installation
 Making a Wiki
 -------------
 
-    #!/bin/bash
-    markdoc init my-wiki
-    cd my-wiki/
-    vim wiki/somefile.md
+    #!bash
+    $ markdoc init my-wiki
+    $ cd my-wiki/
+    $ vim wiki/somefile.md
     # ... write some documentation ...
-    markdoc build
-    markdoc serve
+    $ markdoc build
+    $ markdoc serve
     # .. open http://localhost:8008/ in a browser ...
 
 Layout
