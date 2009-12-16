@@ -83,15 +83,20 @@ class Builder(object):
         yielded.
         """
         
+        if not self.config['document-extensions']:
+            self.config['document-extensions'].append('')
+        
+        def valid_extension(filename):
+            return any(filename.endswith(valid_ext)
+                       for valid_ext in self.config['document-extensions'])
+        
         for dirpath, subdirs, files in os.walk(self.config.wiki_dir):
             remove_hidden(subdirs); subdirs.sort()
             remove_hidden(files); files.sort()
             
-            for filename in files:
-                name, extension = p.splitext(filename)
-                if extension in self.config['document-extensions']:
-                    full_filename = p.join(dirpath, filename)
-                    yield p.relpath(full_filename, start=self.config.wiki_dir)
+            for filename in filter(valid_extension, files):
+                full_filename = p.join(dirpath, filename)
+                yield p.relpath(full_filename, start=self.config.wiki_dir)
     
     def listing_context(self, directory):
         
