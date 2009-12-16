@@ -1,4 +1,8 @@
 wiki-name: Markdoc Documentation
+
+wiki-dir: "."
+static-dir: ".static"
+
 markdown:
   extensions:
     - codehilite
