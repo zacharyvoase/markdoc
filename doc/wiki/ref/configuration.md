@@ -1,6 +1,6 @@
 # Configuration
 
-All Markdoc wikis are configured via a single `markdoc.yaml` file in the wiki root. This file is formatted with YAML (Yet Another Markup Language); you can find more information on that at [yaml.org](http://yaml.org/).
+All Markdoc wikis are configured via a single `markdoc.yaml` file in the wiki root. This file is formatted with YAML (Yet Another Markup Language); you can find more information on that at [yaml.org](http://yaml.org/). When running the command-line interface, Markdoc will search for either a `markdoc.yaml` or a `.markdoc.yaml` file in the current directory. You can also explicitly specify a file to use with the `-c`/`--config` command-line option.
 
 ## Example
 
@@ -60,7 +60,7 @@ This is information about your wiki itself. It is currently only used for render
 
 ### Directories
 
-These settings affect where Markdoc looks for some pieces of data, and where it puts others. You can get more information on the roles of various directories in the [layout documentation](/layout). Note that all `*-dir` parameters are resolved relative to the wiki root.
+These settings affect where Markdoc looks for some pieces of data, and where it puts others. You can get more information on the roles of various directories in the [layout documentation](/layout). Note that all `*-dir` parameters are resolved relative to the wiki root, and that `'.'` (i.e. the wiki root itself) is an acceptable value.
 
 `hide-prefix` (default `.`)
 : This determines how Markdoc finds and writes to hidden directories like `.tmp`, `.templates` and `.html`. You may wish to set this to `'_'` if your VCS or operating system doesn’t play nicely with period-prefixed filenames. If you specify `html-dir`, `temp-dir` and `template-dir`, this setting won’t have any effect.
