@@ -6,6 +6,8 @@ import os.path as p
 
 import webob
 
+from markdoc.render import make_relative
+
 
 if not mimetypes.inited:
     mimetypes.init()
@@ -154,6 +156,7 @@ class MarkdocWSGIApplication(object):
             context = {}
             context['request'] = request
             context['is_index'] = request.path_info in ['/', '/index.html']
+            context['make_relative'] = lambda href: make_relative(request.path_info, href)
             context['status'] = status
             context['reason'] = webob.status_reasons[status]
             
