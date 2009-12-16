@@ -12,8 +12,23 @@ The minimum requirements to run the Markdoc utility are:
 
 ## Installation
 
+You can use either `easy_install` or [pip][] to install Markdoc:
+
+  [pip]: http://pip.openplans.org/
+  
     #!bash
-    $ easy_install Markdoc
+    $ easy_install Markdoc # OR
+    $ pip install Markdoc
+
+Note that you are likely to see a lot of scary-looking output from both commands; nevertheless, you can tell whether installation was successful by looking at the last line of the output. With `easy_install`, this should be:
+
+    Finished processing dependencies for Markdoc
+
+And with `pip install`:
+
+    Successfully installed ... Markdoc ...
+
+pip will list all of the packages it installed, and `Markdoc` should be amongst them.
 
 ## Making a Wiki
 
@@ -25,6 +40,16 @@ The `markdoc init` command creates a new wiki. It also accepts a `--vcs-ignore` 
     $ markdoc init my-wiki --vcs-ignore hg
     --> markdoc init
     # ...logging output...
+
+If you’re using SVN, you have to take a few more steps to set the `svn:ignore` property on the directory:
+
+    #!bash
+    $ markdoc init my-wiki --vcs-ignore cvs
+    --> markdoc init
+    # ..logging output...
+    $ cd my-wiki/
+    $ svn propset svn:ignore -F .cvsignore
+    $ rm .cvsignore
 
 ### Editing Pages
 
