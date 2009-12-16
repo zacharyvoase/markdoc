@@ -1,4 +1,5 @@
 wiki-name: Markdoc Documentation
+google-analytics: UA-9915287-4
 
 wiki-dir: "."
 static-dir: ".static"
