@@ -96,8 +96,12 @@ class Config(dict):
         
         if directory is None:
             directory = os.getcwd()
-        filename = p.join(directory, 'markdoc.yaml')
-        return cls.for_file(filename)
+        
+        if p.exists(p.join(directory, 'markdoc.yaml')):
+            return cls.for_file(p.join(directory, 'markdoc.yaml'))
+        elif p.exists(p.join(directory, '.markdoc.yaml')):
+            return cls.for_file(p.join(directory, '.markdoc.yaml'))
+        raise ConfigNotFound("A markdoc configuration could not be found.")
     
     @classmethod
     def for_file(cls, filename):
