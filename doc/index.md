@@ -4,6 +4,7 @@
 
 Markdoc is a lightweight Markdown-based wiki system. It’s been designed to allow you to create and manage wikis as quickly and easily as possible.
 
+
 ## What is it good for?
 
 Potential use cases for Markdoc include, but aren’t limited to:
@@ -31,9 +32,33 @@ Static Site Generation
     Markdoc need not be installed on the hosting site, since the resultant HTML
     is completely independent.
 
+
+## Cool Features
+
+*   Set up [Google Analytics][] tracking in one line of configuration.
+
+*   [Barebones][] wikis that just look like directories with Markdown-formatted
+    text files in them.
+
+*   A built-in HTTP server and WSGI application to serve up a compiled wiki with
+    a single command.
+
+*   Continuous builds (via `rsync`) mean the server can keep running whilst
+    Markdoc re-compiles the wiki. Just refresh your browser to see the changes.
+
+*   Add [Pygments][]-powered syntax highlighting to your Markdoc wiki with a
+    single [configuration parameter][syntax-highlighting].
+
+[google analytics]: /ref/configuration#metadata
+[barebones]: /tips/barebones
+[pygments]: http://pygments.org/
+[syntax-highlighting]: /tips/syntax-highlighting
+
+
 ## Where do I start?
 
 The [quickstart](/quickstart) document has all the information you need to put together a simple Markdoc wiki. The [authoring](/authoring) guide provides a quick introduction to writing Markdoc pages themselves, especially with regards to linking between pages.
+
 
 ## Reference
 

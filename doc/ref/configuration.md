@@ -9,6 +9,7 @@ Here weâ€™ll go through an example and show how the various settings affect Mark
     #!yaml
     # Metadata
     wiki-name: "My Wiki"
+    google-analytics: UA-XXXXXX-X
     
     # Directories
     hide-prefix: "."
@@ -53,10 +54,15 @@ Remember that Markdoc uses sensible defaults for *all* of these options, so itâ€
 
 ### Metadata
 
-This is information about your wiki itself. It is currently only used for rendering the templates.
+This is information about your wiki itself. It is currently only used when rendering the default set of templates, but custom templates may also use these parameters.
 
 `wiki-name` (no default)
 : Specify the human-friendly name of your wiki. If defined, this will appear in the title and footer in the default Markdoc templates.
+
+`google-analytics` (no default)
+: Specify a [Google Analytics][] tracking key for your Markdoc site. If given, the GA tracking code will be included in every HTML document. Note that this should be the full key, in the format `UA-XXXXXX-X`.
+
+  [google analytics]: http://google.com/analytics/
 
 ### Directories
 

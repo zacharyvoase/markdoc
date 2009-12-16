@@ -6,24 +6,30 @@ Markdoc is a lightweight Markdown-based wiki system. It’s geared towards
 managing technical documentation, but can be used for a range of purposes. It
 has a few notable selling points:
 
-* Wikis are made up completely of plaintext files, so you can easily put them 
-  under version control.
+*   Wikis are made up completely of plaintext files, so you can easily put them 
+    under version control.
 
-* Wikis compile into standalone HTML directories, which can be distributed as 
-  tarballs or served by a HTTP server.
+*   Wikis compile into standalone HTML directories, which can be distributed as 
+    tarballs or served by a HTTP server.
 
-* You can optionally include static media which will be compiled into the HTML 
-  directory alongside all your rendered pages.
+*   Set up Google Analytics tracking in one line of configuration.
 
-* Markdoc comes with a fully-functional pure-Python WSGI application and HTTP 
-  server for serving up compiled wikis.
+*   Create barebones wikis that just look like folders containing
+    Markdown-formatted text files.
 
-* You can render your wiki with a variety of Markdown extensions, such as 
-  Pygments-based code highlighting, extended syntax for definition lists, TOC 
-  generation, et cetera.
+*   You can optionally include static media which will be compiled into the HTML 
+    directory alongside all your rendered pages.
 
-* You can completely customize how your wiki is rendered by editing the Jinja2
-  templates used to convert rendered Markdown into full HTML documents.
+*   Markdoc comes with a fully-functional pure-Python WSGI application and HTTP 
+    server for serving up compiled wikis.
+
+*   You can render your wiki with a variety of Markdown extensions, such as 
+    Pygments-based code highlighting, extended syntax for definition lists, TOC 
+    generation, et cetera.
+
+*   You can completely customize how your wiki is rendered by editing the Jinja2
+    templates used to convert rendered Markdown into full HTML documents.
+
 
 Quickstart
 ==========
