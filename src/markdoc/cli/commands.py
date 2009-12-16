@@ -178,7 +178,7 @@ def sync_static(config, args):
         log.info('makedirs %s' % config.html_dir)
         os.makedirs(config.html_dir)
     
-    command = 'rsync -vaxq --ignore-errors --exclude=".*" --exclude="_*"'.split()
+    command = ('rsync -vaxq --ignore-errors --exclude=.* --exclude=_*').split()
     display_cmd = command[:]
     
     if config['use-default-static']:
@@ -210,7 +210,7 @@ def sync_html(config, args):
         log.info('makedirs %s' % config.html_dir)
         os.makedirs(config.html_dir)
     
-    command = 'rsync -vaxq --delete --ignore-errors --exclude=".*" --exclude="_*"'.split()
+    command = ('rsync -vaxq --delete --ignore-errors --exclude=.* --exclude=_*').split()
     display_cmd = command[:]
     
     # rsync needs the paths to have trailing slashes to work correctly.
