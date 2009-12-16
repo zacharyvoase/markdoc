@@ -9,62 +9,84 @@
       xmlns:foaf="http://xmlns.com/foaf/0.1/"
       {%- endblock %}>
   
+  {% import "macros/html" as html -%}
+  
   <head>
-    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+    {% block head %}
     
-    <title>
-      {% if 'wiki-name' in config %}{{ config['wiki-name']|e }} » {% endif -%}
-      {% block title %}{{ title }}{% endblock %}
-    </title>
+      {% block meta %}
+        <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+      {% endblock %}
+      
+      <title>
+        {% block title_prefix -%}
+          {% if 'wiki-name' in config %}{{ config['wiki-name']|e }} » {% endif %}
+        {%- endblock %}
+        {% block title -%}
+          {{ title }}
+        {%- endblock %}
+      </title>
+      
+      {% block css %}
+        {{ html.cssimport(make_relative("/media/css/reset.css")) }}
+        {{ html.cssimport(make_relative("/media/css/layout.css")) }}
+        {{ html.cssimport(make_relative("/media/css/typography.css")) }}
+        {{ html.cssimport(make_relative("/media/css/pygments.css")) }}
+      {% endblock %}
+      
+      {% block js %}{% endblock %}
     
-    {% import "macros/html" as html -%}
-    
-    {{ html.cssimport(make_relative("/media/css/reset.css")) }}
-    {{ html.cssimport(make_relative("/media/css/layout.css")) }}
-    {{ html.cssimport(make_relative("/media/css/typography.css")) }}
-    {{ html.cssimport(make_relative("/media/css/pygments.css")) }}
+    {% endblock head %}
   </head>
   
-  <body>
+  <body {% block body_attrs %}{% endblock %}>{% block body %}
     <div id="content">
-
-      {% if crumbs %}
-        <div id="breadcrumbs">
-          <p>
-              {% for name, href in crumbs %}
-                {% if href == None %}
-                  {{ name|e }}
-                {% else %}
-                  <a href="{{ make_relative(href)|e }}">{{ name|e }}</a>{% if loop.revindex0 %} &#187;{% endif %}
-                {% endif %}
-              {% endfor %}
-          </p>
-        </div> <!-- div#breadcrumbs -->
-      {% endif %}
       
-      {% block body %}
-      {% endblock %}
-    
-      <p id="footer">
-        {% if 'wiki-name' in config %}
-          {{ config['wiki-name']|e }} —
+      {% block crumbs %}
+        {% if crumbs %}
+          <div id="breadcrumbs">
+            <p>
+                {% for name, href in crumbs %}
+                  {% if href == None %}
+                    {{ name|e }}
+                  {% else %}
+                    <a href="{{ make_relative(href)|e }}">{{ name|e }}</a>{% if loop.revindex0 %} &#187;{% endif %}
+                  {% endif %}
+                {% endfor %}
+            </p>
+          </div> <!-- div#breadcrumbs -->
         {% endif %}
-        Powered by <a href="http://bitbucket.org/zacharyvoase/markdoc">Markdoc</a>.
-      </p>
+      {% endblock crumbs %}
+      
+      {% block content %}
+      {% endblock content %}
+      
+      {% block footer %}
+        <p id="footer">
+          {% if 'wiki-name' in config %}
+            {{ config['wiki-name']|e }} —
+          {% endif %}
+          Powered by <a href="http://bitbucket.org/zacharyvoase/markdoc">Markdoc</a>.
+        </p>
+      {% endblock footer %}
     
     </div> <!-- div#content -->
     
-    {% if 'google-analytics' in config %}
-    <!-- Google Analytics -->
-      <script type="text/javascript">
-      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-      </script>
-      <script type="text/javascript">
-      try{
-      var pageTracker = _gat._getTracker("{{ config['google-analytics'] }}");
-      pageTracker._trackPageview();
-      } catch(err) {}</script>
-    {% endif %}
-  </body>
+    {% block analytics %}
+      {% if 'google-analytics' in config %}
+        <!-- Google Analytics -->
+        <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+        <script type="text/javascript">
+        try{
+        var pageTracker = _gat._getTracker("{{ config['google-analytics'] }}");
+        pageTracker._trackPageview();
+        } catch(err) {}</script>
+      {% endif %}
+    {% endblock analytics %}
+    
+    {% block end %}{% endblock %}
+  {% endblock body %}</body>
 </html>
