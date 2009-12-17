@@ -5,7 +5,7 @@ import os
 import os.path as p
 
 
-__version__ = '0.4.3'
+__version__ = '0.4.4'
 static_dir = p.join(p.dirname(__file__), 'static')
 default_static_dir = p.join(static_dir, 'default-static')
 default_template_dir = p.join(static_dir, 'default-templates')
