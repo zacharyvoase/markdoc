@@ -23,7 +23,7 @@ There are several files and directories in the root of the repo:
     |-- doc/
     |-- src/
     |-- test/
-    |-- LICENSE
+    |-- UNLICENSE
     |-- MANIFEST.in
     |-- README
     |-- REQUIREMENTS
@@ -41,8 +41,8 @@ There are several files and directories in the root of the repo:
 :   Markdoc’s tests (Python + Doctests) and nose configuration. [Nose][] is a 
     Python utility to automate and simplify running complex test suites.
 
-`LICENSE`
-:   The text of the MIT/X11 license under which Markdoc is released.
+`UNLICENSE`
+:   The text of the unlicense which designates Markdoc as public domain software.
 
 `MANIFEST.in`, `setup.py`, `distribute_setup.py`
 :   The necessary Python packaging machinery, so you can run
@@ -67,6 +67,15 @@ All bugs and feature requests are handled on the [Bitbucket issues page](http://
 
 ### Contributing
 
-If you’re interested in implementing a feature or extension for Markdoc, just fork the Bitbucket repository, work on the feature, commit your changes, then send me a pull request. If I like what you’ve done, I’ll pull your changes into the official Markdoc release and give you author credit. Note: you must be willing to release your changes under Markdoc’s [license][], which is a standard MIT/X11 license.
+If you’re interested in implementing a feature or extension for Markdoc, just fork the Bitbucket repository, work on the feature, commit your changes, then send me a pull request. If I like what you’ve done, I’ll pull your changes into the official Markdoc release and give you author credit.
 
-  [license]: http://bitbucket.org/zacharyvoase/markdoc/src/tip/LICENSE
+Remember that you must be willing to release your changes to the public domain. If you are submitting a non-trivial patch, take a look at [unlicense.org][unlicensing contributions] for detailed instructions; for now, you just need to agree to the following statement:
+
+  [unlicensing contributions]: http://unlicense.org/#unlicensing-contributions
+
+    :::text
+    I dedicate any and all copyright interest in this software to the
+    public domain. I make this dedication for the benefit of the public at
+    large and to the detriment of my heirs and successors. I intend this
+    dedication to be an overt act of relinquishment in perpetuity of all
+    present and future rights to this software under copyright law.

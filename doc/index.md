@@ -49,10 +49,16 @@ Static Site Generation
 *   Add [Pygments][]-powered syntax highlighting to your Markdoc wiki with a
     single [configuration parameter][syntax-highlighting].
 
+*   Markdoc is [public domain software][licensing]. It will always be completely
+    free to use, and you can redistribute it (in part or in whole) under any
+    circumstances (open-source, proprietary or otherwise) with no attribution or
+    encumberances.
+
 [google analytics]: /ref/configuration#metadata
 [barebones]: /tips/barebones
 [pygments]: http://pygments.org/
 [syntax-highlighting]: /tips/syntax-highlighting
+[licensing]: /about#license
 
 
 ## Where do I start?
