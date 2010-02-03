@@ -54,38 +54,48 @@
     {% endblock head %}
   </head>
   
-  <body {% block body_attrs %}{% endblock %}>{% block body %}
-    <div id="content">
-      
-      {% block crumbs %}
-        {% if crumbs %}
-          <div id="breadcrumbs">
-            <p>
-                {% for name, href in crumbs %}
-                  {% if href == None %}
-                    {{ name|e }}
-                  {% else %}
-                    <a href="{{ make_relative(href)|e }}">{{ name|e }}</a>{% if loop.revindex0 %} &#187;{% endif %}
-                  {% endif %}
-                {% endfor %}
-            </p>
-          </div> <!-- div#breadcrumbs -->
-        {% endif %}
-      {% endblock crumbs %}
-      
-      {% block content %}
-      {% endblock content %}
-      
-      {% block footer %}
-        <p id="footer">
-          {% if 'wiki-name' in config %}
-            {{ config['wiki-name']|e }} —
-          {% endif %}
-          Powered by <a href="http://bitbucket.org/zacharyvoase/markdoc">Markdoc</a>.
-        </p>
-      {% endblock footer %}
+  <body {% block body_attrs %}{% endblock %}>
+    {% block body %}
     
-    </div> <!-- div#content -->
-  {% block end %}{% endblock %}
-  {% endblock body %}</body>
+      {% block body_header %}
+      {% endblock %}
+    
+      <div id="content">
+        {% block content_header %}
+        {% endblock %}
+      
+        {% block crumbs %}
+          {% if crumbs %}
+            <div id="breadcrumbs">
+              <p>
+                  {% for name, href in crumbs %}
+                    {% if href == None %}
+                      {{ name|e }}
+                    {% else %}
+                      <a href="{{ make_relative(href)|e }}">{{ name|e }}</a>{% if loop.revindex0 %} &#187;{% endif %}
+                    {% endif %}
+                  {% endfor %}
+              </p>
+            </div> <!-- div#breadcrumbs -->
+          {% endif %}
+        {% endblock crumbs %}
+      
+        {% block content %}
+        {% endblock content %}
+      
+        {% block content_footer %}
+          <p id="footer">
+            {% if 'wiki-name' in config %}
+              {{ config['wiki-name']|e }} —
+            {% endif %}
+            Powered by <a href="http://bitbucket.org/zacharyvoase/markdoc">Markdoc</a>.
+          </p>
+        {% endblock footer %}
+      </div> <!-- div#content -->
+    
+      {% block body_footer %}
+      {% endblock body_footer %}
+  
+    {% endblock body %}
+  </body>
 </html>
