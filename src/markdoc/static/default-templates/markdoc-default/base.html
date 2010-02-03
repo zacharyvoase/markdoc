@@ -58,11 +58,11 @@
     {% block body %}
     
       {% block body_header %}
-      {% endblock %}
+      {% endblock body_header %}
     
       <div id="content">
         {% block content_header %}
-        {% endblock %}
+        {% endblock content_header %}
       
         {% block crumbs %}
           {% if crumbs %}
@@ -90,7 +90,7 @@
             {% endif %}
             Powered by <a href="http://bitbucket.org/zacharyvoase/markdoc">Markdoc</a>.
           </p>
-        {% endblock footer %}
+        {% endblock content_footer %}
       </div> <!-- div#content -->
     
       {% block body_footer %}
