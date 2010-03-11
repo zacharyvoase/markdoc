@@ -12,11 +12,20 @@ body {
     overflow: hidden;
     padding: 0 20px;
     width: 920px; }
+  body #breadcrumbs li {
+    list-style: none;
+    padding: 0;
+    margin: 0; }
   body .clear {
     clear: both;
     border-width: 0;
     margin: 0;
     visibility: hidden; }
+
+blockquote {
+  background-color: #f6f6f6;
+  padding: 13px;
+  padding-bottom: 1px; }
 
 dl {
   margin-left: 0; }
@@ -30,13 +39,21 @@ ul {
   ul li {
     list-style: square outside; }
 
+pre {
+  border-left: 1px solid gray;
+  margin-bottom: 13px;
+  margin-left: 30px;
+  padding-left: 12px; }
+
 .codehilite {
   border-left: 1px solid gray;
   margin-bottom: 13px;
   margin-left: 30px;
   padding-left: 12px; }
   .codehilite pre {
-    margin-bottom: 0; }
+    border: none;
+    margin: 0;
+    padding: 0; }
 
 .codehilitetable {
   margin-left: 0;
@@ -49,26 +66,28 @@ ul {
       padding: 0 4px;
       width: 22px; }
       .codehilitetable tr td.linenos .linenodiv pre {
-        margin-bottom: 0; }
+        border: none;
+        margin: 0;
+        padding: 0; }
     .codehilitetable tr td.code {
       margin: 0;
       padding: 0;
       padding-left: 12px; }
       .codehilitetable tr td.code .codehilite {
         border: none;
-        margin-bottom: 0;
-        margin-left: 0;
-        padding-left: 0; }
+        margin: 0;
+        padding: 0; }
 
 body {
   font-family: Helvetica Neue, Helvetica, Arial, Geneva, sans-serif;
   line-height: 21px; }
 
-/* Lists */
+h1, h2, h3, h4, h5, h6 {
+  font-size: 1.2em; }
+
 dl dt {
   font-weight: bold; }
 
-/* Code */
 code, pre {
   font-family: Courier, Courier New, monospace;
   font-weight: normal !important;

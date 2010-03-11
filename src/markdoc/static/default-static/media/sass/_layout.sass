@@ -14,11 +14,25 @@ body
     :padding 0 20px
     :width= 960px - (20px + 20px)
   
+  #breadcrumbs
+    li
+      :list-style none
+      :padding 0
+      :margin 0
+  
   .clear
     :clear both
     :border-width 0
     :margin 0
     :visibility hidden
+
+
+// Common elements
+
+blockquote
+  :background-color #f6f6f6
+  :padding 13px
+  :padding-bottom 1px
 
 
 // Lists
@@ -38,13 +52,21 @@ ul
 
 // Code blocks
 
-.codehilite
+=codeblock
   :border-left 1px solid gray
   :margin-bottom 13px
   :margin-left 30px
   :padding-left 12px
+
+pre
+  +codeblock
+
+.codehilite
+  +codeblock
   pre
-    :margin-bottom 0
+    :border none
+    :margin 0
+    :padding 0
 
 .codehilitetable
   :margin-left 0
@@ -57,13 +79,14 @@ ul
       :padding 0 4px
       :width= 30px - (4px + 4px)
       .linenodiv pre
-        :margin-bottom 0
+        :border none
+        :margin 0
+        :padding 0
     &.code
       :margin 0
       :padding 0
       :padding-left 12px
       .codehilite
         :border none
-        :margin-bottom 0
-        :margin-left 0
-        :padding-left 0
+        :margin 0
+        :padding 0
