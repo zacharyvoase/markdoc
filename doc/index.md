@@ -2,7 +2,8 @@
 
 # Markdoc
 
-Markdoc is a lightweight Markdown-based wiki system. It’s been designed to allow you to create and manage wikis as quickly and easily as possible.
+Markdoc is a lightweight Markdown-based wiki system. It’s been designed to allow
+you to create and manage wikis as quickly and easily as possible.
 
 
 ## What is it good for?
@@ -63,13 +64,24 @@ Static Site Generation
 
 ## Where do I start?
 
-The [quickstart](/quickstart) document has all the information you need to put together a simple Markdoc wiki. The [authoring](/authoring) guide provides a quick introduction to writing Markdoc pages themselves, especially with regards to linking between pages.
+The [quickstart](/quickstart) document has all the information you need to put
+together a simple Markdoc wiki. The [authoring](/authoring) guide provides a
+quick introduction to writing Markdoc pages themselves, especially with regards
+to linking between pages.
 
 
 ## Reference
 
-See the [configuration](/ref/configuration) reference for in-depth knowledge on writing your `markdoc.yaml` file. The [layout](/ref/layout) reference describes the basic filesystem layout for a Markdoc wiki, and the [tips](/tips/) directory contains several handy recipes.
+See the [configuration](/ref/configuration) reference for in-depth knowledge on
+writing your `markdoc.yaml` file. The [layout](/ref/layout) reference describes
+the basic filesystem layout for a Markdoc wiki, and the [tips](/tips/) directory
+contains several handy recipes.
 
-The Markdoc project’s goals and history are described in the [about](/about) page. If you’d like to know more about how Markdoc works at a deeper level, take a look at the [internals directory](/internals/). Developers interested in hacking the utility will likely want the [development](/internals/development) page.
+The Markdoc project’s goals and history are described in the [about](/about)
+page. If you’d like to know more about how Markdoc works at a deeper level, take
+a look at the [internals directory](/internals/). Developers interested in
+hacking the utility will likely want the [development](/internals/development)
+page.
 
-To see the complete list of pages in this wiki, you can browse the [directory listing](/_list).
+To see the complete list of pages in this wiki, you can browse the
+[directory listing](/_list).
