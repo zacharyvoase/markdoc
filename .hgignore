@@ -4,6 +4,7 @@ build/
 dist/
 MANIFEST
 .DS_Store
+.sass-cache
 *.egg-info
 *.pyc
 distribute-*
