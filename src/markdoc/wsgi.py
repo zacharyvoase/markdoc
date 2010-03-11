@@ -158,7 +158,7 @@ class MarkdocWSGIApplication(object):
             context['is_index'] = request.path_info in ['/', '/index.html']
             context['make_relative'] = lambda href: make_relative(request.path_info, href)
             context['status'] = status
-            context['reason'] = webob.status_reasons[status]
+            context['reason'] = webob.statusreasons.status_reasons[status]
             
             template = self.config.template_env.get_template('%d.html' % status)
             response.unicode_body = template.render(context)
