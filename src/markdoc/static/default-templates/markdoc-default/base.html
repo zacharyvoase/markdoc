@@ -10,6 +10,7 @@
       {%- endblock %}>
   
   {% import "macros/html" as html -%}
+  {% import "macros/crumbs" as breadcrumbs with context -%}
   
   <head>
     {% block head %}
@@ -56,46 +57,35 @@
   
   <body {% block body_attrs %}{% endblock %}>
     {% block body %}
-    
+      
       {% block body_header %}
+        {% block crumbs %}
+          {{ breadcrumbs.crumbs(crumbs) }}
+        {% endblock crumbs %}
       {% endblock body_header %}
-    
+      
       <div id="content">
         {% block content_header %}
         {% endblock content_header %}
-      
-        {% block crumbs %}
-          {% if crumbs %}
-            <div id="breadcrumbs">
-              <p>
-                  {% for name, href in crumbs %}
-                    {% if href == None %}
-                      {{ name|e }}
-                    {% else %}
-                      <a href="{{ make_relative(href)|e }}">{{ name|e }}</a>{% if loop.revindex0 %} &#187;{% endif %}
-                    {% endif %}
-                  {% endfor %}
-              </p>
-            </div> <!-- div#breadcrumbs -->
-          {% endif %}
-        {% endblock crumbs %}
-      
+        
         {% block content %}
         {% endblock content %}
-      
+        
         {% block content_footer %}
-          <p id="footer">
-            {% if 'wiki-name' in config %}
-              {{ config['wiki-name']|e }} —
-            {% endif %}
-            Powered by <a href="http://bitbucket.org/zacharyvoase/markdoc">Markdoc</a>.
-          </p>
         {% endblock content_footer %}
       </div> <!-- div#content -->
-    
+      
       {% block body_footer %}
+      <div id="footer">
+        <p>
+          {% if 'wiki-name' in config %}
+            {{ config['wiki-name']|e }} —
+          {% endif %}
+          Powered by <a href="http://markdoc.org/">Markdoc</a>.
+        </p>
+      </div>
       {% endblock body_footer %}
-  
+    
     {% endblock body %}
   </body>
 </html>
