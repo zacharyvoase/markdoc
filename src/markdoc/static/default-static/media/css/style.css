@@ -1,35 +1,75 @@
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td { margin: 0; padding: 0; border: 0; outline: 0; font-weight: inherit; font-style: inherit; font-size: 100%; font-family: inherit; vertical-align: baseline; }
+html {
+  background-color: #f6f6f6; }
 
-*:focus { outline: 0; }
+body {
+  background-color: white;
+  margin: 0 auto;
+  width: 960px; }
+  body #breadcrumbs, body #content, body #footer {
+    background-color: white;
+    clear: both;
+    float: left;
+    overflow: hidden;
+    padding: 0 20px;
+    width: 920px; }
+  body .clear {
+    clear: both;
+    border-width: 0;
+    margin: 0;
+    visibility: hidden; }
 
-body { line-height: 1em; color: black; background: #fff; }
+dl {
+  margin-left: 0; }
+  dl dd {
+    margin-bottom: 13px;
+    margin-left: 13px; }
 
-ol, ul { list-style: none; }
+ul {
+  margin-left: 18px;
+  margin-top: 0; }
+  ul li {
+    list-style: square outside; }
 
-/* tables still need 'cellspacing="0"' in the markup */
-table { border-collapse: separate; border-spacing: 0; vertical-align: middle; }
+.codehilite {
+  border-left: 1px solid gray;
+  margin-bottom: 13px;
+  margin-left: 30px;
+  padding-left: 12px; }
+  .codehilite pre {
+    margin-bottom: 0; }
 
-caption, th, td { text-align: left; font-weight: normal; vertical-align: middle; }
+.codehilitetable {
+  margin-left: 0;
+  padding-left: 0; }
+  .codehilitetable tr td {
+    border: none; }
+    .codehilitetable tr td.linenos {
+      border-right: 1px solid gray;
+      margin: 0;
+      padding: 0 4px;
+      width: 22px; }
+      .codehilitetable tr td.linenos .linenodiv pre {
+        margin-bottom: 0; }
+    .codehilitetable tr td.code {
+      margin: 0;
+      padding: 0;
+      padding-left: 12px; }
+      .codehilitetable tr td.code .codehilite {
+        border: none;
+        margin-bottom: 0;
+        margin-left: 0;
+        padding-left: 0; }
 
-q, blockquote { quotes: "" ""; }
-q:before, q:after, blockquote:before, blockquote:after { content: ""; }
+body {
+  font-family: Helvetica Neue, Helvetica, Arial, Geneva, sans-serif;
+  line-height: 21px; }
 
-img a { border: none; }
+/* Lists */
+dl dt {
+  font-weight: bold; }
 
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td { margin: 0; padding: 0; border: 0; outline: 0; font-weight: inherit; font-style: inherit; font-size: 100%; font-family: inherit; vertical-align: baseline; }
-
-*:focus { outline: 0; }
-
-body { line-height: 1em; color: black; background: #fff; }
-
-ol, ul { list-style: none; }
-
-/* tables still need 'cellspacing="0"' in the markup */
-table { border-collapse: separate; border-spacing: 0; vertical-align: middle; }
-
-caption, th, td { text-align: left; font-weight: normal; vertical-align: middle; }
-
-q, blockquote { quotes: "" ""; }
-q:before, q:after, blockquote:before, blockquote:after { content: ""; }
-
-img a { border: none; }
+/* Code */
+code, pre {
+  font-family: Courier, Courier New, monospace;
+  font-weight: normal !important;
+  line-height: 21px; }

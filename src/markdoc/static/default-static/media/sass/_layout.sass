@@ -1,0 +1,69 @@
+html
+  :background-color #f6f6f6
+
+body
+  :background-color white
+  :margin 0 auto
+  :width 960px
+  
+  #breadcrumbs, #content, #footer
+    :background-color white
+    :clear both
+    :float left
+    :overflow hidden
+    :padding 0 20px
+    :width= 960px - (20px + 20px)
+  
+  .clear
+    :clear both
+    :border-width 0
+    :margin 0
+    :visibility hidden
+
+
+// Lists
+
+dl
+  :margin-left 0
+  dd
+    :margin-bottom 13px
+    :margin-left 13px
+
+ul
+  :margin-left 18px
+  :margin-top 0
+  li
+    :list-style square outside
+
+
+// Code blocks
+
+.codehilite
+  :border-left 1px solid gray
+  :margin-bottom 13px
+  :margin-left 30px
+  :padding-left 12px
+  pre
+    :margin-bottom 0
+
+.codehilitetable
+  :margin-left 0
+  :padding-left 0
+  tr td
+    :border none
+    &.linenos
+      :border-right 1px solid gray
+      :margin 0
+      :padding 0 4px
+      :width= 30px - (4px + 4px)
+      .linenodiv pre
+        :margin-bottom 0
+    &.code
+      :margin 0
+      :padding 0
+      :padding-left 12px
+      .codehilite
+        :border none
+        :margin-bottom 0
+        :margin-left 0
+        :padding-left 0
