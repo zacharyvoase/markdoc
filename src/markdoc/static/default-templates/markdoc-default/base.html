@@ -29,9 +29,13 @@
       </title>
       
       {% block css %}
-        {{ html.cssimport(make_relative("/media/css/reset.css")) }}
-        {{ html.cssimport(make_relative("/media/css/layout.css")) }}
-        {{ html.cssimport(make_relative("/media/css/typography.css")) }}
+        <!-- YUI CSS reset, fonts, base -->
+        {{ html.cssimport(("http://yui.yahooapis.com/combo?" +
+                           "3.0.0/build/cssreset/reset-min.css&" +
+                           "3.0.0/build/cssfonts/fonts-min.css&" +
+                           "3.0.0/build/cssbase/base-min.css") | e) }}
+        
+        {{ html.cssimport(make_relative("/media/css/style.css")) }}
         {{ html.cssimport(make_relative("/media/css/pygments.css")) }}
       {% endblock %}
       
