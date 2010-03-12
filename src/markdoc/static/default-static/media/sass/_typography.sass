@@ -1,9 +1,18 @@
-!monospace_fonts = "Courier", "Courier New", "monospace"
-!sans_serif_fonts = "Helvetica Neue", "Helvetica", "Arial", "Geneva", "sans-serif"
+!monospace_fonts = "Courier", "'Courier New'", "monospace"
+!sans_serif_fonts = "'Helvetica Neue'", "Helvetica", "Arial", "Geneva", "sans-serif"
 
 body
   :font-family= !sans_serif_fonts
   :line-height 21px
+
+body.listing
+  table#pages, table#subdirs
+    td.size
+      :font-family= !monospace_fonts
+  table#subdirs
+    td.name
+      :font-family= !monospace_fonts
+
 
 #breadcrumbs
   li

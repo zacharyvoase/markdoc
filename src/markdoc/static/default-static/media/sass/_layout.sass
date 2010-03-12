@@ -46,6 +46,23 @@ body
     :visibility hidden
 
 
+body.listing
+  table#pages, table#subdirs, table#files
+    tr
+      :border-bottom 1px solid #777
+      :border-top 1px solid #777
+    td
+      :border none
+      &.size
+        :background-color #f6f6f6
+      &.name
+        :padding 0
+        a
+          :display block
+          :margin 0
+          :padding 4px 8px
+
+
 // Common elements
 
 blockquote

@@ -41,6 +41,20 @@ body {
     margin: 0;
     visibility: hidden; }
 
+body.listing table#pages tr, body.listing table#subdirs tr, body.listing table#files tr {
+  border-bottom: 1px solid #777;
+  border-top: 1px solid #777; }
+body.listing table#pages td, body.listing table#subdirs td, body.listing table#files td {
+  border: none; }
+  body.listing table#pages td.size, body.listing table#subdirs td.size, body.listing table#files td.size {
+    background-color: #f6f6f6; }
+  body.listing table#pages td.name, body.listing table#subdirs td.name, body.listing table#files td.name {
+    padding: 0; }
+    body.listing table#pages td.name a, body.listing table#subdirs td.name a, body.listing table#files td.name a {
+      display: block;
+      margin: 0;
+      padding: 4px 8px; }
+
 blockquote {
   background-color: #f6f6f6;
   padding: 13px;
@@ -97,8 +111,13 @@ pre {
         padding: 0; }
 
 body {
-  font-family: Helvetica Neue, Helvetica, Arial, Geneva, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif;
   line-height: 21px; }
+
+body.listing table#pages td.size, body.listing table#subdirs td.size {
+  font-family: Courier, 'Courier New', monospace; }
+body.listing table#subdirs td.name {
+  font-family: Courier, 'Courier New', monospace; }
 
 #breadcrumbs li {
   color: #777;
@@ -138,6 +157,6 @@ dl dt {
   font-weight: bold; }
 
 code, pre {
-  font-family: Courier, Courier New, monospace;
+  font-family: Courier, 'Courier New', monospace;
   font-weight: normal !important;
   line-height: 21px; }
