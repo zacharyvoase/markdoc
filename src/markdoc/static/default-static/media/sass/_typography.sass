@@ -5,8 +5,49 @@ body
   :font-family= !sans_serif_fonts
   :line-height 21px
 
-h1, h2, h3, h4, h5, h6
-  :font-size 1.2em
+#breadcrumbs
+  li
+    :color #777
+    :font-size 13px
+    :font-weight bold
+    :line-height 28px
+    a
+      :text-decoration none
+    .list-crumb
+      :font-weight normal
+
+
+// Headers
+
+h1
+  :line-height 28px
+  :font-size 34px
+
+h2, h3, h4, h5, h6
+  :line-height 21px
+
+h2
+  :font-size 21px
+
+h3
+  :font-size 17px
+
+h4, h5, h6
+  :font-size 13px
+
+
+// Links
+
+!link_color= #ba0000
+
+a
+  :color= !link_color
+  :text-decoration none
+  &:hover
+    :color= !link_color * 0.8
+  &[href^="http:"]
+    :text-decoration underline
+
 
 // Lists
 
