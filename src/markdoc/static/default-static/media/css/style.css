@@ -32,6 +32,9 @@ body {
       body #breadcrumbs li.not-last:after {
         content: "»";
         float: right; }
+  body #footer {
+    border-top: 2px solid #f6f6f6;
+    padding-top: 13px; }
   body .clear {
     clear: both;
     border-width: 0;
@@ -50,7 +53,6 @@ dl {
     margin-left: 13px; }
 
 ul {
-  margin-left: 18px;
   margin-top: 0; }
   ul li {
     list-style: square outside; }
