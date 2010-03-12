@@ -2,6 +2,8 @@
 
 {% block title %}ls /{{ directory|e }}{% endblock %}
 
+{% block body_attrs %}class="listing"{% endblock %}
+
 {% block content %}
   <h1><code>ls /{{ directory|e }}</code></h1>
 
