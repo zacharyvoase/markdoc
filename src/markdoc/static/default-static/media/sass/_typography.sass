@@ -1,4 +1,5 @@
-!monospace_fonts = "Courier", "'Courier New'", "monospace"
+!monospace_fonts_block = "Menlo", "'DejaVu Sans Mono'", "'Bitstream Vera Sans Mono'", "Courier", "'Courier 10 Pitch'", "'Courier New'", "monospace"
+!monospace_fonts_inline = "Courier", "'Courier 10 Pitch'", "'Courier New'", "monospace"
 !sans_serif_fonts = "'Helvetica Neue'", "Helvetica", "Arial", "Geneva", "sans-serif"
 
 body
@@ -7,7 +8,7 @@ body
   
   #breadcrumbs
     li
-      :color #777
+      :color #aaa
       :font-size 13px
       :font-weight bold
       :line-height 28px
@@ -24,10 +25,11 @@ body
   &.listing
     table#pages, table#subdirs
       td.size
-        :font-family= !monospace_fonts
+        :font-family= !monospace_fonts_block
+        :text-align right
     table#subdirs
       td.name
-        :font-family= !monospace_fonts
+        :font-family= !monospace_fonts_inline
 
 
 // Headers
@@ -50,7 +52,7 @@ h4, h5, h6
 
 // Links
 
-!link_color= #900
+!link_color = #900
 
 a
   :color= !link_color
@@ -70,6 +72,11 @@ dl
 
 // Code
 
-code, pre
-  :font-family= !monospace_fonts
+code
+  :font-family= !monospace_fonts_inline
+  :line-height 18px
+
+pre
+  :font-family= !monospace_fonts_block
+  :font-size 11px
   :line-height 18px

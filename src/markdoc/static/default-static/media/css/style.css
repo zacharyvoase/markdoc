@@ -120,7 +120,7 @@ body {
   font-family: 'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif;
   line-height: 21px; }
   body #breadcrumbs li {
-    color: #777;
+    color: #aaa;
     font-size: 13px;
     font-weight: bold;
     line-height: 28px; }
@@ -133,9 +133,10 @@ body {
     font-size: 13px;
     text-transform: lowercase; }
   body.listing table#pages td.size, body.listing table#subdirs td.size {
-    font-family: Courier, 'Courier New', monospace; }
+    font-family: Menlo, 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', Courier, 'Courier 10 Pitch', 'Courier New', monospace;
+    text-align: right; }
   body.listing table#subdirs td.name {
-    font-family: Courier, 'Courier New', monospace; }
+    font-family: Courier, 'Courier 10 Pitch', 'Courier New', monospace; }
 
 h1, h2, h3, h4, h5, h6 {
   line-height: 21px; }
@@ -163,6 +164,11 @@ a {
 dl dt {
   font-weight: bold; }
 
-code, pre {
-  font-family: Courier, 'Courier New', monospace;
+code {
+  font-family: Courier, 'Courier 10 Pitch', 'Courier New', monospace;
+  line-height: 18px; }
+
+pre {
+  font-family: Menlo, 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', Courier, 'Courier 10 Pitch', 'Courier New', monospace;
+  font-size: 11px;
   line-height: 18px; }
