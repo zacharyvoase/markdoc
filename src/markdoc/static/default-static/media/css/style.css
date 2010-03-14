@@ -97,19 +97,21 @@ pre {
   margin-left: 0;
   padding-left: 0; }
   .codehilitetable tr td {
-    border: none; }
+    border: none;
+    padding: 3px 5px 0 5px; }
     .codehilitetable tr td.linenos {
+      background-color: #f6f6f6;
       border-right: 1px solid gray;
       margin: 0;
-      padding: 0 4px;
-      width: 22px; }
+      padding-right: 6px;
+      text-align: right;
+      width: 19px; }
       .codehilitetable tr td.linenos .linenodiv pre {
         border: none;
         margin: 0;
         padding: 0; }
     .codehilitetable tr td.code {
       margin: 0;
-      padding: 0;
       padding-left: 12px; }
       .codehilitetable tr td.code .codehilite {
         border: none;
