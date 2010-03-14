@@ -33,7 +33,7 @@ body {
         content: "»";
         float: right; }
   body #footer {
-    border-top: 2px solid #f6f6f6;
+    border-top: 8px solid #f6f6f6;
     padding-top: 13px; }
   body .clear {
     clear: both;
@@ -59,6 +59,12 @@ blockquote {
   background-color: #f6f6f6;
   padding: 13px;
   padding-bottom: 1px; }
+
+hr {
+  border-style: solid;
+  border: none;
+  border-top: 1px solid #777;
+  margin: 28px 0; }
 
 dl {
   margin-left: 0; }
@@ -113,43 +119,44 @@ pre {
 body {
   font-family: 'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif;
   line-height: 21px; }
+  body #breadcrumbs li {
+    color: #777;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 28px; }
+    body #breadcrumbs li a {
+      text-decoration: none; }
+    body #breadcrumbs li .list-crumb {
+      font-weight: normal; }
+  body #footer {
+    color: #777;
+    font-size: 13px;
+    text-transform: lowercase; }
+  body.listing table#pages td.size, body.listing table#subdirs td.size {
+    font-family: Courier, 'Courier New', monospace; }
+  body.listing table#subdirs td.name {
+    font-family: Courier, 'Courier New', monospace; }
 
-body.listing table#pages td.size, body.listing table#subdirs td.size {
-  font-family: Courier, 'Courier New', monospace; }
-body.listing table#subdirs td.name {
-  font-family: Courier, 'Courier New', monospace; }
-
-#breadcrumbs li {
-  color: #777;
-  font-size: 13px;
-  font-weight: bold;
-  line-height: 28px; }
-  #breadcrumbs li a {
-    text-decoration: none; }
-  #breadcrumbs li .list-crumb {
-    font-weight: normal; }
-
-h1 {
-  line-height: 28px;
-  font-size: 34px; }
-
-h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6 {
   line-height: 21px; }
 
-h2 {
+h1 {
   font-size: 21px; }
 
+h2 {
+  font-size: 18px; }
+
 h3 {
-  font-size: 17px; }
+  font-size: 15px; }
 
 h4, h5, h6 {
   font-size: 13px; }
 
 a {
-  color: #ba0000;
+  color: #990000;
   text-decoration: none; }
   a:hover {
-    color: #940000; }
+    color: #4c0000; }
   a[href^="http:"] {
     text-decoration: underline; }
 
@@ -158,5 +165,4 @@ dl dt {
 
 code, pre {
   font-family: Courier, 'Courier New', monospace;
-  font-weight: normal !important;
-  line-height: 21px; }
+  line-height: 18px; }
