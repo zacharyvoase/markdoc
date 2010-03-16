@@ -76,6 +76,8 @@ ul {
   margin-top: 0; }
   ul li {
     list-style: square outside; }
+  ul ul {
+    margin-bottom: 0; }
 
 pre {
   border-left: 1px solid gray;
