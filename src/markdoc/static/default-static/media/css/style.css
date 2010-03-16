@@ -4,20 +4,20 @@ html {
 body {
   background-color: white;
   margin: 0 auto;
-  width: 960px; }
+  width: 650px; }
   body #breadcrumbs, body #content, body #footer {
     background-color: white;
     clear: both;
     float: left;
     overflow: hidden;
     padding: 0 20px;
-    width: 920px; }
+    width: 610px; }
   body #breadcrumbs {
     border-bottom: 2px solid #f6f6f6;
     height: 28px;
     margin: 0;
     padding: 0;
-    width: 960px; }
+    width: 650px; }
     body #breadcrumbs li {
       float: left;
       list-style: none;
