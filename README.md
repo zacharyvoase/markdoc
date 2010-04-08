@@ -1,6 +1,4 @@
-<!--*-markdown-*-->
-
-# Markdoc README
+# Markdoc
 
 Markdoc is a lightweight Markdown-based wiki system. It’s geared towards
 managing technical documentation, but can be used for a range of purposes. It
@@ -47,7 +45,8 @@ Installation
 ------------
 
     #!bash
-    $ easy_install Markdoc
+    $ easy_install Markdoc  # OR
+    $ pip install Markdoc
 
 Making a Wiki
 -------------
