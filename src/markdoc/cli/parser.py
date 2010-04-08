@@ -11,8 +11,10 @@ from markdoc.config import Config
 parser = argparse.ArgumentParser(**{
     'prog': 'markdoc',
     'description': 'A lightweight Markdown-based wiki build tool.',
-    'version': markdoc.__version__,
 })
+
+parser.add_argument('-v', '--version', action='version',
+    version=markdoc.__version__)
 
 config = parser.add_argument('--config', '-c', default=os.getcwd(),
     help="Use the specified Markdoc config (a YAML file or a directory "
