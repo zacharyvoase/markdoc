@@ -65,7 +65,7 @@ setup(
     version          = get_version(),
     author           = "Zachary Voase",
     author_email     = "zacharyvoase@me.com",
-    url              = 'http://bitbucket.org/zacharyvoase/markdoc',
+    url              = 'http://github.com/zacharyvoase/markdoc',
     description      = "A lightweight Markdown-based wiki build tool.",
     packages         = find_packages(where='src'),
     package_dir      = {'': 'src'},
