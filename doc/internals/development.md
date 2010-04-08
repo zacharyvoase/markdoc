@@ -1,17 +1,20 @@
 # Development
 
-Markdoc is actively developed through its [Bitbucket page][bb-markdoc]. The [Mercurial Version Control System][hg] is used to manage the software history
+Markdoc is actively developed via [GitHub][gh-markdoc].
 
-  [bb-markdoc]: http://bitbucket.org/zacharyvoase/markdoc
+  [gh-markdoc]: http://github.com/zacharyvoase/markdoc
 
 ## Working with the Repository
 
-You’ll need to install [Mercurial][hg] first; check your OS’s package manager for a `mercurial` or `hg` package.
+You’ll need to install [Git][git] first; check your OS’s package manager for a
+`git` or `git-core` package.
+
+  [git]: http://git-scm.com/
 
 You can check out a copy of the repository by cloning it:
 
     :::bash
-    $ hg clone http://bitbucket.org/zacharyvoase/markdoc
+    $ git clone git://github.com/zacharyvoase/markdoc.git
     $ cd markdoc/
 
 ### Repo Structure
@@ -57,17 +60,16 @@ There are several files and directories in the root of the repo:
     replacement for Python.
 
 
-  [hg]: http://mercurial.selenic.com/
   [pip]: http://pip.openplans.org/
   [nose]: http://somethingaboutorange.com/mrl/projects/nose/0.11.1/
 
 ### Bug Reporting and Feature Requests
 
-All bugs and feature requests are handled on the [Bitbucket issues page](http://bitbucket.org/zacharyvoase/markdoc/issues/).
+All bugs and feature requests are handled on the [GitHub issues page](http://github.com/zacharyvoase/markdoc/issues).
 
 ### Contributing
 
-If you’re interested in implementing a feature or extension for Markdoc, just fork the Bitbucket repository, work on the feature, commit your changes, then send me a pull request. If I like what you’ve done, I’ll pull your changes into the official Markdoc release and give you author credit.
+If you’re interested in implementing a feature or extension for Markdoc, just fork the GitHub repository, work on the feature, commit your changes, then send me a pull request. If I like what you’ve done, I’ll pull your changes into the official Markdoc release and give you author credit.
 
 Remember that you must be willing to release your changes to the public domain. If you are submitting a non-trivial patch, take a look at [unlicense.org][unlicensing contributions] for detailed instructions; for now, you just need to agree to the following statement:
 
