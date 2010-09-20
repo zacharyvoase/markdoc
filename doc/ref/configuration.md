@@ -24,6 +24,7 @@ Markdoc’s behavior:
     html-dir: ".html"
     template-dir: ".templates"
     temp-dir: ".tmp"
+    cvs-exclude: true
     
     # Building
     document-extensions: [.md, .mdown, .markdown, .wiki, .text]
@@ -111,6 +112,15 @@ is an acceptable value.
 
 `temp-dir` (default `hide-prefix + "tmp"`)
 :   This directory is used as a temporary destination when building HTML.
+
+`cvs-exclude` (default `true`)
+:   If this is `true`, Markdoc will pass the `--cvs-exclude` option to `rsync`
+    when syncing static media and rendered HTML files. This causes `rsync` to
+    skip some common backup/hidden files (e.g. `.git/`, `.svn/`, `*~` and `#*`).
+    The full semantics of this option are specified in the
+    [`rsync` documentation][rsync-docs].
+
+  [rsync-docs]: http://www.samba.org/ftp/rsync/rsync.html
 
 ### Building
 

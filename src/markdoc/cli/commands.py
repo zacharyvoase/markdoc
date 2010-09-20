@@ -175,13 +175,17 @@ def sync_static(config, args):
         log.debug('makedirs %s' % config.html_dir)
         os.makedirs(config.html_dir)
     
-    command = ('rsync -vaxq --ignore-errors --include=.htaccess --exclude=.* --exclude=_*').split()
+    command = ('rsync -vaxq --cvs-exclude --ignore-errors --include=.htaccess --exclude=.* --exclude=_*').split()
     display_cmd = command[:]
     
     if config['use-default-static']:
         # rsync needs the paths to have trailing slashes to work correctly.
         command.append(p.join(markdoc.default_static_dir, ''))
         display_cmd.append(p.basename(markdoc.default_static_dir) + '/')
+    
+    if not config['cvs-exclude']:
+        command.remove('--cvs-exclude')
+        display_cmd.remove('--cvs-exclude')
     
     if p.isdir(config.static_dir):
         command.append(p.join(config.static_dir, ''))
@@ -207,7 +211,7 @@ def sync_html(config, args):
         log.debug('makedirs %s' % config.html_dir)
         os.makedirs(config.html_dir)
     
-    command = ('rsync -vaxq --delete --ignore-errors --include=.htaccess --exclude=.* --exclude=_*').split()
+    command = ('rsync -vaxq --cvs-exclude --delete --ignore-errors --include=.htaccess --exclude=.* --exclude=_*').split()
     display_cmd = command[:]
     
     # rsync needs the paths to have trailing slashes to work correctly.
@@ -217,6 +221,10 @@ def sync_html(config, args):
     if config['use-default-static']:
         command.append(p.join(markdoc.default_static_dir, ''))
         display_cmd.append(p.basename(markdoc.default_static_dir) + '/')
+    
+    if not config['cvs-exclude']:
+        command.remove('--cvs-exclude')
+        display_cmd.remove('--cvs-exclude')
     
     if p.isdir(config.static_dir):
         command.append(p.join(config.static_dir, ''))
